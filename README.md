@@ -10,28 +10,31 @@ Instead of passing the entire conversation history between agents, the Compresso
 
 ```mermaid
 graph LR
-    classDef default fill:#ffffff,stroke:#333333,stroke-width:2px,color:#000;
-    classDef comp fill:#fcf8e3,stroke:#8a6d3b,stroke-width:3px,color:#8a6d3b;
-    classDef agent fill:#d9edf7,stroke:#31708f,stroke-width:2px,color:#31708f;
+    %% Modern styling
+    classDef user fill:#2d3748,stroke:#4a5568,stroke-width:2px,color:#fff,rx:10,ry:10;
+    classDef agent fill:#ebf8ff,stroke:#3182ce,stroke-width:2px,color:#2b6cb0,rx:5,ry:5;
+    classDef compressor fill:#fefcbf,stroke:#d69e2e,stroke-width:3px,color:#975a16,rx:15,ry:15;
+    classDef output fill:#e6fffa,stroke:#319795,stroke-width:2px,color:#285e61,rx:10,ry:10;
 
-    U((User))
+    User((👤 User Input)):::user
     
-    subgraph "Local Execution Environment (Ollama)"
-        A[Data Ingestion Node]:::agent
-        B[Logistics Planner Node]:::agent
-        C{Context Compressor Node}:::comp
-        D[Financial Analyst Node]:::agent
-        E[Decision Manager Node]:::agent
+    subgraph Ollama ["🤖 Local Execution Environment (Llama 3)"]
+        direction LR
+        A[Data Ingestion]:::agent
+        B[Logistics Planner]:::agent
+        C([Context Compressor Node]):::compressor
+        D[Financial Analyst]:::agent
+        E[Decision Manager]:::agent
     end
     
-    R((Final Output))
+    Result((🎯 Final Output)):::output
 
-    U --> A
+    User --> A
     A --> B
     B -->|Verbose History| C
     C -->|Dense Context| D
     D --> E
-    E --> R
+    E --> Result
 ```
 
 ## Features
