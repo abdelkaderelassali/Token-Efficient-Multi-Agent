@@ -10,24 +10,21 @@ Instead of passing the entire conversation history between agents, the Compresso
 
 ```mermaid
 graph LR
-    %% Modern styling
-    classDef user fill:#2d3748,stroke:#4a5568,stroke-width:2px,color:#fff,rx:10,ry:10;
-    classDef agent fill:#ebf8ff,stroke:#3182ce,stroke-width:2px,color:#2b6cb0,rx:5,ry:5;
-    classDef compressor fill:#fefcbf,stroke:#d69e2e,stroke-width:3px,color:#975a16,rx:15,ry:15;
-    classDef output fill:#e6fffa,stroke:#319795,stroke-width:2px,color:#285e61,rx:10,ry:10;
+    classDef default fill:#ffffff,stroke:#000000,stroke-width:2px,color:#000000;
+    classDef rounded fill:#ffffff,stroke:#000000,stroke-width:2px,color:#000000,rx:20,ry:20;
 
-    User((👤 User Input)):::user
+    User((User)):::default
     
-    subgraph Ollama ["🤖 Local Execution Environment (Llama 3)"]
+    subgraph "Local Execution Environment (Llama 3)"
         direction LR
-        A[Data Ingestion]:::agent
-        B[Logistics Planner]:::agent
-        C([Context Compressor Node]):::compressor
-        D[Financial Analyst]:::agent
-        E[Decision Manager]:::agent
+        A[Data Ingestion Node]:::default
+        B[Logistics Planner Node]:::default
+        C([Context Compressor Node]):::rounded
+        D[Financial Analyst Node]:::default
+        E[Decision Manager Node]:::default
     end
     
-    Result((🎯 Final Output)):::output
+    Result((Final Output)):::default
 
     User --> A
     A --> B
