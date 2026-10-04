@@ -1,0 +1,376 @@
+[
+  {
+    "file": "verification\\graph-pilot-20260928.json",
+    "experiment_id": "5ff103ec-e636-4e06-9c11-b8047d0a14ae",
+    "scenario_id": "demo_detailed",
+    "protocol": "validated-v5-graph",
+    "compression_applied": true,
+    "saved_tokens": 2489,
+    "reduction_percent": 27.42397531952402,
+    "checks": {
+      "source_unchanged": true,
+      "protected_record_unchanged": true,
+      "python_audit_unchanged": true,
+      "context_exactly_reconstructed_from_source": true,
+      "all_required_caveats_selected": true,
+      "selected_caveats_are_source_exact": true,
+      "downstream_prompts_use_active_context": true,
+      "agent_reports_forward_only_guarded_text": true,
+      "both_final_decisions_validated": true
+    },
+    "all_checks_passed": true,
+    "selected_caveat_ids": [
+      "U2",
+      "U3",
+      "U15",
+      "U11",
+      "U13"
+    ],
+    "omitted_catalog_caveats": [
+      {
+        "id": "U0",
+        "quote_id": "D1",
+        "detail": "The quoted arrival is the warehouse delivery date, not the vessel arrival date."
+      },
+      {
+        "id": "U1",
+        "quote_id": "D1",
+        "detail": "The supplier has not confirmed any earlier delivery at this rate."
+      },
+      {
+        "id": "U4",
+        "quote_id": "D3",
+        "detail": "This offer exceeds the allowed shipment budget, even though it satisfies the delivery, capacity, and insurance requirements."
+      },
+      {
+        "id": "U5",
+        "quote_id": "D3",
+        "detail": "No discount is offered."
+      },
+      {
+        "id": "U6",
+        "quote_id": "D3",
+        "detail": "The finance review must compare the full quoted total with the cap rather than assuming the urgency justifies exceeding it."
+      },
+      {
+        "id": "U7",
+        "quote_id": "D4",
+        "detail": "However, cargo travels without transit insurance under this quotation."
+      },
+      {
+        "id": "U8",
+        "quote_id": "D4",
+        "detail": "The terms explicitly exclude any insurance premium, and the supplier has not priced an insurance extension."
+      },
+      {
+        "id": "U9",
+        "quote_id": "D4",
+        "detail": "The shipping team must not assume insurance is included in another cost line."
+      },
+      {
+        "id": "U10",
+        "quote_id": "D4",
+        "detail": "Although this offer is cheaper than some insured options, insurance is a mandatory requirement."
+      },
+      {
+        "id": "U12",
+        "quote_id": "D5",
+        "detail": "An additional departure could be requested separately, but no price, arrival, or capacity is supplied for it."
+      },
+      {
+        "id": "U14",
+        "quote_id": "D5",
+        "detail": "Consequently, do not extrapolate this quote proportionally or assume that the carrier can expand its allocation without a revised offer."
+      }
+    ],
+    "full_brief_in_active_context": false,
+    "carrier_and_method_names_in_active_context": false,
+    "every_eligible_full_terms_in_active_context": false,
+    "scope": "Exact source-backed structured facts, selected caveats, prompt routing, guarded claims, and final supplied-fact checks. Omitted prose is not certified semantically equivalent."
+  },
+  {
+    "file": "verification\\graph-holdout-20260928.json",
+    "experiment_id": "8edd030b-5565-4bae-9534-c89975428567",
+    "scenario_id": "demo_detailed",
+    "protocol": "validated-v5-graph",
+    "compression_applied": true,
+    "saved_tokens": 2467,
+    "reduction_percent": 27.181577787571616,
+    "checks": {
+      "source_unchanged": true,
+      "protected_record_unchanged": true,
+      "python_audit_unchanged": true,
+      "context_exactly_reconstructed_from_source": true,
+      "all_required_caveats_selected": true,
+      "selected_caveats_are_source_exact": true,
+      "downstream_prompts_use_active_context": true,
+      "agent_reports_forward_only_guarded_text": true,
+      "both_final_decisions_validated": true
+    },
+    "all_checks_passed": true,
+    "selected_caveat_ids": [
+      "U2",
+      "U3",
+      "U15",
+      "U11",
+      "U13"
+    ],
+    "omitted_catalog_caveats": [
+      {
+        "id": "U0",
+        "quote_id": "D1",
+        "detail": "The quoted arrival is the warehouse delivery date, not the vessel arrival date."
+      },
+      {
+        "id": "U1",
+        "quote_id": "D1",
+        "detail": "The supplier has not confirmed any earlier delivery at this rate."
+      },
+      {
+        "id": "U4",
+        "quote_id": "D3",
+        "detail": "This offer exceeds the allowed shipment budget, even though it satisfies the delivery, capacity, and insurance requirements."
+      },
+      {
+        "id": "U5",
+        "quote_id": "D3",
+        "detail": "No discount is offered."
+      },
+      {
+        "id": "U6",
+        "quote_id": "D3",
+        "detail": "The finance review must compare the full quoted total with the cap rather than assuming the urgency justifies exceeding it."
+      },
+      {
+        "id": "U7",
+        "quote_id": "D4",
+        "detail": "However, cargo travels without transit insurance under this quotation."
+      },
+      {
+        "id": "U8",
+        "quote_id": "D4",
+        "detail": "The terms explicitly exclude any insurance premium, and the supplier has not priced an insurance extension."
+      },
+      {
+        "id": "U9",
+        "quote_id": "D4",
+        "detail": "The shipping team must not assume insurance is included in another cost line."
+      },
+      {
+        "id": "U10",
+        "quote_id": "D4",
+        "detail": "Although this offer is cheaper than some insured options, insurance is a mandatory requirement."
+      },
+      {
+        "id": "U12",
+        "quote_id": "D5",
+        "detail": "An additional departure could be requested separately, but no price, arrival, or capacity is supplied for it."
+      },
+      {
+        "id": "U14",
+        "quote_id": "D5",
+        "detail": "Consequently, do not extrapolate this quote proportionally or assume that the carrier can expand its allocation without a revised offer."
+      }
+    ],
+    "full_brief_in_active_context": false,
+    "carrier_and_method_names_in_active_context": false,
+    "every_eligible_full_terms_in_active_context": false,
+    "scope": "Exact source-backed structured facts, selected caveats, prompt routing, guarded claims, and final supplied-fact checks. Omitted prose is not certified semantically equivalent."
+  },
+  {
+    "file": "verification\\graph-medium-20260928.json",
+    "experiment_id": "2f72188e-ad5d-46d3-bce4-49e632e8ae85",
+    "scenario_id": "demo_medium",
+    "protocol": "validated-v5-graph",
+    "compression_applied": true,
+    "saved_tokens": 930,
+    "reduction_percent": 14.96861419604056,
+    "checks": {
+      "source_unchanged": true,
+      "protected_record_unchanged": true,
+      "python_audit_unchanged": true,
+      "context_exactly_reconstructed_from_source": true,
+      "all_required_caveats_selected": true,
+      "selected_caveats_are_source_exact": true,
+      "downstream_prompts_use_active_context": true,
+      "agent_reports_forward_only_guarded_text": true,
+      "both_final_decisions_validated": true
+    },
+    "all_checks_passed": true,
+    "selected_caveat_ids": [
+      "U1",
+      "U2",
+      "U3"
+    ],
+    "omitted_catalog_caveats": [
+      {
+        "id": "U0",
+        "quote_id": "M2",
+        "detail": "The arrival is after the requested deadline; the carrier has not offered an earlier slot at this price."
+      },
+      {
+        "id": "U4",
+        "quote_id": "M4",
+        "detail": "Evaluate the supplied offer as it stands; do not invent a premium to make it compliant."
+      }
+    ],
+    "full_brief_in_active_context": false,
+    "carrier_and_method_names_in_active_context": false,
+    "every_eligible_full_terms_in_active_context": false,
+    "scope": "Exact source-backed structured facts, selected caveats, prompt routing, guarded claims, and final supplied-fact checks. Omitted prose is not certified semantically equivalent."
+  },
+  {
+    "file": "verification\\graph-short-20260928.json",
+    "experiment_id": "7aae86a2-1780-462c-9d5d-d08d8db64a6d",
+    "scenario_id": "demo_short",
+    "protocol": "validated-v5-graph",
+    "compression_applied": false,
+    "saved_tokens": 3,
+    "reduction_percent": 0.06290626965820927,
+    "checks": {
+      "source_unchanged": true,
+      "protected_record_unchanged": true,
+      "python_audit_unchanged": true,
+      "context_exactly_reconstructed_from_source": true,
+      "all_required_caveats_selected": true,
+      "selected_caveats_are_source_exact": true,
+      "downstream_prompts_use_active_context": true,
+      "agent_reports_forward_only_guarded_text": true,
+      "both_final_decisions_validated": true
+    },
+    "all_checks_passed": true,
+    "selected_caveat_ids": [],
+    "omitted_catalog_caveats": [],
+    "full_brief_in_active_context": true,
+    "carrier_and_method_names_in_active_context": true,
+    "every_eligible_full_terms_in_active_context": true,
+    "scope": "Exact source-backed structured facts, selected caveats, prompt routing, guarded claims, and final supplied-fact checks. Omitted prose is not certified semantically equivalent."
+  },
+  {
+    "file": "verification\\ablations\\projection-detailed-20260928.json",
+    "experiment_id": "9766e077-e2f9-4325-928a-e65aa64a8d56",
+    "scenario_id": "demo_detailed",
+    "protocol": "validated-v6-projection",
+    "compression_applied": true,
+    "saved_tokens": 3098,
+    "reduction_percent": 34.133979726751875,
+    "checks": {
+      "source_unchanged": true,
+      "protected_record_unchanged": true,
+      "python_audit_unchanged": true,
+      "context_exactly_reconstructed_from_source": true,
+      "all_required_caveats_selected": true,
+      "selected_caveats_are_source_exact": true,
+      "downstream_prompts_use_active_context": true,
+      "agent_reports_forward_only_guarded_text": true,
+      "both_final_decisions_validated": true
+    },
+    "all_checks_passed": true,
+    "selected_caveat_ids": [
+      "U2",
+      "U3",
+      "U15",
+      "U11",
+      "U13"
+    ],
+    "omitted_catalog_caveats": [
+      {
+        "id": "U0",
+        "quote_id": "D1",
+        "detail": "The quoted arrival is the warehouse delivery date, not the vessel arrival date."
+      },
+      {
+        "id": "U1",
+        "quote_id": "D1",
+        "detail": "The supplier has not confirmed any earlier delivery at this rate."
+      },
+      {
+        "id": "U4",
+        "quote_id": "D3",
+        "detail": "This offer exceeds the allowed shipment budget, even though it satisfies the delivery, capacity, and insurance requirements."
+      },
+      {
+        "id": "U5",
+        "quote_id": "D3",
+        "detail": "No discount is offered."
+      },
+      {
+        "id": "U6",
+        "quote_id": "D3",
+        "detail": "The finance review must compare the full quoted total with the cap rather than assuming the urgency justifies exceeding it."
+      },
+      {
+        "id": "U7",
+        "quote_id": "D4",
+        "detail": "However, cargo travels without transit insurance under this quotation."
+      },
+      {
+        "id": "U8",
+        "quote_id": "D4",
+        "detail": "The terms explicitly exclude any insurance premium, and the supplier has not priced an insurance extension."
+      },
+      {
+        "id": "U9",
+        "quote_id": "D4",
+        "detail": "The shipping team must not assume insurance is included in another cost line."
+      },
+      {
+        "id": "U10",
+        "quote_id": "D4",
+        "detail": "Although this offer is cheaper than some insured options, insurance is a mandatory requirement."
+      },
+      {
+        "id": "U12",
+        "quote_id": "D5",
+        "detail": "An additional departure could be requested separately, but no price, arrival, or capacity is supplied for it."
+      },
+      {
+        "id": "U14",
+        "quote_id": "D5",
+        "detail": "Consequently, do not extrapolate this quote proportionally or assume that the carrier can expand its allocation without a revised offer."
+      }
+    ],
+    "full_brief_in_active_context": false,
+    "carrier_and_method_names_in_active_context": true,
+    "every_eligible_full_terms_in_active_context": false,
+    "scope": "Exact source-backed structured facts, selected caveats, prompt routing, guarded claims, and final supplied-fact checks. Omitted prose is not certified semantically equivalent."
+  },
+  {
+    "file": "verification\\ablations\\projection-medium-20260928.json",
+    "experiment_id": "dda2b4c4-80b7-451f-a78b-6c15b93d66bf",
+    "scenario_id": "demo_medium",
+    "protocol": "validated-v6-projection",
+    "compression_applied": true,
+    "saved_tokens": 1411,
+    "reduction_percent": 22.64484031455625,
+    "checks": {
+      "source_unchanged": true,
+      "protected_record_unchanged": true,
+      "python_audit_unchanged": true,
+      "context_exactly_reconstructed_from_source": true,
+      "all_required_caveats_selected": true,
+      "selected_caveats_are_source_exact": true,
+      "downstream_prompts_use_active_context": true,
+      "agent_reports_forward_only_guarded_text": true,
+      "both_final_decisions_validated": true
+    },
+    "all_checks_passed": true,
+    "selected_caveat_ids": [
+      "U1",
+      "U2",
+      "U3",
+      "U4"
+    ],
+    "omitted_catalog_caveats": [
+      {
+        "id": "U0",
+        "quote_id": "M2",
+        "detail": "The arrival is after the requested deadline; the carrier has not offered an earlier slot at this price."
+      }
+    ],
+    "full_brief_in_active_context": false,
+    "carrier_and_method_names_in_active_context": true,
+    "every_eligible_full_terms_in_active_context": false,
+    "scope": "Exact source-backed structured facts, selected caveats, prompt routing, guarded claims, and final supplied-fact checks. Omitted prose is not certified semantically equivalent."
+  }
+]

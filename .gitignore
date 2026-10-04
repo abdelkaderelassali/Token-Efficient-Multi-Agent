@@ -1,0 +1,59 @@
+# Python
+__pycache__/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+*.py[cod]
+*.pyo
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Virtual environment
+venv/
+.venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# OS
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# Internal working notes
+Remarks.md
+experiment_results.txt
+
+# Temporary review files and exploratory runs
+/tmp/
+/verification/local/
+/verification/*.log
+
+# Local report preparation and generated bundles
+/rapport/CONTROLE_FINAL.md
+/rapport/LIRE_RAPPORT.md
+/rapport/rapport_pfa.tex
+/rapport/token_efficient_latex.zip
+/rapport/*.aux
+/rapport/*.log
+/rapport/*.toc
+/rapport/*.lof
+/rapport/*.lot
+/rapport/*.out
+/rapport/*.fls
+/rapport/*.fdb_latexmk
+/rapport/*.synctex.gz

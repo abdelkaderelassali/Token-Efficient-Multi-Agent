@@ -1,0 +1,388 @@
+[
+  {
+    "scenario_id": "demo_short",
+    "calculation_version": "quote-calculations-v1",
+    "rows": [
+      {
+        "quote_id": "S1",
+        "within_budget": true,
+        "on_time": true,
+        "enough_capacity": true,
+        "insured_as_required": true
+      },
+      {
+        "quote_id": "S2",
+        "within_budget": true,
+        "on_time": false,
+        "enough_capacity": true,
+        "insured_as_required": true
+      }
+    ],
+    "comparisons": [
+      {
+        "quote_id": "S1",
+        "quoted_total_usd": 720,
+        "budget_usd": 900,
+        "budget_remaining_usd": "180",
+        "arrival_date": "2026-10-07",
+        "deadline": "2026-10-08",
+        "days_before_deadline": 1,
+        "capacity_units": 40,
+        "quantity": 40,
+        "capacity_surplus_units": 0,
+        "insurance_included": true,
+        "insurance_required": true,
+        "eligible": true,
+        "failed_constraints": []
+      },
+      {
+        "quote_id": "S2",
+        "quoted_total_usd": 540,
+        "budget_usd": 900,
+        "budget_remaining_usd": "360",
+        "arrival_date": "2026-10-10",
+        "deadline": "2026-10-08",
+        "days_before_deadline": -2,
+        "capacity_units": 40,
+        "quantity": 40,
+        "capacity_surplus_units": 0,
+        "insurance_included": true,
+        "insurance_required": true,
+        "eligible": false,
+        "failed_constraints": [
+          "on_time"
+        ]
+      }
+    ],
+    "eligible_ids": [
+      "S1"
+    ],
+    "ineligible_ids": [
+      "S2"
+    ],
+    "lowest_cost_eligible_ids": [
+      "S1"
+    ],
+    "lowest_eligible_total_usd": 720,
+    "recommendation": {
+      "verdict": "proceed",
+      "option_id": "S1",
+      "total_cost_usd": 720,
+      "arrival_date": "2026-10-07",
+      "quantity": 40,
+      "budget_usd": 900,
+      "deadline": "2026-10-08"
+    },
+    "tie_break": "lexicographically smallest quote ID; all minimum-price eligible quotes accepted by evaluation",
+    "protected_facts_sha256": "1893db12b01539387966d04cdece445bd23856f92779d5c276855b468bb05828",
+    "text": "PYTHON CONSTRAINT CHECKS (authoritative calculations from protected source fields):\nS1: within_budget=PASS; on_time=PASS; enough_capacity=PASS; insured_as_required=PASS; budget_remaining_usd=180; days_before_deadline=1; capacity_surplus_units=0\nS2: within_budget=PASS; on_time=FAIL; enough_capacity=PASS; insured_as_required=PASS; budget_remaining_usd=360; days_before_deadline=-2; capacity_surplus_units=0\nELIGIBLE QUOTE IDS: S1\nINELIGIBLE QUOTE IDS: S2\nLOWEST-COST ELIGIBLE QUOTE IDS: S1\nPYTHON RECOMMENDATION: proceed with S1, USD 720, arrival 2026-10-07\nAny FAIL makes a quote infeasible. Negative remaining budget, days or capacity indicate a shortfall. Explain these computed results; do not replace them with model arithmetic. Equal-price eligible quotes are tied; the recommendation uses the lexicographically smallest quote ID."
+  },
+  {
+    "scenario_id": "demo_medium",
+    "calculation_version": "quote-calculations-v1",
+    "rows": [
+      {
+        "quote_id": "M1",
+        "within_budget": true,
+        "on_time": true,
+        "enough_capacity": true,
+        "insured_as_required": true
+      },
+      {
+        "quote_id": "M2",
+        "within_budget": true,
+        "on_time": false,
+        "enough_capacity": true,
+        "insured_as_required": true
+      },
+      {
+        "quote_id": "M3",
+        "within_budget": true,
+        "on_time": true,
+        "enough_capacity": true,
+        "insured_as_required": true
+      },
+      {
+        "quote_id": "M4",
+        "within_budget": true,
+        "on_time": true,
+        "enough_capacity": true,
+        "insured_as_required": false
+      }
+    ],
+    "comparisons": [
+      {
+        "quote_id": "M1",
+        "quoted_total_usd": 5900,
+        "budget_usd": 6500,
+        "budget_remaining_usd": "600",
+        "arrival_date": "2026-10-10",
+        "deadline": "2026-10-12",
+        "days_before_deadline": 2,
+        "capacity_units": 180,
+        "quantity": 160,
+        "capacity_surplus_units": 20,
+        "insurance_included": true,
+        "insurance_required": true,
+        "eligible": true,
+        "failed_constraints": []
+      },
+      {
+        "quote_id": "M2",
+        "quoted_total_usd": 4300,
+        "budget_usd": 6500,
+        "budget_remaining_usd": "2200",
+        "arrival_date": "2026-10-14",
+        "deadline": "2026-10-12",
+        "days_before_deadline": -2,
+        "capacity_units": 200,
+        "quantity": 160,
+        "capacity_surplus_units": 40,
+        "insurance_included": true,
+        "insurance_required": true,
+        "eligible": false,
+        "failed_constraints": [
+          "on_time"
+        ]
+      },
+      {
+        "quote_id": "M3",
+        "quoted_total_usd": 5100,
+        "budget_usd": 6500,
+        "budget_remaining_usd": "1400",
+        "arrival_date": "2026-10-11",
+        "deadline": "2026-10-12",
+        "days_before_deadline": 1,
+        "capacity_units": 160,
+        "quantity": 160,
+        "capacity_surplus_units": 0,
+        "insurance_included": true,
+        "insurance_required": true,
+        "eligible": true,
+        "failed_constraints": []
+      },
+      {
+        "quote_id": "M4",
+        "quoted_total_usd": 4600,
+        "budget_usd": 6500,
+        "budget_remaining_usd": "1900",
+        "arrival_date": "2026-10-09",
+        "deadline": "2026-10-12",
+        "days_before_deadline": 3,
+        "capacity_units": 160,
+        "quantity": 160,
+        "capacity_surplus_units": 0,
+        "insurance_included": false,
+        "insurance_required": true,
+        "eligible": false,
+        "failed_constraints": [
+          "insured_as_required"
+        ]
+      }
+    ],
+    "eligible_ids": [
+      "M1",
+      "M3"
+    ],
+    "ineligible_ids": [
+      "M2",
+      "M4"
+    ],
+    "lowest_cost_eligible_ids": [
+      "M3"
+    ],
+    "lowest_eligible_total_usd": 5100,
+    "recommendation": {
+      "verdict": "proceed",
+      "option_id": "M3",
+      "total_cost_usd": 5100,
+      "arrival_date": "2026-10-11",
+      "quantity": 160,
+      "budget_usd": 6500,
+      "deadline": "2026-10-12"
+    },
+    "tie_break": "lexicographically smallest quote ID; all minimum-price eligible quotes accepted by evaluation",
+    "protected_facts_sha256": "459948018798fe9441b3db846b43ed4259b09b6a238cfc1f7c42a272837a09b4",
+    "text": "PYTHON CONSTRAINT CHECKS (authoritative calculations from protected source fields):\nM1: within_budget=PASS; on_time=PASS; enough_capacity=PASS; insured_as_required=PASS; budget_remaining_usd=600; days_before_deadline=2; capacity_surplus_units=20\nM2: within_budget=PASS; on_time=FAIL; enough_capacity=PASS; insured_as_required=PASS; budget_remaining_usd=2200; days_before_deadline=-2; capacity_surplus_units=40\nM3: within_budget=PASS; on_time=PASS; enough_capacity=PASS; insured_as_required=PASS; budget_remaining_usd=1400; days_before_deadline=1; capacity_surplus_units=0\nM4: within_budget=PASS; on_time=PASS; enough_capacity=PASS; insured_as_required=FAIL; budget_remaining_usd=1900; days_before_deadline=3; capacity_surplus_units=0\nELIGIBLE QUOTE IDS: M1, M3\nINELIGIBLE QUOTE IDS: M2, M4\nLOWEST-COST ELIGIBLE QUOTE IDS: M3\nPYTHON RECOMMENDATION: proceed with M3, USD 5100, arrival 2026-10-11\nAny FAIL makes a quote infeasible. Negative remaining budget, days or capacity indicate a shortfall. Explain these computed results; do not replace them with model arithmetic. Equal-price eligible quotes are tied; the recommendation uses the lexicographically smallest quote ID."
+  },
+  {
+    "scenario_id": "demo_detailed",
+    "calculation_version": "quote-calculations-v1",
+    "rows": [
+      {
+        "quote_id": "D1",
+        "within_budget": true,
+        "on_time": false,
+        "enough_capacity": true,
+        "insured_as_required": true
+      },
+      {
+        "quote_id": "D2",
+        "within_budget": true,
+        "on_time": true,
+        "enough_capacity": true,
+        "insured_as_required": true
+      },
+      {
+        "quote_id": "D3",
+        "within_budget": false,
+        "on_time": true,
+        "enough_capacity": true,
+        "insured_as_required": true
+      },
+      {
+        "quote_id": "D4",
+        "within_budget": true,
+        "on_time": true,
+        "enough_capacity": true,
+        "insured_as_required": false
+      },
+      {
+        "quote_id": "D5",
+        "within_budget": true,
+        "on_time": true,
+        "enough_capacity": false,
+        "insured_as_required": true
+      },
+      {
+        "quote_id": "D6",
+        "within_budget": true,
+        "on_time": true,
+        "enough_capacity": true,
+        "insured_as_required": true
+      }
+    ],
+    "comparisons": [
+      {
+        "quote_id": "D1",
+        "quoted_total_usd": 8600,
+        "budget_usd": 15000,
+        "budget_remaining_usd": "6400",
+        "arrival_date": "2026-10-18",
+        "deadline": "2026-10-15",
+        "days_before_deadline": -3,
+        "capacity_units": 600,
+        "quantity": 500,
+        "capacity_surplus_units": 100,
+        "insurance_included": true,
+        "insurance_required": true,
+        "eligible": false,
+        "failed_constraints": [
+          "on_time"
+        ]
+      },
+      {
+        "quote_id": "D2",
+        "quoted_total_usd": 12800,
+        "budget_usd": 15000,
+        "budget_remaining_usd": "2200",
+        "arrival_date": "2026-10-13",
+        "deadline": "2026-10-15",
+        "days_before_deadline": 2,
+        "capacity_units": 500,
+        "quantity": 500,
+        "capacity_surplus_units": 0,
+        "insurance_included": true,
+        "insurance_required": true,
+        "eligible": true,
+        "failed_constraints": []
+      },
+      {
+        "quote_id": "D3",
+        "quoted_total_usd": 16400,
+        "budget_usd": 15000,
+        "budget_remaining_usd": "-1400",
+        "arrival_date": "2026-10-08",
+        "deadline": "2026-10-15",
+        "days_before_deadline": 7,
+        "capacity_units": 700,
+        "quantity": 500,
+        "capacity_surplus_units": 200,
+        "insurance_included": true,
+        "insurance_required": true,
+        "eligible": false,
+        "failed_constraints": [
+          "within_budget"
+        ]
+      },
+      {
+        "quote_id": "D4",
+        "quoted_total_usd": 11900,
+        "budget_usd": 15000,
+        "budget_remaining_usd": "3100",
+        "arrival_date": "2026-10-12",
+        "deadline": "2026-10-15",
+        "days_before_deadline": 3,
+        "capacity_units": 500,
+        "quantity": 500,
+        "capacity_surplus_units": 0,
+        "insurance_included": false,
+        "insurance_required": true,
+        "eligible": false,
+        "failed_constraints": [
+          "insured_as_required"
+        ]
+      },
+      {
+        "quote_id": "D5",
+        "quoted_total_usd": 10700,
+        "budget_usd": 15000,
+        "budget_remaining_usd": "4300",
+        "arrival_date": "2026-10-11",
+        "deadline": "2026-10-15",
+        "days_before_deadline": 4,
+        "capacity_units": 350,
+        "quantity": 500,
+        "capacity_surplus_units": -150,
+        "insurance_included": true,
+        "insurance_required": true,
+        "eligible": false,
+        "failed_constraints": [
+          "enough_capacity"
+        ]
+      },
+      {
+        "quote_id": "D6",
+        "quoted_total_usd": 13900,
+        "budget_usd": 15000,
+        "budget_remaining_usd": "1100",
+        "arrival_date": "2026-10-14",
+        "deadline": "2026-10-15",
+        "days_before_deadline": 1,
+        "capacity_units": 550,
+        "quantity": 500,
+        "capacity_surplus_units": 50,
+        "insurance_included": true,
+        "insurance_required": true,
+        "eligible": true,
+        "failed_constraints": []
+      }
+    ],
+    "eligible_ids": [
+      "D2",
+      "D6"
+    ],
+    "ineligible_ids": [
+      "D1",
+      "D3",
+      "D4",
+      "D5"
+    ],
+    "lowest_cost_eligible_ids": [
+      "D2"
+    ],
+    "lowest_eligible_total_usd": 12800,
+    "recommendation": {
+      "verdict": "proceed",
+      "option_id": "D2",
+      "total_cost_usd": 12800,
+      "arrival_date": "2026-10-13",
+      "quantity": 500,
+      "budget_usd": 15000,
+      "deadline": "2026-10-15"
+    },
+    "tie_break": "lexicographically smallest quote ID; all minimum-price eligible quotes accepted by evaluation",
+    "protected_facts_sha256": "fcb01329e98f81965741b39e58a1e49fb061e3e13f0237fc4224ea72be38ce2b",
+    "text": "PYTHON CONSTRAINT CHECKS (authoritative calculations from protected source fields):\nD1: within_budget=PASS; on_time=FAIL; enough_capacity=PASS; insured_as_required=PASS; budget_remaining_usd=6400; days_before_deadline=-3; capacity_surplus_units=100\nD2: within_budget=PASS; on_time=PASS; enough_capacity=PASS; insured_as_required=PASS; budget_remaining_usd=2200; days_before_deadline=2; capacity_surplus_units=0\nD3: within_budget=FAIL; on_time=PASS; enough_capacity=PASS; insured_as_required=PASS; budget_remaining_usd=-1400; days_before_deadline=7; capacity_surplus_units=200\nD4: within_budget=PASS; on_time=PASS; enough_capacity=PASS; insured_as_required=FAIL; budget_remaining_usd=3100; days_before_deadline=3; capacity_surplus_units=0\nD5: within_budget=PASS; on_time=PASS; enough_capacity=FAIL; insured_as_required=PASS; budget_remaining_usd=4300; days_before_deadline=4; capacity_surplus_units=-150\nD6: within_budget=PASS; on_time=PASS; enough_capacity=PASS; insured_as_required=PASS; budget_remaining_usd=1100; days_before_deadline=1; capacity_surplus_units=50\nELIGIBLE QUOTE IDS: D2, D6\nINELIGIBLE QUOTE IDS: D1, D3, D4, D5\nLOWEST-COST ELIGIBLE QUOTE IDS: D2\nPYTHON RECOMMENDATION: proceed with D2, USD 12800, arrival 2026-10-13\nAny FAIL makes a quote infeasible. Negative remaining budget, days or capacity indicate a shortfall. Explain these computed results; do not replace them with model arithmetic. Equal-price eligible quotes are tied; the recommendation uses the lexicographically smallest quote ID."
+  }
+]

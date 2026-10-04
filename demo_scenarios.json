@@ -1,0 +1,161 @@
+[
+  {
+    "id": "demo_short",
+    "title": "Short · Two courier quotations",
+    "size": "short",
+    "route": "Lyon to Paris",
+    "quantity": 40,
+    "budget_usd": 900,
+    "deadline": "2026-10-08",
+    "require_insurance": true,
+    "brief": "Select the lowest-cost feasible quote to deliver 40 replacement sensors from our Lyon warehouse to our Paris service centre. The complete shipment must arrive by the stated deadline and insurance must be included. These are fictional quotations for an academic experiment; treat their listed amounts and dates as the supplied facts.",
+    "options": [
+      {
+        "id": "S1",
+        "carrier": "Rhone Express",
+        "method": "Road courier",
+        "quoted_total_usd": 720,
+        "arrival_date": "2026-10-07",
+        "capacity_units": 40,
+        "insurance_included": true,
+        "terms": "The quoted total covers collection, road transport, delivery, and transit insurance. Collection is at the Lyon warehouse loading bay; delivery is to the Paris service centre receiving desk. The service handles all 40 units as one consignment."
+      },
+      {
+        "id": "S2",
+        "carrier": "Metro Freight",
+        "method": "Economy road",
+        "quoted_total_usd": 540,
+        "arrival_date": "2026-10-10",
+        "capacity_units": 40,
+        "insurance_included": true,
+        "terms": "The economy service consolidates the consignment with other deliveries. The quotation includes collection and insurance. Its listed arrival date is fixed for this exercise; do not assume it can be expedited at the same price."
+      }
+    ]
+  },
+  {
+    "id": "demo_medium",
+    "title": "Medium · Regional equipment shipment",
+    "size": "medium",
+    "route": "Casablanca to Madrid",
+    "quantity": 160,
+    "budget_usd": 6500,
+    "deadline": "2026-10-12",
+    "require_insurance": true,
+    "brief": "Compare four supplied quotations for delivering 160 boxed monitoring devices from Casablanca to Madrid. Select the lowest-cost feasible option. Every unit must arrive by the deadline, and transit insurance is mandatory. Prices are fictional all-in quotations in USD; customs and handling are included. Do not substitute market estimates or assume extra capacity.",
+    "options": [
+      {
+        "id": "M1",
+        "carrier": "Atlas Direct",
+        "method": "Air cargo",
+        "quoted_total_usd": 5900,
+        "arrival_date": "2026-10-10",
+        "capacity_units": 180,
+        "insurance_included": true,
+        "terms": "The quotation includes airport handling at both ends, customs processing, transit insurance, and the final delivery to the Madrid distribution centre. The stated capacity is the confirmed allocation for this booking, rather than a general aircraft capacity."
+      },
+      {
+        "id": "M2",
+        "carrier": "Iberia Consolidation",
+        "method": "Sea and road",
+        "quoted_total_usd": 4300,
+        "arrival_date": "2026-10-14",
+        "capacity_units": 200,
+        "insurance_included": true,
+        "terms": "A scheduled sea crossing is followed by consolidated road delivery. Insurance and destination handling are included. The arrival is after the requested deadline; the carrier has not offered an earlier slot at this price."
+      },
+      {
+        "id": "M3",
+        "carrier": "Strait Logistics",
+        "method": "Road and ferry",
+        "quoted_total_usd": 5100,
+        "arrival_date": "2026-10-11",
+        "capacity_units": 160,
+        "insurance_included": true,
+        "terms": "A dedicated vehicle crosses by ferry and continues to the Madrid receiving facility. The quoted amount includes the ferry reservation, customs handling, cargo insurance, and delivery. The allocation covers exactly the required consignment."
+      },
+      {
+        "id": "M4",
+        "carrier": "Budget Forwarding",
+        "method": "Road and ferry",
+        "quoted_total_usd": 4600,
+        "arrival_date": "2026-10-09",
+        "capacity_units": 160,
+        "insurance_included": false,
+        "terms": "This quotation meets the date and capacity requirements but explicitly excludes transit insurance. No insurance add-on has been quoted. Evaluate the supplied offer as it stands; do not invent a premium to make it compliant."
+      }
+    ]
+  },
+  {
+    "id": "demo_detailed",
+    "title": "Detailed · International supplier quotations",
+    "size": "detailed",
+    "route": "New York to London",
+    "quantity": 500,
+    "budget_usd": 15000,
+    "deadline": "2026-10-15",
+    "require_insurance": true,
+    "brief": "Prepare an executive shipping decision for 500 boxed electronics units moving from New York to London. Select the lowest-cost feasible quotation from the six offers below. The shipment must stay within the USD 15,000 cap, carry all 500 units, arrive no later than 2026-10-15, and include transit insurance. The quoted totals already include transport, handling, customs charges, insurance where explicitly stated, and final delivery; do not add those charges a second time. No split shipments, unquoted upgrades, alternative carriers, or newly invented prices are allowed. These are fictional supplier documents supplied for this PFA experiment, not real market quotations. All dates are ISO dates and all prices are USD.",
+    "options": [
+      {
+        "id": "D1",
+        "carrier": "North Atlantic Economy",
+        "method": "Consolidated ocean freight",
+        "quoted_total_usd": 8600,
+        "arrival_date": "2026-10-18",
+        "capacity_units": 600,
+        "insurance_included": true,
+        "terms": "The supplier offers consolidated ocean freight with insured carriage and delivery to the London warehouse. The quoted arrival is the warehouse delivery date, not the vessel arrival date. Its lower price depends on a later consolidation schedule. The supplier has not confirmed any earlier delivery at this rate. Collection paperwork and carton labelling follow the standard warehouse process. The quote is otherwise complete and carries sufficient capacity; the scheduled arrival remains the deciding time restriction."
+      },
+      {
+        "id": "D2",
+        "carrier": "Atlantic Priority",
+        "method": "Priority ocean and road",
+        "quoted_total_usd": 12800,
+        "arrival_date": "2026-10-13",
+        "capacity_units": 500,
+        "insurance_included": true,
+        "terms": "This offer reserves priority ocean space for the full consignment, followed by direct road delivery to the London warehouse. The stated USD total is the final all-in amount for the shipment. Cargo insurance, origin handling, destination handling, customs charges, and last-mile delivery are included. Capacity is confirmed for exactly 500 units. The carrier provides a planned warehouse arrival of 2026-10-13. The booking requires the normal packing list and commercial invoice. There are no additional mandatory charges in this fictional quote."
+      },
+      {
+        "id": "D3",
+        "carrier": "Transatlantic Air",
+        "method": "Express air freight",
+        "quoted_total_usd": 16400,
+        "arrival_date": "2026-10-08",
+        "capacity_units": 700,
+        "insurance_included": true,
+        "terms": "Express air freight offers the earliest arrival among the supplied quotations and ample confirmed capacity. The total includes cargo insurance and both airport handling stages. This offer exceeds the allowed shipment budget, even though it satisfies the delivery, capacity, and insurance requirements. No discount is offered. The finance review must compare the full quoted total with the cap rather than assuming the urgency justifies exceeding it. Delivery is to the same London receiving facility as the other offers."
+      },
+      {
+        "id": "D4",
+        "carrier": "Harbour Budget",
+        "method": "Standard ocean freight",
+        "quoted_total_usd": 11900,
+        "arrival_date": "2026-10-12",
+        "capacity_units": 500,
+        "insurance_included": false,
+        "terms": "The supplier confirms timely delivery and capacity for the full shipment. However, cargo travels without transit insurance under this quotation. The terms explicitly exclude any insurance premium, and the supplier has not priced an insurance extension. The shipping team must not assume insurance is included in another cost line. Although this offer is cheaper than some insured options, insurance is a mandatory requirement. All the other fees are included in the quoted total; the exclusion is a coverage issue."
+      },
+      {
+        "id": "D5",
+        "carrier": "Portline Allocation",
+        "method": "Ocean freight",
+        "quoted_total_usd": 10700,
+        "arrival_date": "2026-10-11",
+        "capacity_units": 350,
+        "insurance_included": true,
+        "terms": "This carrier has confirmed only 350 units of space on the stated departure. The price and arrival apply to that available allocation, with insurance included. An additional departure could be requested separately, but no price, arrival, or capacity is supplied for it. The project requires a single feasible offer for all 500 units, and split shipments are not allowed. Consequently, do not extrapolate this quote proportionally or assume that the carrier can expand its allocation without a revised offer."
+      },
+      {
+        "id": "D6",
+        "carrier": "CityLink Freight",
+        "method": "Priority ocean and road",
+        "quoted_total_usd": 13900,
+        "arrival_date": "2026-10-14",
+        "capacity_units": 550,
+        "insurance_included": true,
+        "terms": "The supplier offers an insured service with enough capacity and an arrival before the deadline. Its total includes all stated charges and final warehouse delivery. This is a feasible backup option, but its quoted amount is higher than another feasible offer. The project objective is to choose the lowest-cost feasible offer, not simply the fastest service or the first one that meets the constraints. Keep this offer in the comparison so that the decision explains the trade-off using supplied facts."
+      }
+    ]
+  }
+]

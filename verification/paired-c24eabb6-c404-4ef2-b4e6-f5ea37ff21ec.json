@@ -1,0 +1,80 @@
+[
+  {
+    "schema_version": 1,
+    "experiment_id": "c24eabb6-c404-4ef2-b4e6-f5ea37ff21ec",
+    "created_at": "2026-10-01T17:23:13.438017+00:00",
+    "scenario": {
+      "title": "Short \u00b7 Two courier quotations",
+      "brief": "Select the lowest-cost feasible quote to deliver 40 replacement sensors from our Lyon warehouse to our Paris service centre. The complete shipment must arrive by the stated deadline and insurance must be included. These are fictional quotations for an academic experiment; treat their listed amounts and dates as the supplied facts.",
+      "route": "Lyon to Paris",
+      "quantity": 40,
+      "budget_usd": 900,
+      "deadline": "2026-10-08",
+      "require_insurance": true,
+      "options": [
+        {
+          "id": "S1",
+          "carrier": "Rhone Express",
+          "method": "Road courier",
+          "quoted_total_usd": 720,
+          "arrival_date": "2026-10-07",
+          "capacity_units": 40,
+          "terms": "The quoted total covers collection, road transport, delivery, and transit insurance. Collection is at the Lyon warehouse loading bay; delivery is to the Paris service centre receiving desk. The service handles all 40 units as one consignment.",
+          "insurance_included": true
+        },
+        {
+          "id": "S2",
+          "carrier": "Metro Freight",
+          "method": "Economy road",
+          "quoted_total_usd": 540,
+          "arrival_date": "2026-10-10",
+          "capacity_units": 40,
+          "terms": "The economy service consolidates the consignment with other deliveries. The quotation includes collection and insurance. Its listed arrival date is fixed for this exercise; do not assume it can be expedited at the same price.",
+          "insurance_included": true
+        }
+      ],
+      "requirement_review": {
+        "confirmed": false,
+        "required_capabilities": [],
+        "other_requirements": [],
+        "quote_capabilities": {
+          "S1": {
+            "refrigerated_transport": null,
+            "fragile_handling": null,
+            "signature_on_delivery": null
+          },
+          "S2": {
+            "refrigerated_transport": null,
+            "fragile_handling": null,
+            "signature_on_delivery": null
+          }
+        }
+      },
+      "id": "custom_c3b54375d1bd7845c1732c49",
+      "size": "custom"
+    },
+    "configuration": {
+      "pipeline_version": "validated-v13-requirements",
+      "model": "llama3",
+      "seed": 42,
+      "validation_scope": "Python validates declared structured requirements. The user reviews completeness and supplier declarations; arbitrary prose is not automatically understood or certified."
+    },
+    "status": "needs_review",
+    "requirement_validation": {
+      "status": "needs_review",
+      "basis": "incomplete_review",
+      "issues": [
+        "Critical requirements and supplier declarations have not been confirmed."
+      ],
+      "scope": "Python validates declared structured requirements. The user reviews completeness and supplier declarations; arbitrary prose is not automatically understood or certified."
+    },
+    "calls": [],
+    "measured_tokens": 0,
+    "usage_complete": true,
+    "experiment_wall_seconds": 0,
+    "reports": {
+      "Decision": "NEEDS REVIEW\nCritical requirements and supplier declarations have not been confirmed."
+    },
+    "measurement_note": "Stopped before inference. No decision or compression saving is claimed."
+  }
+]

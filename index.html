@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Workspace · Token Efficient</title>
+  <link rel="stylesheet" href="/style.css?v=9">
+  <script src="/custom_scenario.js?v=3" defer></script>
+  <script src="/script.js?v=31" defer></script>
+</head>
+<body>
+  <aside class="sidebar">
+    <a class="brand" href="/" aria-label="Token Efficient home"><span class="brand-mark">te<span>.</span></span><span>Token Efficient<small>RESEARCH WORKSPACE</small></span></a>
+    <div class="nav-label">WORKSPACE</div>
+    <a class="nav-item selected" href="#workspace"><span aria-hidden="true">▦</span> Experiment</a>
+    <a class="nav-item" href="#comparison"><span aria-hidden="true">▤</span> Run comparison</a>
+    <div class="sidebar-note"><span class="small-label">THE OBJECTIVE</span><p>Less context.<br>Same essential information.</p><span>Explore the trade-off between context compression and token usage.</span></div>
+    <div class="runtime"><span class="runtime-icon">L</span><div>Local inference<small id="runtime-model">Local Ollama</small></div></div>
+  </aside>
+  <main id="workspace">
+    <div class="topbar"><span>Workspace <span class="slash">/</span> <strong>Experiment</strong></span><span class="version">MULTI-AGENT LAB <span>01</span></span></div>
+    <header class="page-heading"><div><div class="eyebrow">CONTEXT COMPRESSION</div><h1>Make every token count.</h1><p>Run a scenario. Inspect the reports. Compare the cost of context.</p></div><span class="status" id="status" role="status">Ready to run</span></header>
+    <section class="metrics" aria-label="Latest run metrics">
+      <article class="metric"><div class="metric-label">Total tokens <span>01</span></div><div class="metric-value" id="token-val">—</div><p id="token-note">Across all workflow agents</p></article>
+      <article class="metric"><div class="metric-label">Execution time <span>02</span></div><div class="metric-value" id="time-val">—</div><p>Measured by the workflow</p></article>
+      <article class="metric"><div class="metric-label">Token reduction <span>03</span></div><div class="metric-value" id="delta-val">—</div><p id="delta-subtitle">Run both modes for this scenario</p></article>
+    </section>
+    <div class="workspace-grid">
+      <section class="panel setup"><div class="section-heading"><h2>Start a comparison</h2><span class="section-number">01 / START</span></div>
+        <form id="run-form"><fieldset id="run-fields" disabled>
+          <label class="field-label" for="scenario-select">Scenario</label>
+          <select id="scenario-select"><option value="">Loading scenarios…</option></select>
+          <p id="setup-summary" class="setup-summary">Llama 3 · Automatic optimization</p>
+          <details id="scenario-details" class="setup-disclosure"><summary>View scenario details</summary><div id="scenario-preview" class="scenario-preview"></div></details>
+          <div id="custom-prompt-group" hidden><label class="field-label" for="custom-prompt">Your request</label><textarea id="custom-prompt" rows="6" placeholder="Describe the shipment, budget, deadline, and any constraints…"></textarea></div>
+          <fieldset id="custom-fields" class="custom-fields" hidden disabled>
+            <legend>Your scenario</legend>
+            <p class="form-help">Enter the shipment and supplier quotes, then confirm the facts once. The comparison settings are ready for you.</p>
+            <details class="setup-disclosure"><summary>Use an editable example</summary>
+            <label for="custom-template">Example</label>
+            <select id="custom-template"><option value="demo_short">Two quotations</option><option value="demo_medium">Four quotations</option><option value="demo_detailed">Six detailed quotations</option></select>
+            <button type="button" id="load-custom-template" class="secondary-btn">Load editable example</button>
+            <p id="custom-template-status" class="run-caption" role="status"></p>
+            </details>
+            <details class="custom-section" id="shipment-section" open><summary><span>1. Shipment</span><small>Request & requirements</small></summary><div class="section-fields">
+            <div class="field-grid">
+            <label>Scenario name<input id="custom-title" required maxlength="120" value="My shipment"></label>
+            <label>Route<input id="custom-route" required placeholder="For example: Lyon to Paris"></label>
+            <label class="wide-field">Complete request<textarea id="custom-brief" rows="3" required placeholder="Include every instruction and constraint from the original request."></textarea></label>
+            <label>Quantity<input id="custom-quantity" type="number" min="1" step="1" required></label>
+            <label>Budget (USD)<input id="custom-budget" type="number" min="0" step="0.01" required></label>
+            <label>Delivery deadline<input id="custom-deadline" type="date" required></label>
+            <label class="checkbox-label"><input id="custom-insurance" type="checkbox" checked>Transit insurance required</label>
+            </div>
+            <fieldset class="requirement-options"><legend>Does the shipment need any of these?</legend>
+              <label class="checkbox-label"><input type="checkbox" data-requirement="refrigerated_transport">Refrigerated transport required</label>
+              <label class="checkbox-label"><input type="checkbox" data-requirement="fragile_handling">Fragile-item handling required</label>
+              <label class="checkbox-label"><input type="checkbox" data-requirement="signature_on_delivery">Signature on delivery required</label>
+              <label>Other essential conditions, if any<textarea id="custom-other-requirements" rows="2" placeholder="One per line, such as a specific temperature range or certification"></textarea></label>
+              <p class="form-help">Other conditions need manual review before a decision can be made.</p>
+            </fieldset>
+            </div></details>
+            <details class="custom-section" id="quotes-section" open><summary><span>2. Supplier quotes</span><small id="quote-count">2 quotes</small></summary><div class="section-fields">
+            <p class="form-help">Keep the original supplier terms. Only required capabilities need an answer.</p>
+            <div id="custom-quotes"></div>
+            <button type="button" id="add-custom-quote" class="secondary-btn">Add quotation</button>
+            </div></details>
+            <div class="review-confirmation"><h3>3. Check & confirm</h3><p id="custom-review-summary" class="form-help" aria-live="polite"></p>
+            <label class="checkbox-label"><input id="custom-requirements-confirmed" type="checkbox">I checked that all critical requirements are included and the supplier details match the source.</label>
+            <p class="form-help">Any edit clears this confirmation. Missing or unsupported information stops the run for review.</p></div>
+          </fieldset>
+          <div class="run-hint" id="run-hint">The original and optimized workflows run together.</div>
+          <button id="run-btn" class="primary-btn" type="submit"><span id="run-label">Run comparison</span><span aria-hidden="true">↗</span></button>
+          <details id="advanced-settings" class="setup-disclosure advanced-settings"><summary>Advanced settings</summary>
+          <div id="fidelity-group"><label class="field-label" for="fidelity-select">Optimization strategy</label>
+            <select id="fidelity-select"><option value="adaptive">Automatic (recommended)</option><option value="complete">Complete source — compression only</option><option value="decision">Decision-focused — experimental</option></select>
+            <p class="run-caption" id="fidelity-note">Complete source preserves every supplied field and term. It usually saves fewer tokens.</p>
+          </div>
+          <fieldset class="mode-field"><legend class="field-label" id="mode-legend">Context mode</legend>
+            <label class="mode-option"><input type="radio" name="mode" value="baseline"><span><strong>Original workflow</strong><small>Inspect the full-context reports.</small></span></label>
+            <label class="mode-option"><input type="radio" name="mode" value="compressed" checked><span><strong>Optimized workflow</strong><small>Inspect the optimized reports.</small></span></label>
+          </fieldset>
+          <button id="load-saved" type="button" class="secondary-btn" hidden>Load last saved comparison</button>
+          </details>
+        </fieldset></form>
+        <p class="run-caption" id="run-caption">Local model runs can take a few minutes.</p>
+        <div id="error" class="error" role="alert" hidden></div>
+      </section>
+      <section class="panel results-panel"><div class="section-heading"><h2>Workflow & reports</h2><span class="section-number" id="result-mode">02 / OUTPUT</span></div>
+        <div class="pipeline" aria-label="Workflow architecture"><span>Ingestion</span><b>→</b><span id="compression-step" hidden>Compress</span><b id="compression-arrow" hidden>→</b><span>Logistics + Finance<small>PARALLEL</small></span><b>→</b><span>Risk + Compliance<small>PARALLEL REVIEWS</small></span><b>→</b><span>Final decision</span></div>
+        <p id="workflow-note" class="detail-note"></p>
+        <div id="requirement-review-result" class="review-result" role="status" hidden><h3>Needs review</h3><p>No automatic decision was issued. Resolve the items below before running the model.</p><ul id="requirement-review-issues"></ul><p id="requirement-review-scope"></p></div>
+        <div id="empty-state" class="empty-state"><div class="document-icon" aria-hidden="true"><i></i><i></i><i></i></div><h3>A clearer view of your workflow.</h3><p>Choose a scenario and run an experiment.<br>Your agent reports and token usage will appear here.</p><span class="empty-footnote">Six roles · adaptive execution · measured comparisons</span></div>
+        <div id="running-state" class="empty-state" hidden><span class="spinner" aria-hidden="true"></span><h3>Working through your scenario</h3><p>The local model is processing the workflow.<br>Reports appear when all agents have finished.</p><span class="elapsed" id="elapsed">Elapsed 0:00</span></div>
+        <div id="report-view" hidden><div class="report-toolbar"><div id="report-tabs" class="report-tabs" role="tablist" aria-label="Agent reports"></div><button type="button" id="copy-report" class="text-button">Copy report</button></div><div id="report-content" class="report-content" role="tabpanel" tabindex="0"></div></div>
+      </section>
+    </div>
+    <section class="panel comparison" id="comparison"><div class="section-heading"><div><h2>Compare your runs</h2><p id="comparison-description">Latest successful run in each mode, for the selected request.</p></div><button id="download-pair" class="text-button" type="button" hidden>Download results</button></div><div class="table-scroll"><table><thead><tr><th scope="col">Context mode</th><th scope="col">Tokens</th><th scope="col">Execution time</th><th scope="col">Checks</th><th scope="col">Status</th></tr></thead><tbody id="comparison-body"></tbody></table></div>
+      <div class="comparison-footnote" id="comparison-note">Token totals include the compressor when enabled. Lower usage alone does not measure output quality.</div>
+      <div class="comparison-footnote" id="attribution-note" hidden><strong>Difference source:</strong> <span id="attribution-label"></span></div>
+      <div id="paired-details" hidden>
+        <p class="paired-summary" id="paired-summary"></p>
+        <details><summary>Decision checklist</summary><p class="detail-note">Checks supplied quote selection and key facts. These checks do not certify the reasoning, prose, or real-world shipping feasibility.</p><div class="table-scroll"><table><thead><tr><th>Check</th><th>Full context</th><th>Compressed</th></tr></thead><tbody id="quality-body"></tbody></table></div></details>
+        <details><summary>Token breakdown by agent</summary><p class="detail-note">Shared upstream work is charged to both totals. The compressed total also includes the compressor's input and output.</p><div class="table-scroll"><table><thead><tr><th>Agent</th><th>Full input</th><th>Full output</th><th>Compressed input</th><th>Compressed output</th></tr></thead><tbody id="token-breakdown"></tbody></table></div></details>
+      </div>
+    </section>
+    <section class="panel comparison"><div class="section-heading"><div><h2>Model evaluation</h2><p id="evaluation-description">Loading measured evaluation results…</p></div></div>
+      <div class="table-scroll"><table><thead><tr><th>Model</th><th>Attempts</th><th>Needs review</th><th>Validated / planned decisions</th><th>Claim accuracy</th><th>Rejected items / malformed</th><th>Applied / skipped</th><th>Negative savings pairs</th><th>Mean reduction ± SD</th><th>Mean pair time</th></tr></thead><tbody id="evaluation-body"></tbody></table></div>
+      <p class="detail-note">Savings and mean inference time exclude runs stopped before inference. Needs-review cases are listed separately and remain unvalidated in the planned-decision denominator. Claim accuracy covers structured results; it does not prove arbitrary prose. Small fictional-quote sample, not general model rankings.</p>
+    </section>
+    <section class="panel comparison">
+      <div class="section-heading"><div><h2>How measurements work</h2><p>Every displayed claim is backed by a saved measurement.</p></div></div>
+      <details class="explainer-block">
+        <summary>Python's role and what it can and cannot verify</summary>
+        <div class="explainer-body">
+          <p><strong>What Python checks:</strong> All four feasibility constraints (budget, deadline, capacity, insurance) are computed from the source record using exact arithmetic — no LLM involvement. The result is the authoritative audit passed to every agent.</p>
+          <p><strong>What agent claims are checked against:</strong> Each structured claim tuple (quote_id, constraint, result) is compared to the Python audit. Claims that contradict the audit are rejected and stored verbatim in <code>claim_validation.rejected</code>; only <code>safe_text</code> reaches the next agent.</p>
+          <p><strong>What the decision validator checks:</strong> The final <code>option_id</code>, <code>total_cost_usd</code>, and <code>arrival_date</code> must exactly match the Python recommendation. A wrong selection or invented explanation yields <code>status = failed_validation</code> — it is never silently passed through.</p>
+          <p><strong>What is <em>not</em> verified:</strong> Narrative prose quality, reasoning beyond the canonical explanation, real-world shipping feasibility, and the correctness of the model's general knowledge. Checks cover supplied facts only.</p>
+        </div>
+      </details>
+      <details class="explainer-block">
+        <summary>Separating compression savings from run-to-run variation</summary>
+        <div class="explainer-body">
+          <p>All branches share Ingestion and the protected source facts. Adaptive mode measures three workflows: full source with six LLM roles, compression alone with six LLM roles, and compression with Python tools. Short inputs keep four LLM roles; long inputs keep three. Every remaining LLM role receives the complete source. The <strong>difference_attribution</strong> field identifies how the comparison was made:</p>
+          <ul>
+            <li><strong>compression_routing_and_output_variation</strong> — compression and Python tools were used. The compression-only branch separates context savings from avoided agent calls and output changes. These total savings are not compressor-only savings.</li>
+            <li><strong>paired_compression_and_output_variation</strong> — compression was applied; savings include both context reduction and natural output variation.</li>
+            <li><strong>rejected_compression_cost_and_output_variation</strong> — the compressor ran but fell back to full context (invalid caveat coverage); its cost is still charged.</li>
+            <li><strong>run_to_run_variation_no_compression</strong> — compression was skipped entirely; any token difference is pure output variation with no context reduction.</li>
+          </ul>
+          <p>When compression is skipped, no savings are reported. The "Token reduction" metric is set to "Skipped" rather than a number, to avoid attributing normal variation to compression.</p>
+        </div>
+      </details>
+      <details class="explainer-block">
+        <summary>Validation failures and skipped compression</summary>
+        <div class="explainer-body">
+          <p><strong>Failed validation:</strong> If the model selects a wrong quote or uses an unverified explanation, the Decision report is replaced with <code>FAILED VALIDATION: &lt;failed_checks&gt;</code>. The pair status becomes <code>failed_validation</code>. These pairs are counted in <em>failed_validation_pairs</em> and reduce <em>decision_accuracy</em>.</p>
+          <p><strong>Skipped compression:</strong> Adaptive and Complete source apply the deterministic projection only when it is shorter; they do not predict a minimum token saving. Disabling adaptive compression also disables routing. The experimental Decision-focused mode uses a calibrated cost policy and falls back to the source when its LLM compressor omits required caveats; that call is still charged.</p>
+          <p><strong>Evaluation limits:</strong> Results are measured on a small set of fictional logistics quotes. They do not rank models for real-world tasks. Branch order alternates across repeats to reduce ordering bias. Standard deviation is only reported with two or more applied pairs.</p>
+        </div>
+      </details>
+    </section>
+    <footer><span>Token Efficient <span class="footer-divider">/</span> Multi-agent experiments</span><span>Paired comparisons are saved locally.</span></footer>
+  </main>
+</body>
+</html>
+
+

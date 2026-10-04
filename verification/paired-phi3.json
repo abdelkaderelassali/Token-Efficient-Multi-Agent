@@ -1,0 +1,1171 @@
+[
+  {
+    "schema_version": 1,
+    "experiment_id": "ee1f3766-c37c-4a00-a92b-b254e1e2ebe7",
+    "created_at": "2026-09-23T10:16:06.315015+00:00",
+    "scenario": {
+      "id": "demo_detailed",
+      "title": "Detailed \u00b7 International supplier quotations",
+      "size": "detailed",
+      "route": "New York to London",
+      "quantity": 500,
+      "budget_usd": 15000,
+      "deadline": "2026-10-15",
+      "require_insurance": true,
+      "brief": "Prepare an executive shipping decision for 500 boxed electronics units moving from New York to London. Select the lowest-cost feasible quotation from the six offers below. The shipment must stay within the USD 15,000 cap, carry all 500 units, arrive no later than 2026-10-15, and include transit insurance. The quoted totals already include transport, handling, customs charges, insurance where explicitly stated, and final delivery; do not add those charges a second time. No split shipments, unquoted upgrades, alternative carriers, or newly invented prices are allowed. These are fictional supplier documents supplied for this PFA experiment, not real market quotations. All dates are ISO dates and all prices are USD.",
+      "options": [
+        {
+          "id": "D1",
+          "carrier": "North Atlantic Economy",
+          "method": "Consolidated ocean freight",
+          "quoted_total_usd": 8600,
+          "arrival_date": "2026-10-18",
+          "capacity_units": 600,
+          "insurance_included": true,
+          "terms": "The supplier offers consolidated ocean freight with insured carriage and delivery to the London warehouse. The quoted arrival is the warehouse delivery date, not the vessel arrival date. Its lower price depends on a later consolidation schedule. The supplier has not confirmed any earlier delivery at this rate. Collection paperwork and carton labelling follow the standard warehouse process. The quote is otherwise complete and carries sufficient capacity; the scheduled arrival remains the deciding time restriction."
+        },
+        {
+          "id": "D2",
+          "carrier": "Atlantic Priority",
+          "method": "Priority ocean and road",
+          "quoted_total_usd": 12800,
+          "arrival_date": "2026-10-13",
+          "capacity_units": 500,
+          "insurance_included": true,
+          "terms": "This offer reserves priority ocean space for the full consignment, followed by direct road delivery to the London warehouse. The stated USD total is the final all-in amount for the shipment. Cargo insurance, origin handling, destination handling, customs charges, and last-mile delivery are included. Capacity is confirmed for exactly 500 units. The carrier provides a planned warehouse arrival of 2026-10-13. The booking requires the normal packing list and commercial invoice. There are no additional mandatory charges in this fictional quote."
+        },
+        {
+          "id": "D3",
+          "carrier": "Transatlantic Air",
+          "method": "Express air freight",
+          "quoted_total_usd": 16400,
+          "arrival_date": "2026-10-08",
+          "capacity_units": 700,
+          "insurance_included": true,
+          "terms": "Express air freight offers the earliest arrival among the supplied quotations and ample confirmed capacity. The total includes cargo insurance and both airport handling stages. This offer exceeds the allowed shipment budget, even though it satisfies the delivery, capacity, and insurance requirements. No discount is offered. The finance review must compare the full quoted total with the cap rather than assuming the urgency justifies exceeding it. Delivery is to the same London receiving facility as the other offers."
+        },
+        {
+          "id": "D4",
+          "carrier": "Harbour Budget",
+          "method": "Standard ocean freight",
+          "quoted_total_usd": 11900,
+          "arrival_date": "2026-10-12",
+          "capacity_units": 500,
+          "insurance_included": false,
+          "terms": "The supplier confirms timely delivery and capacity for the full shipment. However, cargo travels without transit insurance under this quotation. The terms explicitly exclude any insurance premium, and the supplier has not priced an insurance extension. The shipping team must not assume insurance is included in another cost line. Although this offer is cheaper than some insured options, insurance is a mandatory requirement. All the other fees are included in the quoted total; the exclusion is a coverage issue."
+        },
+        {
+          "id": "D5",
+          "carrier": "Portline Allocation",
+          "method": "Ocean freight",
+          "quoted_total_usd": 10700,
+          "arrival_date": "2026-10-11",
+          "capacity_units": 350,
+          "insurance_included": true,
+          "terms": "This carrier has confirmed only 350 units of space on the stated departure. The price and arrival apply to that available allocation, with insurance included. An additional departure could be requested separately, but no price, arrival, or capacity is supplied for it. The project requires a single feasible offer for all 500 units, and split shipments are not allowed. Consequently, do not extrapolate this quote proportionally or assume that the carrier can expand its allocation without a revised offer."
+        },
+        {
+          "id": "D6",
+          "carrier": "CityLink Freight",
+          "method": "Priority ocean and road",
+          "quoted_total_usd": 13900,
+          "arrival_date": "2026-10-14",
+          "capacity_units": 550,
+          "insurance_included": true,
+          "terms": "The supplier offers an insured service with enough capacity and an arrival before the deadline. Its total includes all stated charges and final warehouse delivery. This is a feasible backup option, but its quoted amount is higher than another feasible offer. The project objective is to choose the lowest-cost feasible offer, not simply the fastest service or the first one that meets the constraints. Keep this offer in the comparison so that the decision explains the trade-off using supplied facts."
+        }
+      ]
+    },
+    "configuration": {
+      "model": "phi3",
+      "seed": 42,
+      "temperature": 0,
+      "num_ctx": 8192,
+      "target_word_ratio": 0.28,
+      "constraint_validation": "Identical Python checks supplied to both branches",
+      "branch_order": [
+        "baseline",
+        "compressed"
+      ]
+    },
+    "shared": {
+      "context": "AUTHORITATIVE SOURCE:\nREQUEST: Prepare an executive shipping decision for 500 boxed electronics units moving from New York to London. Select the lowest-cost feasible quotation from the six offers below. The shipment must stay within the USD 15,000 cap, carry all 500 units, arrive no later than 2026-10-15, and include transit insurance. The quoted totals already include transport, handling, customs charges, insurance where explicitly stated, and final delivery; do not add those charges a second time. No split shipments, unquoted upgrades, alternative carriers, or newly invented prices are allowed. These are fictional supplier documents supplied for this PFA experiment, not real market quotations. All dates are ISO dates and all prices are USD.\nRoute: New York to London\nQuantity: 500 units\nBudget: USD 15000\nDeadline: 2026-10-15\nTransit insurance required: True\nObjective: lowest quoted total among offers satisfying every requirement.\nNo split shipments or unquoted changes. All quoted totals are all-in.\n\nQUOTE D1 \u2014 North Atlantic Economy / Consolidated ocean freight\nAll-in total: USD 8600\nWarehouse arrival: 2026-10-18\nConfirmed capacity: 600 units\nTransit insurance included: True\nSupplier terms: The supplier offers consolidated ocean freight with insured carriage and delivery to the London warehouse. The quoted arrival is the warehouse delivery date, not the vessel arrival date. Its lower price depends on a later consolidation schedule. The supplier has not confirmed any earlier delivery at this rate. Collection paperwork and carton labelling follow the standard warehouse process. The quote is otherwise complete and carries sufficient capacity; the scheduled arrival remains the deciding time restriction.\n\nQUOTE D2 \u2014 Atlantic Priority / Priority ocean and road\nAll-in total: USD 12800\nWarehouse arrival: 2026-10-13\nConfirmed capacity: 500 units\nTransit insurance included: True\nSupplier terms: This offer reserves priority ocean space for the full consignment, followed by direct road delivery to the London warehouse. The stated USD total is the final all-in amount for the shipment. Cargo insurance, origin handling, destination handling, customs charges, and last-mile delivery are included. Capacity is confirmed for exactly 500 units. The carrier provides a planned warehouse arrival of 2026-10-13. The booking requires the normal packing list and commercial invoice. There are no additional mandatory charges in this fictional quote.\n\nQUOTE D3 \u2014 Transatlantic Air / Express air freight\nAll-in total: USD 16400\nWarehouse arrival: 2026-10-08\nConfirmed capacity: 700 units\nTransit insurance included: True\nSupplier terms: Express air freight offers the earliest arrival among the supplied quotations and ample confirmed capacity. The total includes cargo insurance and both airport handling stages. This offer exceeds the allowed shipment budget, even though it satisfies the delivery, capacity, and insurance requirements. No discount is offered. The finance review must compare the full quoted total with the cap rather than assuming the urgency justifies exceeding it. Delivery is to the same London receiving facility as the other offers.\n\nQUOTE D4 \u2014 Harbour Budget / Standard ocean freight\nAll-in total: USD 11900\nWarehouse arrival: 2026-10-12\nConfirmed capacity: 500 units\nTransit insurance included: False\nSupplier terms: The supplier confirms timely delivery and capacity for the full shipment. However, cargo travels without transit insurance under this quotation. The terms explicitly exclude any insurance premium, and the supplier has not priced an insurance extension. The shipping team must not assume insurance is included in another cost line. Although this offer is cheaper than some insured options, insurance is a mandatory requirement. All the other fees are included in the quoted total; the exclusion is a coverage issue.\n\nQUOTE D5 \u2014 Portline Allocation / Ocean freight\nAll-in total: USD 10700\nWarehouse arrival: 2026-10-11\nConfirmed capacity: 350 units\nTransit insurance included: True\nSupplier terms: This carrier has confirmed only 350 units of space on the stated departure. The price and arrival apply to that available allocation, with insurance included. An additional departure could be requested separately, but no price, arrival, or capacity is supplied for it. The project requires a single feasible offer for all 500 units, and split shipments are not allowed. Consequently, do not extrapolate this quote proportionally or assume that the carrier can expand its allocation without a revised offer.\n\nQUOTE D6 \u2014 CityLink Freight / Priority ocean and road\nAll-in total: USD 13900\nWarehouse arrival: 2026-10-14\nConfirmed capacity: 550 units\nTransit insurance included: True\nSupplier terms: The supplier offers an insured service with enough capacity and an arrival before the deadline. Its total includes all stated charges and final warehouse delivery. This is a feasible backup option, but its quoted amount is higher than another feasible offer. The project objective is to choose the lowest-cost feasible offer, not simply the fastest service or the first one that meets the constraints. Keep this offer in the comparison so that the decision explains the trade-off using supplied facts.\n\nLOGISTICS REPORT:\nExecutive Shipping Decision Report:\n\nUpon reviewing the six provided shipping offers for the transport of 500 boxed electronics units from New York to London, the objective is to select the lowest-cost feasible option that meets the budget of USD 15,000, arrives no later than October 15, 2026, and includes transit insurance.\n\nOf the six offers, Quote D2 (Atlantic Priority / Priority ocean and road) stands out as the most suitable choice. It meets all the mandatory constraints with an all-in total of USD 12,800, which is within the budget. The capacity is confirmed for exactly 500 units, and transit insurance is included. The arrival date of October 13, 2026, is before the deadline, ensuring timely delivery.\n\nQuote D1 (North Atlantic Economy / Consolidated ocean freight) is not feasible due to its later arrival date of October 18, 2026, which exceeds the deadline. Although it includes transit insurance and has a lower all-in total of USD 8,600, the later arrival date is a significant drawback.\n\nQuote D3 (Transatlantic Air / Express air freight) exceeds the budget with an all-in total of USD 16,400, despite meeting the delivery and insurance requirements.\n\nQuote D4 (Harbour Budget / Standard ocean freight) does not include transit insurance, which is a mandatory requirement.\n\nQuote D5 (Portline Allocation / Ocean freight) is not feasible due to its limited capacity of only 350 units, which is insufficient for the full shipment.\n\nQuote D6 (CityLink Freight / Priority ocean and road) is a backup option with an all-in total of USD 13,900 and an arrival date of October 14, 2026. While it meets the budget and capacity requirements, it is more expensive than Quote D2.\n\nTherefore, Quote D2 is the recommended choice for the shipment. It offers a balance between cost and timely delivery, ensuring the ship\n\nFINANCE REPORT:\nExecutive Summary:\n\nUpon reviewing the six provided shipping offers for the transport of 500 boxed electronics units from New York to London, the lowest-cost feasible option within the USD 15,000 budget and arrival deadline of 2026-10-15, including transit insurance, is Quote D2.\n\nQuote D2 offers priority ocean and road transportation for a total of USD 12,800, with a confirmed capacity of 500 units and an arrival date of 2026-10-13. This option includes cargo insurance, origin handling, destination handling, customs charges, and last-mile delivery. It is the most cost-effective choice that meets all the specified requirements.\n\nAlternative Option:\n\nQuote D4, with an all-in total of USD 11,900, lacks transit insurance, which is a mandatory requirement. Although it is cheaper than Quote D2, it does not fulfill the insurance requirement, making it an unsuitable choice.\n\nTrade-off Analysis:\n\nQuote D3, with an all-in total of USD 16,400, exceeds the budget cap, despite meeting the other requirements. Therefore, it is not a viable option.\n\nQuote D5, with an all-in total of USD 10,700, includes transit insurance but falls short of the required capacity, as it only confirms 350 units of space. This option cannot be considered due to the capacity constraint.\n\nQuote D6, with an all-in total of USD 13,900, also exceeds the budget cap and is not the lowest-cost option.\n\nConclusion:\n\nBased on the mandatory constraints and the need to stay within the budget, Quote D2 is the most suitable choice for the shipment. It provides the required capacity, meets the arrival deadline, and includes transit insurance, all within the budget cap. The trade-off for choosing Quote D2 over Quote D4 is the inclusion of transit insurance, which adds to the cost but ensures the necessary coverage. The other options either exceed the budget, do",
+      "context_sha256": "ac68b90001a476fed702e67e6b000974c496ca9f5b0244bb91b95e4be2304868",
+      "reports": {
+        "Ingestion": "Objective: Choose Quote D2, which meets the budget, capacity, and transit insurance requirements at the lowest cost of USD 12,800.\n\nMandatory Constraints:\n- Ship 500 boxed electronics units from New York to London.\n- Stay within a USD 15,000 budget.\n- Arrive no later than 2026-10-15.\n- Include transit insurance.\n- No split shipments or unquoted changes.\n- All quoted totals are all-in.\n- No additional mandatory charges beyond the quoted total.",
+        "Logistics": "Executive Shipping Decision Report:\n\nUpon reviewing the six provided shipping offers for the transport of 500 boxed electronics units from New York to London, the objective is to select the lowest-cost feasible option that meets the budget of USD 15,000, arrives no later than October 15, 2026, and includes transit insurance.\n\nOf the six offers, Quote D2 (Atlantic Priority / Priority ocean and road) stands out as the most suitable choice. It meets all the mandatory constraints with an all-in total of USD 12,800, which is within the budget. The capacity is confirmed for exactly 500 units, and transit insurance is included. The arrival date of October 13, 2026, is before the deadline, ensuring timely delivery.\n\nQuote D1 (North Atlantic Economy / Consolidated ocean freight) is not feasible due to its later arrival date of October 18, 2026, which exceeds the deadline. Although it includes transit insurance and has a lower all-in total of USD 8,600, the later arrival date is a significant drawback.\n\nQuote D3 (Transatlantic Air / Express air freight) exceeds the budget with an all-in total of USD 16,400, despite meeting the delivery and insurance requirements.\n\nQuote D4 (Harbour Budget / Standard ocean freight) does not include transit insurance, which is a mandatory requirement.\n\nQuote D5 (Portline Allocation / Ocean freight) is not feasible due to its limited capacity of only 350 units, which is insufficient for the full shipment.\n\nQuote D6 (CityLink Freight / Priority ocean and road) is a backup option with an all-in total of USD 13,900 and an arrival date of October 14, 2026. While it meets the budget and capacity requirements, it is more expensive than Quote D2.\n\nTherefore, Quote D2 is the recommended choice for the shipment. It offers a balance between cost and timely delivery, ensuring the ship",
+        "Finance": "Executive Summary:\n\nUpon reviewing the six provided shipping offers for the transport of 500 boxed electronics units from New York to London, the lowest-cost feasible option within the USD 15,000 budget and arrival deadline of 2026-10-15, including transit insurance, is Quote D2.\n\nQuote D2 offers priority ocean and road transportation for a total of USD 12,800, with a confirmed capacity of 500 units and an arrival date of 2026-10-13. This option includes cargo insurance, origin handling, destination handling, customs charges, and last-mile delivery. It is the most cost-effective choice that meets all the specified requirements.\n\nAlternative Option:\n\nQuote D4, with an all-in total of USD 11,900, lacks transit insurance, which is a mandatory requirement. Although it is cheaper than Quote D2, it does not fulfill the insurance requirement, making it an unsuitable choice.\n\nTrade-off Analysis:\n\nQuote D3, with an all-in total of USD 16,400, exceeds the budget cap, despite meeting the other requirements. Therefore, it is not a viable option.\n\nQuote D5, with an all-in total of USD 10,700, includes transit insurance but falls short of the required capacity, as it only confirms 350 units of space. This option cannot be considered due to the capacity constraint.\n\nQuote D6, with an all-in total of USD 13,900, also exceeds the budget cap and is not the lowest-cost option.\n\nConclusion:\n\nBased on the mandatory constraints and the need to stay within the budget, Quote D2 is the most suitable choice for the shipment. It provides the required capacity, meets the arrival deadline, and includes transit insurance, all within the budget cap. The trade-off for choosing Quote D2 over Quote D4 is the inclusion of transit insurance, which adds to the cost but ensures the necessary coverage. The other options either exceed the budget, do"
+      },
+      "calls": [
+        {
+          "role": "Ingestion",
+          "input_tokens": 1391,
+          "output_tokens": 147,
+          "total_tokens": 1538,
+          "seconds": 9.100813700002618,
+          "output": "Objective: Choose Quote D2, which meets the budget, capacity, and transit insurance requirements at the lowest cost of USD 12,800.\n\nMandatory Constraints:\n- Ship 500 boxed electronics units from New York to London.\n- Stay within a USD 15,000 budget.\n- Arrive no later than 2026-10-15.\n- Include transit insurance.\n- No split shipments or unquoted changes.\n- All quoted totals are all-in.\n- No additional mandatory charges beyond the quoted total.",
+          "input_sha256": "f6e79631c7c9c6299b451959a0718eb523dcbf1b63309a0abd015e48bc3dce99",
+          "finish_reason": "stop"
+        },
+        {
+          "role": "Logistics",
+          "input_tokens": 1589,
+          "output_tokens": 512,
+          "total_tokens": 2101,
+          "seconds": 32.958096799993655,
+          "output": "Executive Shipping Decision Report:\n\nUpon reviewing the six provided shipping offers for the transport of 500 boxed electronics units from New York to London, the objective is to select the lowest-cost feasible option that meets the budget of USD 15,000, arrives no later than October 15, 2026, and includes transit insurance.\n\nOf the six offers, Quote D2 (Atlantic Priority / Priority ocean and road) stands out as the most suitable choice. It meets all the mandatory constraints with an all-in total of USD 12,800, which is within the budget. The capacity is confirmed for exactly 500 units, and transit insurance is included. The arrival date of October 13, 2026, is before the deadline, ensuring timely delivery.\n\nQuote D1 (North Atlantic Economy / Consolidated ocean freight) is not feasible due to its later arrival date of October 18, 2026, which exceeds the deadline. Although it includes transit insurance and has a lower all-in total of USD 8,600, the later arrival date is a significant drawback.\n\nQuote D3 (Transatlantic Air / Express air freight) exceeds the budget with an all-in total of USD 16,400, despite meeting the delivery and insurance requirements.\n\nQuote D4 (Harbour Budget / Standard ocean freight) does not include transit insurance, which is a mandatory requirement.\n\nQuote D5 (Portline Allocation / Ocean freight) is not feasible due to its limited capacity of only 350 units, which is insufficient for the full shipment.\n\nQuote D6 (CityLink Freight / Priority ocean and road) is a backup option with an all-in total of USD 13,900 and an arrival date of October 14, 2026. While it meets the budget and capacity requirements, it is more expensive than Quote D2.\n\nTherefore, Quote D2 is the recommended choice for the shipment. It offers a balance between cost and timely delivery, ensuring the ship",
+          "input_sha256": "d1a95d441643f2694c73098a8764964b9acc8690ff375c2fbec12f6d2fff6eb2",
+          "finish_reason": "length"
+        },
+        {
+          "role": "Finance",
+          "input_tokens": 1602,
+          "output_tokens": 512,
+          "total_tokens": 2114,
+          "seconds": 67.30896439999924,
+          "output": "Executive Summary:\n\nUpon reviewing the six provided shipping offers for the transport of 500 boxed electronics units from New York to London, the lowest-cost feasible option within the USD 15,000 budget and arrival deadline of 2026-10-15, including transit insurance, is Quote D2.\n\nQuote D2 offers priority ocean and road transportation for a total of USD 12,800, with a confirmed capacity of 500 units and an arrival date of 2026-10-13. This option includes cargo insurance, origin handling, destination handling, customs charges, and last-mile delivery. It is the most cost-effective choice that meets all the specified requirements.\n\nAlternative Option:\n\nQuote D4, with an all-in total of USD 11,900, lacks transit insurance, which is a mandatory requirement. Although it is cheaper than Quote D2, it does not fulfill the insurance requirement, making it an unsuitable choice.\n\nTrade-off Analysis:\n\nQuote D3, with an all-in total of USD 16,400, exceeds the budget cap, despite meeting the other requirements. Therefore, it is not a viable option.\n\nQuote D5, with an all-in total of USD 10,700, includes transit insurance but falls short of the required capacity, as it only confirms 350 units of space. This option cannot be considered due to the capacity constraint.\n\nQuote D6, with an all-in total of USD 13,900, also exceeds the budget cap and is not the lowest-cost option.\n\nConclusion:\n\nBased on the mandatory constraints and the need to stay within the budget, Quote D2 is the most suitable choice for the shipment. It provides the required capacity, meets the arrival deadline, and includes transit insurance, all within the budget cap. The trade-off for choosing Quote D2 over Quote D4 is the inclusion of transit insurance, which adds to the cost but ensures the necessary coverage. The other options either exceed the budget, do",
+          "input_sha256": "d1a95d441643f2694c73098a8764964b9acc8690ff375c2fbec12f6d2fff6eb2",
+          "finish_reason": "length"
+        }
+      ],
+      "seconds": 76.41381349999574,
+      "token_usage": 5753
+    },
+    "baseline": {
+      "mode": "baseline",
+      "shared_context_sha256": "ac68b90001a476fed702e67e6b000974c496ca9f5b0244bb91b95e4be2304868",
+      "token_usage": 15036,
+      "execution_time_seconds": 134.91840090000187,
+      "branch_seconds": 58.50458740000613,
+      "calls": [
+        {
+          "role": "Risk",
+          "input_tokens": 2478,
+          "output_tokens": 192,
+          "total_tokens": 2670,
+          "seconds": 38.892591899988474,
+          "output": "Executive Summary:\n\nThe lowest-cost feasible option for shipping 500 boxed electronics units from New York to London, within a USD 15,000 budget and an arrival deadline of 2026-10-15, including transit insurance, is Quote D2.\n\nQuote D2 offers priority ocean and road transportation for a total of USD 12,800, with a confirmed capacity of 500 units and an arrival date of 2026-10-13. This option includes cargo insurance, origin handling, destination handling, customs charges, and last-mile delivery. It is the most cost-effective choice that meets all the specified requirements.\n\nAlternative Option:\n\nQuote D4, with an all-in total of USD 1",
+          "input_sha256": "ac68b90001a476fed702e67e6b000974c496ca9f5b0244bb91b95e4be2304868",
+          "finish_reason": "length"
+        },
+        {
+          "role": "Compliance",
+          "input_tokens": 2787,
+          "output_tokens": 256,
+          "total_tokens": 3043,
+          "seconds": 22.309931099996902,
+          "output": "```python\n# Python constraint checks for each quote\n\ndef check_quote(quote):\n    within_budget = quote['All-in total'] <= 15000\n    on_time = quote['Warehouse arrival'] <= '2026-10-15'\n    enough_capacity = quote['Confirmed capacity'] >= 500\n    insured_as_required = quote['Transit insurance included'] == True\n    return within_budget and on_time and enough_capacity and insured_as_required\n\n# Quotes to check\nquotes = {\n    'D1': {'All-in total': '8600', 'Warehouse arrival': '2026-10-18', 'Confirmed capacity': '600', 'Transit insurance included': True},\n    'D2': {'All-in total': '12800', 'Warehouse arrival': '2026-10-13', 'Confirmed capacity': '500', 'Transit insurance included': True},\n    'D",
+          "input_sha256": "5c0b34e522d478872c1954e918d403685e37b8bab751491834c4b9b4710038ca",
+          "finish_reason": "length"
+        },
+        {
+          "role": "Decision",
+          "input_tokens": 3372,
+          "output_tokens": 198,
+          "total_tokens": 3570,
+          "seconds": 19.609385299991118,
+          "output": "{\n    \"verdict\": \"proceed\",\n    \"option_id\": \"D2\",\n    \"total_cost_usd\": 12800,\n    \"arrival_date\": \"2026-10-13\",\n    \"quantity\": 500,\n    \"budget_usd\": 15000,\n    \"deadline\": \"2026-10-15\",\n    \"reasoning\": \"Quote D2 is the lowest-cost option within the budget and meets all other requirements, including timely arrival and capacity for 500 units with insurance.\",\n    \"conditions\": [\n        \"Total cost within budget\",\n        \"Capacity for 500 units\",\n        \"Includes transit insurance\",\n        \"Arrival before deadline\"\n    ]\n}",
+          "input_sha256": "c7b83f7e393f91561257ed3c6f8d480ef006c69c8cd368a92edaf2a55eb73130",
+          "finish_reason": "stop"
+        }
+      ],
+      "reports": {
+        "Ingestion": "Objective: Choose Quote D2, which meets the budget, capacity, and transit insurance requirements at the lowest cost of USD 12,800.\n\nMandatory Constraints:\n- Ship 500 boxed electronics units from New York to London.\n- Stay within a USD 15,000 budget.\n- Arrive no later than 2026-10-15.\n- Include transit insurance.\n- No split shipments or unquoted changes.\n- All quoted totals are all-in.\n- No additional mandatory charges beyond the quoted total.",
+        "Logistics": "Executive Shipping Decision Report:\n\nUpon reviewing the six provided shipping offers for the transport of 500 boxed electronics units from New York to London, the objective is to select the lowest-cost feasible option that meets the budget of USD 15,000, arrives no later than October 15, 2026, and includes transit insurance.\n\nOf the six offers, Quote D2 (Atlantic Priority / Priority ocean and road) stands out as the most suitable choice. It meets all the mandatory constraints with an all-in total of USD 12,800, which is within the budget. The capacity is confirmed for exactly 500 units, and transit insurance is included. The arrival date of October 13, 2026, is before the deadline, ensuring timely delivery.\n\nQuote D1 (North Atlantic Economy / Consolidated ocean freight) is not feasible due to its later arrival date of October 18, 2026, which exceeds the deadline. Although it includes transit insurance and has a lower all-in total of USD 8,600, the later arrival date is a significant drawback.\n\nQuote D3 (Transatlantic Air / Express air freight) exceeds the budget with an all-in total of USD 16,400, despite meeting the delivery and insurance requirements.\n\nQuote D4 (Harbour Budget / Standard ocean freight) does not include transit insurance, which is a mandatory requirement.\n\nQuote D5 (Portline Allocation / Ocean freight) is not feasible due to its limited capacity of only 350 units, which is insufficient for the full shipment.\n\nQuote D6 (CityLink Freight / Priority ocean and road) is a backup option with an all-in total of USD 13,900 and an arrival date of October 14, 2026. While it meets the budget and capacity requirements, it is more expensive than Quote D2.\n\nTherefore, Quote D2 is the recommended choice for the shipment. It offers a balance between cost and timely delivery, ensuring the ship",
+        "Finance": "Executive Summary:\n\nUpon reviewing the six provided shipping offers for the transport of 500 boxed electronics units from New York to London, the lowest-cost feasible option within the USD 15,000 budget and arrival deadline of 2026-10-15, including transit insurance, is Quote D2.\n\nQuote D2 offers priority ocean and road transportation for a total of USD 12,800, with a confirmed capacity of 500 units and an arrival date of 2026-10-13. This option includes cargo insurance, origin handling, destination handling, customs charges, and last-mile delivery. It is the most cost-effective choice that meets all the specified requirements.\n\nAlternative Option:\n\nQuote D4, with an all-in total of USD 11,900, lacks transit insurance, which is a mandatory requirement. Although it is cheaper than Quote D2, it does not fulfill the insurance requirement, making it an unsuitable choice.\n\nTrade-off Analysis:\n\nQuote D3, with an all-in total of USD 16,400, exceeds the budget cap, despite meeting the other requirements. Therefore, it is not a viable option.\n\nQuote D5, with an all-in total of USD 10,700, includes transit insurance but falls short of the required capacity, as it only confirms 350 units of space. This option cannot be considered due to the capacity constraint.\n\nQuote D6, with an all-in total of USD 13,900, also exceeds the budget cap and is not the lowest-cost option.\n\nConclusion:\n\nBased on the mandatory constraints and the need to stay within the budget, Quote D2 is the most suitable choice for the shipment. It provides the required capacity, meets the arrival deadline, and includes transit insurance, all within the budget cap. The trade-off for choosing Quote D2 over Quote D4 is the inclusion of transit insurance, which adds to the cost but ensures the necessary coverage. The other options either exceed the budget, do",
+        "Risk": "Executive Summary:\n\nThe lowest-cost feasible option for shipping 500 boxed electronics units from New York to London, within a USD 15,000 budget and an arrival deadline of 2026-10-15, including transit insurance, is Quote D2.\n\nQuote D2 offers priority ocean and road transportation for a total of USD 12,800, with a confirmed capacity of 500 units and an arrival date of 2026-10-13. This option includes cargo insurance, origin handling, destination handling, customs charges, and last-mile delivery. It is the most cost-effective choice that meets all the specified requirements.\n\nAlternative Option:\n\nQuote D4, with an all-in total of USD 1",
+        "Compliance": "PYTHON CONSTRAINT CHECKS (computed from supplied source fields):\nD1: within_budget=PASS; on_time=FAIL; enough_capacity=PASS; insured_as_required=PASS\nD2: within_budget=PASS; on_time=PASS; enough_capacity=PASS; insured_as_required=PASS\nD3: within_budget=FAIL; on_time=PASS; enough_capacity=PASS; insured_as_required=PASS\nD4: within_budget=PASS; on_time=PASS; enough_capacity=PASS; insured_as_required=FAIL\nD5: within_budget=PASS; on_time=PASS; enough_capacity=FAIL; insured_as_required=PASS\nD6: within_budget=PASS; on_time=PASS; enough_capacity=PASS; insured_as_required=PASS\nELIGIBLE QUOTE IDS: D2, D6\nINELIGIBLE QUOTE IDS: D1, D3, D4, D5\nAny FAIL makes that quote infeasible. Among all-PASS quotes, compare source totals to select the lowest cost.\n\nMODEL REVIEW:\n```python\n# Python constraint checks for each quote\n\ndef check_quote(quote):\n    within_budget = quote['All-in total'] <= 15000\n    on_time = quote['Warehouse arrival'] <= '2026-10-15'\n    enough_capacity = quote['Confirmed capacity'] >= 500\n    insured_as_required = quote['Transit insurance included'] == True\n    return within_budget and on_time and enough_capacity and insured_as_required\n\n# Quotes to check\nquotes = {\n    'D1': {'All-in total': '8600', 'Warehouse arrival': '2026-10-18', 'Confirmed capacity': '600', 'Transit insurance included': True},\n    'D2': {'All-in total': '12800', 'Warehouse arrival': '2026-10-13', 'Confirmed capacity': '500', 'Transit insurance included': True},\n    'D",
+        "Decision": "{\n    \"verdict\": \"proceed\",\n    \"option_id\": \"D2\",\n    \"total_cost_usd\": 12800,\n    \"arrival_date\": \"2026-10-13\",\n    \"quantity\": 500,\n    \"budget_usd\": 15000,\n    \"deadline\": \"2026-10-15\",\n    \"reasoning\": \"Quote D2 is the lowest-cost option within the budget and meets all other requirements, including timely arrival and capacity for 500 units with insurance.\",\n    \"conditions\": [\n        \"Total cost within budget\",\n        \"Capacity for 500 units\",\n        \"Includes transit insurance\",\n        \"Arrival before deadline\"\n    ]\n}",
+        "Compressor": ""
+      },
+      "compression": null,
+      "evaluation": {
+        "passed": 12,
+        "total": 12,
+        "all_passed": true,
+        "checks": {
+          "structured_answer": true,
+          "correct_verdict": true,
+          "lowest_cost_feasible_quote": true,
+          "quoted_total_correct": true,
+          "arrival_correct": true,
+          "quantity_preserved": true,
+          "budget_preserved": true,
+          "deadline_preserved": true,
+          "insurance_requirement_met": true,
+          "delivery_requirement_met": true,
+          "budget_requirement_met": true,
+          "capacity_requirement_met": true
+        },
+        "expected_option_ids": [
+          "D2"
+        ],
+        "decision": {
+          "verdict": "proceed",
+          "option_id": "D2",
+          "total_cost_usd": 12800,
+          "arrival_date": "2026-10-13",
+          "quantity": 500,
+          "budget_usd": 15000,
+          "deadline": "2026-10-15",
+          "reasoning": "Quote D2 is the lowest-cost option within the budget and meets all other requirements, including timely arrival and capacity for 500 units with insurance.",
+          "conditions": [
+            "Total cost within budget",
+            "Capacity for 500 units",
+            "Includes transit insurance",
+            "Arrival before deadline"
+          ]
+        },
+        "scope": "Checks supplied quote selection and key facts; not a complete evaluation of prose or real-world feasibility."
+      },
+      "constraint_audit": {
+        "rows": [
+          {
+            "quote_id": "D1",
+            "within_budget": true,
+            "on_time": false,
+            "enough_capacity": true,
+            "insured_as_required": true
+          },
+          {
+            "quote_id": "D2",
+            "within_budget": true,
+            "on_time": true,
+            "enough_capacity": true,
+            "insured_as_required": true
+          },
+          {
+            "quote_id": "D3",
+            "within_budget": false,
+            "on_time": true,
+            "enough_capacity": true,
+            "insured_as_required": true
+          },
+          {
+            "quote_id": "D4",
+            "within_budget": true,
+            "on_time": true,
+            "enough_capacity": true,
+            "insured_as_required": false
+          },
+          {
+            "quote_id": "D5",
+            "within_budget": true,
+            "on_time": true,
+            "enough_capacity": false,
+            "insured_as_required": true
+          },
+          {
+            "quote_id": "D6",
+            "within_budget": true,
+            "on_time": true,
+            "enough_capacity": true,
+            "insured_as_required": true
+          }
+        ],
+        "eligible_ids": [
+          "D2",
+          "D6"
+        ],
+        "text": "PYTHON CONSTRAINT CHECKS (computed from supplied source fields):\nD1: within_budget=PASS; on_time=FAIL; enough_capacity=PASS; insured_as_required=PASS\nD2: within_budget=PASS; on_time=PASS; enough_capacity=PASS; insured_as_required=PASS\nD3: within_budget=FAIL; on_time=PASS; enough_capacity=PASS; insured_as_required=PASS\nD4: within_budget=PASS; on_time=PASS; enough_capacity=PASS; insured_as_required=FAIL\nD5: within_budget=PASS; on_time=PASS; enough_capacity=FAIL; insured_as_required=PASS\nD6: within_budget=PASS; on_time=PASS; enough_capacity=PASS; insured_as_required=PASS\nELIGIBLE QUOTE IDS: D2, D6\nINELIGIBLE QUOTE IDS: D1, D3, D4, D5\nAny FAIL makes that quote infeasible. Among all-PASS quotes, compare source totals to select the lowest cost."
+      }
+    },
+    "compressed": {
+      "mode": "compressed",
+      "shared_context_sha256": "ac68b90001a476fed702e67e6b000974c496ca9f5b0244bb91b95e4be2304868",
+      "token_usage": 12764,
+      "execution_time_seconds": 144.07353329999023,
+      "branch_seconds": 67.65971979999449,
+      "calls": [
+        {
+          "role": "Compressor",
+          "input_tokens": 2493,
+          "output_tokens": 384,
+          "total_tokens": 2877,
+          "seconds": 32.25901999999769,
+          "output": "Executive Shipping Decision:\n\nBased on the mandatory constraints and the need to stay within the budget, Quote D2 (Atlantic Priority / Priority ocean and road) is the most suitable choice for the shipment. It offers an all-in total of USD 12,800, meets the capacity requirement of 500 units, and arrives before the deadline on October 13, 2026. This option includes cargo insurance, origin handling, destination handling, customs charges, and last-mile delivery.\n\nAlternative Option:\n\nQuote D4 (Harbour Budget / Standard ocean freight) lacks transit insurance, which is a mandatory requirement. Although it is cheaper than Quote D2, it does not fulfill the insurance requirement, making it an unsuitable choice.\n\nTrade-off Analysis:\n\nQuote D3 (Transatlantic Air / Express air freight) exceeds the budget cap, despite meeting the other requirements. Therefore, it is not a viable option.\n\nQuote D5 (Portline Allocation / Ocean freight) includes transit insurance but falls short of the required capacity, as it only confirms 350 units of space. This option cannot be considered due to the capacity constraint.\n\nConclusion:\n\nBased on the mandatory constraints and the need to stay within the budget, Quote D2 is the most suitable choice for the shipment. It provides the required capacity, meets the arrival deadline, and includes transit insurance, all within the budget cap. The trade-off for choosing Quote D2 over Quote D4 is the inclusion of transit insurance, which adds to the cost but ens",
+          "input_sha256": "ac68b90001a476fed702e67e6b000974c496ca9f5b0244bb91b95e4be2304868",
+          "finish_reason": "length"
+        },
+        {
+          "role": "Risk",
+          "input_tokens": 770,
+          "output_tokens": 192,
+          "total_tokens": 962,
+          "seconds": 9.724787899991497,
+          "output": "Executive Shipping Decision:\n\nBased on the mandatory constraints and the need to stay within the budget, Quote D2 (Atlantic Priority / Priority ocean and road) is the most suitable choice for the shipment. It offers an all-in total of USD 12,800, meets the capacity requirement of 500 units, and arrives before the deadline on October 13, 2026. This option includes cargo insurance, origin handling, destination handling, customs charges, and last-mile delivery.\n\nAlternative Option:\n\nQuote D4 (Harbour Budget / Standard ocean freight) lacks transit insurance, which is a mandatory requirement. Although it is cheaper than Quote D2, it does not fulfill the insurance requirement, making it an unsuitable choice.\n\n",
+          "input_sha256": "3cfe4025747e7f55922efb262e4e9092fc2d6a81ce6bef63143d901b7d14f0de",
+          "finish_reason": "length"
+        },
+        {
+          "role": "Compliance",
+          "input_tokens": 1079,
+          "output_tokens": 256,
+          "total_tokens": 1335,
+          "seconds": 24.1583255000005,
+          "output": "```python\n# Python code to verify quotes against constraints\n\nfrom datetime import datetime\n\n# Define the constraints\nbudget_limit = 15000\ndeadline = datetime.strptime('2026-10-15', '%Y-%m-%d')\n\n# Define the quotes\nquotes = {\n    'D1': {'total': 8600, 'arrival': datetime.strptime('2026-10-18', '%Y-%m-%d'), 'capacity': 600, 'insured': True},\n    'D2': {'total': 12800, 'arrival': datetime.strptime('2026-10-13', '%Y-%m-%d'), 'capacity': 500, 'insured': True},\n    'D3': {'total': 16400, 'arrival': datetime.strptime('2026-10-08', '%Y-%m-%d'), 'capacity': 700, 'insured': True},\n    'D4",
+          "input_sha256": "969ef0866f85e85d94e23f3929e4926856977d31b65f502f4636e49d5c913864",
+          "finish_reason": "length"
+        },
+        {
+          "role": "Decision",
+          "input_tokens": 1664,
+          "output_tokens": 173,
+          "total_tokens": 1837,
+          "seconds": 11.238369600003352,
+          "output": "{\n    \"verdict\": \"proceed\",\n    \"option_id\": \"D2\",\n    \"total_cost_usd\": 12800,\n    \"arrival_date\": \"2026-10-13\",\n    \"quantity\": 500,\n    \"budget_usd\": 15000,\n    \"deadline\": \"2026-10-15\",\n    \"reasoning\": \"D2 is the lowest-cost quote within budget, meets capacity and insurance requirements, and arrives before the deadline.\",\n    \"conditions\": [\"within_budget\", \"on_time\", \"enough_capacity\", \"insured_as_required\"]\n}",
+          "input_sha256": "c6f562c244a0a4c0e70813ba77e24f3776e4045f0fe0d1b2dd1601ca772778f4",
+          "finish_reason": "stop"
+        }
+      ],
+      "reports": {
+        "Ingestion": "Objective: Choose Quote D2, which meets the budget, capacity, and transit insurance requirements at the lowest cost of USD 12,800.\n\nMandatory Constraints:\n- Ship 500 boxed electronics units from New York to London.\n- Stay within a USD 15,000 budget.\n- Arrive no later than 2026-10-15.\n- Include transit insurance.\n- No split shipments or unquoted changes.\n- All quoted totals are all-in.\n- No additional mandatory charges beyond the quoted total.",
+        "Logistics": "Executive Shipping Decision Report:\n\nUpon reviewing the six provided shipping offers for the transport of 500 boxed electronics units from New York to London, the objective is to select the lowest-cost feasible option that meets the budget of USD 15,000, arrives no later than October 15, 2026, and includes transit insurance.\n\nOf the six offers, Quote D2 (Atlantic Priority / Priority ocean and road) stands out as the most suitable choice. It meets all the mandatory constraints with an all-in total of USD 12,800, which is within the budget. The capacity is confirmed for exactly 500 units, and transit insurance is included. The arrival date of October 13, 2026, is before the deadline, ensuring timely delivery.\n\nQuote D1 (North Atlantic Economy / Consolidated ocean freight) is not feasible due to its later arrival date of October 18, 2026, which exceeds the deadline. Although it includes transit insurance and has a lower all-in total of USD 8,600, the later arrival date is a significant drawback.\n\nQuote D3 (Transatlantic Air / Express air freight) exceeds the budget with an all-in total of USD 16,400, despite meeting the delivery and insurance requirements.\n\nQuote D4 (Harbour Budget / Standard ocean freight) does not include transit insurance, which is a mandatory requirement.\n\nQuote D5 (Portline Allocation / Ocean freight) is not feasible due to its limited capacity of only 350 units, which is insufficient for the full shipment.\n\nQuote D6 (CityLink Freight / Priority ocean and road) is a backup option with an all-in total of USD 13,900 and an arrival date of October 14, 2026. While it meets the budget and capacity requirements, it is more expensive than Quote D2.\n\nTherefore, Quote D2 is the recommended choice for the shipment. It offers a balance between cost and timely delivery, ensuring the ship",
+        "Finance": "Executive Summary:\n\nUpon reviewing the six provided shipping offers for the transport of 500 boxed electronics units from New York to London, the lowest-cost feasible option within the USD 15,000 budget and arrival deadline of 2026-10-15, including transit insurance, is Quote D2.\n\nQuote D2 offers priority ocean and road transportation for a total of USD 12,800, with a confirmed capacity of 500 units and an arrival date of 2026-10-13. This option includes cargo insurance, origin handling, destination handling, customs charges, and last-mile delivery. It is the most cost-effective choice that meets all the specified requirements.\n\nAlternative Option:\n\nQuote D4, with an all-in total of USD 11,900, lacks transit insurance, which is a mandatory requirement. Although it is cheaper than Quote D2, it does not fulfill the insurance requirement, making it an unsuitable choice.\n\nTrade-off Analysis:\n\nQuote D3, with an all-in total of USD 16,400, exceeds the budget cap, despite meeting the other requirements. Therefore, it is not a viable option.\n\nQuote D5, with an all-in total of USD 10,700, includes transit insurance but falls short of the required capacity, as it only confirms 350 units of space. This option cannot be considered due to the capacity constraint.\n\nQuote D6, with an all-in total of USD 13,900, also exceeds the budget cap and is not the lowest-cost option.\n\nConclusion:\n\nBased on the mandatory constraints and the need to stay within the budget, Quote D2 is the most suitable choice for the shipment. It provides the required capacity, meets the arrival deadline, and includes transit insurance, all within the budget cap. The trade-off for choosing Quote D2 over Quote D4 is the inclusion of transit insurance, which adds to the cost but ensures the necessary coverage. The other options either exceed the budget, do",
+        "Risk": "Executive Shipping Decision:\n\nBased on the mandatory constraints and the need to stay within the budget, Quote D2 (Atlantic Priority / Priority ocean and road) is the most suitable choice for the shipment. It offers an all-in total of USD 12,800, meets the capacity requirement of 500 units, and arrives before the deadline on October 13, 2026. This option includes cargo insurance, origin handling, destination handling, customs charges, and last-mile delivery.\n\nAlternative Option:\n\nQuote D4 (Harbour Budget / Standard ocean freight) lacks transit insurance, which is a mandatory requirement. Although it is cheaper than Quote D2, it does not fulfill the insurance requirement, making it an unsuitable choice.\n\n",
+        "Compliance": "PYTHON CONSTRAINT CHECKS (computed from supplied source fields):\nD1: within_budget=PASS; on_time=FAIL; enough_capacity=PASS; insured_as_required=PASS\nD2: within_budget=PASS; on_time=PASS; enough_capacity=PASS; insured_as_required=PASS\nD3: within_budget=FAIL; on_time=PASS; enough_capacity=PASS; insured_as_required=PASS\nD4: within_budget=PASS; on_time=PASS; enough_capacity=PASS; insured_as_required=FAIL\nD5: within_budget=PASS; on_time=PASS; enough_capacity=FAIL; insured_as_required=PASS\nD6: within_budget=PASS; on_time=PASS; enough_capacity=PASS; insured_as_required=PASS\nELIGIBLE QUOTE IDS: D2, D6\nINELIGIBLE QUOTE IDS: D1, D3, D4, D5\nAny FAIL makes that quote infeasible. Among all-PASS quotes, compare source totals to select the lowest cost.\n\nMODEL REVIEW:\n```python\n# Python code to verify quotes against constraints\n\nfrom datetime import datetime\n\n# Define the constraints\nbudget_limit = 15000\ndeadline = datetime.strptime('2026-10-15', '%Y-%m-%d')\n\n# Define the quotes\nquotes = {\n    'D1': {'total': 8600, 'arrival': datetime.strptime('2026-10-18', '%Y-%m-%d'), 'capacity': 600, 'insured': True},\n    'D2': {'total': 12800, 'arrival': datetime.strptime('2026-10-13', '%Y-%m-%d'), 'capacity': 500, 'insured': True},\n    'D3': {'total': 16400, 'arrival': datetime.strptime('2026-10-08', '%Y-%m-%d'), 'capacity': 700, 'insured': True},\n    'D4",
+        "Decision": "{\n    \"verdict\": \"proceed\",\n    \"option_id\": \"D2\",\n    \"total_cost_usd\": 12800,\n    \"arrival_date\": \"2026-10-13\",\n    \"quantity\": 500,\n    \"budget_usd\": 15000,\n    \"deadline\": \"2026-10-15\",\n    \"reasoning\": \"D2 is the lowest-cost quote within budget, meets capacity and insurance requirements, and arrives before the deadline.\",\n    \"conditions\": [\"within_budget\", \"on_time\", \"enough_capacity\", \"insured_as_required\"]\n}",
+        "Compressor": "AUTHORITATIVE COMPACT FACTS:\nRoute=New York to London; quantity=500 units; budget_usd=15000; deadline=2026-10-15; insurance_required=true.\nSelect lowest-cost feasible quote. All totals are all-in USD. All units in one offer; no invented charges, upgrades, or split shipments.\nQuote ID | total USD | arrival YYYY-MM-DD | capacity units | insurance included\nD1 | 8600 | 2026-10-18 | 600 | true\nD2 | 12800 | 2026-10-13 | 500 | true\nD3 | 16400 | 2026-10-08 | 700 | true\nD4 | 11900 | 2026-10-12 | 500 | false\nD5 | 10700 | 2026-10-11 | 350 | true\nD6 | 13900 | 2026-10-14 | 550 | true\n\nCOMPRESSED ANALYSIS:\nExecutive Shipping Decision:\n\nBased on the mandatory constraints and the need to stay within the budget, Quote D2 (Atlantic Priority / Priority ocean and road) is the most suitable choice for the shipment. It offers an all-in total of USD 12,800, meets the capacity requirement of 500 units, and arrives before the deadline on October 13, 2026. This option includes cargo insurance, origin handling, destination handling, customs charges, and last-mile delivery.\n\nAlternative Option:\n\nQuote D4 (Harbour Budget / Standard ocean freight) lacks transit insurance, which is a mandatory requirement. Although it is cheaper than Quote D2, it does not fulfill the insurance requirement, making it an unsuitable choice.\n\nTrade-off Analysis:\n\nQuote D3 (Transatlantic Air / Express air freight) exceeds the budget cap, despite meeting the other requirements. Therefore, it is not a viable option.\n\nQuote D5 (Portline Allocation / Ocean freight) includes transit insurance but falls short of the required capacity, as it only confirms 350 units of space. This option cannot be considered due to the capacity constraint.\n\nConclusion:\n\nBased on the mandatory constraints and the need to stay within the budget, Quote D2 is the most suitable choice for the shipment. It provides the required capacity, meets the arrival deadline, and includes transit insurance, all within the budget cap. The trade-off for choosing Quote D2 over Quote D4 is the inclusion of transit insurance, which adds to the cost but ens"
+      },
+      "compression": {
+        "strategy": "LLM summary plus losslessly packed source facts",
+        "target_word_ratio": 0.28,
+        "source_words": 1372,
+        "compressed_words": 336,
+        "achieved_word_ratio": 0.24489795918367346,
+        "summary_word_budget": 120,
+        "source_sha256": "ac68b90001a476fed702e67e6b000974c496ca9f5b0244bb91b95e4be2304868",
+        "protected_facts": "Route=New York to London; quantity=500 units; budget_usd=15000; deadline=2026-10-15; insurance_required=true.\nSelect lowest-cost feasible quote. All totals are all-in USD. All units in one offer; no invented charges, upgrades, or split shipments.\nQuote ID | total USD | arrival YYYY-MM-DD | capacity units | insurance included\nD1 | 8600 | 2026-10-18 | 600 | true\nD2 | 12800 | 2026-10-13 | 500 | true\nD3 | 16400 | 2026-10-08 | 700 | true\nD4 | 11900 | 2026-10-12 | 500 | false\nD5 | 10700 | 2026-10-11 | 350 | true\nD6 | 13900 | 2026-10-14 | 550 | true"
+      },
+      "evaluation": {
+        "passed": 12,
+        "total": 12,
+        "all_passed": true,
+        "checks": {
+          "structured_answer": true,
+          "correct_verdict": true,
+          "lowest_cost_feasible_quote": true,
+          "quoted_total_correct": true,
+          "arrival_correct": true,
+          "quantity_preserved": true,
+          "budget_preserved": true,
+          "deadline_preserved": true,
+          "insurance_requirement_met": true,
+          "delivery_requirement_met": true,
+          "budget_requirement_met": true,
+          "capacity_requirement_met": true
+        },
+        "expected_option_ids": [
+          "D2"
+        ],
+        "decision": {
+          "verdict": "proceed",
+          "option_id": "D2",
+          "total_cost_usd": 12800,
+          "arrival_date": "2026-10-13",
+          "quantity": 500,
+          "budget_usd": 15000,
+          "deadline": "2026-10-15",
+          "reasoning": "D2 is the lowest-cost quote within budget, meets capacity and insurance requirements, and arrives before the deadline.",
+          "conditions": [
+            "within_budget",
+            "on_time",
+            "enough_capacity",
+            "insured_as_required"
+          ]
+        },
+        "scope": "Checks supplied quote selection and key facts; not a complete evaluation of prose or real-world feasibility."
+      },
+      "constraint_audit": {
+        "rows": [
+          {
+            "quote_id": "D1",
+            "within_budget": true,
+            "on_time": false,
+            "enough_capacity": true,
+            "insured_as_required": true
+          },
+          {
+            "quote_id": "D2",
+            "within_budget": true,
+            "on_time": true,
+            "enough_capacity": true,
+            "insured_as_required": true
+          },
+          {
+            "quote_id": "D3",
+            "within_budget": false,
+            "on_time": true,
+            "enough_capacity": true,
+            "insured_as_required": true
+          },
+          {
+            "quote_id": "D4",
+            "within_budget": true,
+            "on_time": true,
+            "enough_capacity": true,
+            "insured_as_required": false
+          },
+          {
+            "quote_id": "D5",
+            "within_budget": true,
+            "on_time": true,
+            "enough_capacity": false,
+            "insured_as_required": true
+          },
+          {
+            "quote_id": "D6",
+            "within_budget": true,
+            "on_time": true,
+            "enough_capacity": true,
+            "insured_as_required": true
+          }
+        ],
+        "eligible_ids": [
+          "D2",
+          "D6"
+        ],
+        "text": "PYTHON CONSTRAINT CHECKS (computed from supplied source fields):\nD1: within_budget=PASS; on_time=FAIL; enough_capacity=PASS; insured_as_required=PASS\nD2: within_budget=PASS; on_time=PASS; enough_capacity=PASS; insured_as_required=PASS\nD3: within_budget=FAIL; on_time=PASS; enough_capacity=PASS; insured_as_required=PASS\nD4: within_budget=PASS; on_time=PASS; enough_capacity=PASS; insured_as_required=FAIL\nD5: within_budget=PASS; on_time=PASS; enough_capacity=FAIL; insured_as_required=PASS\nD6: within_budget=PASS; on_time=PASS; enough_capacity=PASS; insured_as_required=PASS\nELIGIBLE QUOTE IDS: D2, D6\nINELIGIBLE QUOTE IDS: D1, D3, D4, D5\nAny FAIL makes that quote infeasible. Among all-PASS quotes, compare source totals to select the lowest cost."
+      }
+    },
+    "comparison": {
+      "saved_tokens": 2272,
+      "reduction_percent": 15.110401702580473,
+      "review_input_reduction_percent": 68.92655367231639,
+      "both_checklists_passed": true,
+      "total_experiment_tokens": 22047,
+      "experiment_wall_seconds": 202.57906760001788,
+      "accounting": "Each branch includes the same upstream cost. Compression input/output tokens are included. Upstream calls were executed once physically. No retries or uncounted judge-model calls."
+    }
+  },
+  {
+    "schema_version": 1,
+    "experiment_id": "93040b3c-2600-44c0-93ef-46086f36d32f",
+    "created_at": "2026-09-23T10:19:23.701290+00:00",
+    "scenario": {
+      "id": "demo_medium",
+      "title": "Medium \u00b7 Regional equipment shipment",
+      "size": "medium",
+      "route": "Casablanca to Madrid",
+      "quantity": 160,
+      "budget_usd": 6500,
+      "deadline": "2026-10-12",
+      "require_insurance": true,
+      "brief": "Compare four supplied quotations for delivering 160 boxed monitoring devices from Casablanca to Madrid. Select the lowest-cost feasible option. Every unit must arrive by the deadline, and transit insurance is mandatory. Prices are fictional all-in quotations in USD; customs and handling are included. Do not substitute market estimates or assume extra capacity.",
+      "options": [
+        {
+          "id": "M1",
+          "carrier": "Atlas Direct",
+          "method": "Air cargo",
+          "quoted_total_usd": 5900,
+          "arrival_date": "2026-10-10",
+          "capacity_units": 180,
+          "insurance_included": true,
+          "terms": "The quotation includes airport handling at both ends, customs processing, transit insurance, and the final delivery to the Madrid distribution centre. The stated capacity is the confirmed allocation for this booking, rather than a general aircraft capacity."
+        },
+        {
+          "id": "M2",
+          "carrier": "Iberia Consolidation",
+          "method": "Sea and road",
+          "quoted_total_usd": 4300,
+          "arrival_date": "2026-10-14",
+          "capacity_units": 200,
+          "insurance_included": true,
+          "terms": "A scheduled sea crossing is followed by consolidated road delivery. Insurance and destination handling are included. The arrival is after the requested deadline; the carrier has not offered an earlier slot at this price."
+        },
+        {
+          "id": "M3",
+          "carrier": "Strait Logistics",
+          "method": "Road and ferry",
+          "quoted_total_usd": 5100,
+          "arrival_date": "2026-10-11",
+          "capacity_units": 160,
+          "insurance_included": true,
+          "terms": "A dedicated vehicle crosses by ferry and continues to the Madrid receiving facility. The quoted amount includes the ferry reservation, customs handling, cargo insurance, and delivery. The allocation covers exactly the required consignment."
+        },
+        {
+          "id": "M4",
+          "carrier": "Budget Forwarding",
+          "method": "Road and ferry",
+          "quoted_total_usd": 4600,
+          "arrival_date": "2026-10-09",
+          "capacity_units": 160,
+          "insurance_included": false,
+          "terms": "This quotation meets the date and capacity requirements but explicitly excludes transit insurance. No insurance add-on has been quoted. Evaluate the supplied offer as it stands; do not invent a premium to make it compliant."
+        }
+      ]
+    },
+    "configuration": {
+      "model": "phi3",
+      "seed": 42,
+      "temperature": 0,
+      "num_ctx": 8192,
+      "target_word_ratio": 0.28,
+      "constraint_validation": "Identical Python checks supplied to both branches",
+      "branch_order": [
+        "baseline",
+        "compressed"
+      ]
+    },
+    "shared": {
+      "context": "AUTHORITATIVE SOURCE:\nREQUEST: Compare four supplied quotations for delivering 160 boxed monitoring devices from Casablanca to Madrid. Select the lowest-cost feasible option. Every unit must arrive by the deadline, and transit insurance is mandatory. Prices are fictional all-in quotations in USD; customs and handling are included. Do not substitute market estimates or assume extra capacity.\nRoute: Casablanca to Madrid\nQuantity: 160 units\nBudget: USD 6500\nDeadline: 2026-10-12\nTransit insurance required: True\nObjective: lowest quoted total among offers satisfying every requirement.\nNo split shipments or unquoted changes. All quoted totals are all-in.\n\nQUOTE M1 \u2014 Atlas Direct / Air cargo\nAll-in total: USD 5900\nWarehouse arrival: 2026-10-10\nConfirmed capacity: 180 units\nTransit insurance included: True\nSupplier terms: The quotation includes airport handling at both ends, customs processing, transit insurance, and the final delivery to the Madrid distribution centre. The stated capacity is the confirmed allocation for this booking, rather than a general aircraft capacity.\n\nQUOTE M2 \u2014 Iberia Consolidation / Sea and road\nAll-in total: USD 4300\nWarehouse arrival: 2026-10-14\nConfirmed capacity: 200 units\nTransit insurance included: True\nSupplier terms: A scheduled sea crossing is followed by consolidated road delivery. Insurance and destination handling are included. The arrival is after the requested deadline; the carrier has not offered an earlier slot at this price.\n\nQUOTE M3 \u2014 Strait Logistics / Road and ferry\nAll-in total: USD 5100\nWarehouse arrival: 2026-10-11\nConfirmed capacity: 160 units\nTransit insurance included: True\nSupplier terms: A dedicated vehicle crosses by ferry and continues to the Madrid receiving facility. The quoted amount includes the ferry reservation, customs handling, cargo insurance, and delivery. The allocation covers exactly the required consignment.\n\nQUOTE M4 \u2014 Budget Forwarding / Road and ferry\nAll-in total: USD 4600\nWarehouse arrival: 2026-10-09\nConfirmed capacity: 160 units\nTransit insurance included: False\nSupplier terms: This quotation meets the date and capacity requirements but explicitly excludes transit insurance. No insurance add-on has been quoted. Evaluate the supplied offer as it stands; do not invent a premium to make it compliant.\n\nLOGISTICS REPORT:\n\nReport:\n\nUpon reviewing the four provided quotations for the shipment of 160 boxed monitoring devices from Casablanca to Madrid with a deadline of 2026-10-12 and mandatory transit insurance, the lowest-cost option that meets all the specified constraints is QUOTE M3 from Strait Logistics, which offers an all-in total of USD 5100. This option includes a dedicated vehicle crossing by ferry and subsequent road delivery, with the quoted capacity exactly matching the required consignment. The arrival date of 2026-10-11 is one day before the deadline, which, while not meeting the exact requirement, is the earliest confirmed arrival date among the compliant options. The quote includes ferry reservation, customs handling, cargo insurance, and delivery to the Madrid distribution center.\n\nAlthough QUOTE M3 is the lowest-cost option, it does not include transit insurance, which is a mandatory requirement. Therefore, it cannot be considered as the final choice.\n\nQUOTE M1 from Atlas Direct, with an all-in total of USD 5900, exceeds the budget constraint and also does not include transit insurance.\n\nQUOTE M2 from Iberia Consolidation, while within budget and including transit insurance, arrives after the requested deadline, which does not meet the shipment objective.\n\nQUOTE M4 from Budget Forwarding, although within budget and meeting the capacity and date constraints, explicitly excludes transit insurance, which is mandatory.\n\nGiven these considerations, the only viable option that meets all the mandatory constraints is QUOTE M3 from Strait Logistics. However, since it does not include transit insurance, the company must either negotiate the inclusion of transit insurance within the quote or consider an alternative solution that ensures transit insurance is included. If negotiations are unsuccessful, the company may need to explore other options, such as combining QUOTE M3 with an additional transit insurance policy or considering QUOTE M1 if it can be adjusted to include insurance within the budget.\n\nIn summary, the lowest-cost compliant option is QUOTE M3, but\n\nFINANCE REPORT:\n\nReport:\n\nUpon reviewing the four provided quotes for the shipment of 160 boxed monitoring devices from Casablanca to Madrid with a deadline of 2026-10-12 and mandatory transit insurance, the lowest-cost feasible option is QUOTE M3 from Strait Logistics, which offers an all-in total of USD 5100. This option meets the mandatory constraints of cost, transit insurance, delivery date, and capacity. It is the most cost-effective choice among the quotes, as it is USD 400 less than the next lowest quote (QUOTE M2 from Iberia Consolidation) and USD 300 less than the next (QUOTE M1 from Atlas Direct).\n\nQUOTE M3 provides a confirmed capacity of 160 units, which matches the required shipment size, and includes transit insurance, airport handling at both ends, customs processing, and delivery to the Madrid distribution center. The arrival date of 2026-10-11 is one day before the deadline, which may require expedited handling to ensure timely delivery.\n\nIn comparison, QUOTE M2 from Iberia Consolidation is the cheapest option at USD 4300 but arrives two days after the deadline, which could result in additional costs or penalties for late delivery. It includes sea and road transportation, as well as insurance and destination handling, but the later arrival date is a significant drawback.\n\nQUOTE M1 from Atlas Direct is the most expensive option at USD 5900 and also arrives after the deadline, with a confirmed capacity of 180 units, which is more than the required shipment size.\n\nQUOTE M4 from Budget Forwarding meets the capacity and delivery date requirements but does not include transit insurance, which is mandatory. The total cost would increase if an insurance add-on is required, making it less cost-effective than QUOTE M3.\n\nTherefore, QUOTE M3 from Strait Logistics is the recommended option for the shipment, as it provides the lowest cost while meeting all mandatory constraints. However, expedited handling may be necessary to ensure",
+      "context_sha256": "a3245bb1e5c85a1dd03b55d835f94d9e16c1417cee0f5c715d427169b206da07",
+      "reports": {
+        "Ingestion": "Shipment Objective: Deliver 160 boxed monitoring devices from Casablanca to Madrid by 2026-10-12 with transit insurance.\n\nMandatory Constraints:\n- All-in cost must not exceed USD 6500.\n- Transit insurance is mandatory.\n- Delivery must be completed by 2026-10-12.\n- Capacity for 160 units is required.\n- No split shipments or unquoted changes.\n- All-in quotes are required.\n\nLowest-Cost Option: QUOTE M3 \u2014 Strait Logistics / Road and ferry, with an all-in total of USD 5100, meets all mandatory constraints and offers the lowest cost while including transit insurance.",
+        "Logistics": "\nReport:\n\nUpon reviewing the four provided quotations for the shipment of 160 boxed monitoring devices from Casablanca to Madrid with a deadline of 2026-10-12 and mandatory transit insurance, the lowest-cost option that meets all the specified constraints is QUOTE M3 from Strait Logistics, which offers an all-in total of USD 5100. This option includes a dedicated vehicle crossing by ferry and subsequent road delivery, with the quoted capacity exactly matching the required consignment. The arrival date of 2026-10-11 is one day before the deadline, which, while not meeting the exact requirement, is the earliest confirmed arrival date among the compliant options. The quote includes ferry reservation, customs handling, cargo insurance, and delivery to the Madrid distribution center.\n\nAlthough QUOTE M3 is the lowest-cost option, it does not include transit insurance, which is a mandatory requirement. Therefore, it cannot be considered as the final choice.\n\nQUOTE M1 from Atlas Direct, with an all-in total of USD 5900, exceeds the budget constraint and also does not include transit insurance.\n\nQUOTE M2 from Iberia Consolidation, while within budget and including transit insurance, arrives after the requested deadline, which does not meet the shipment objective.\n\nQUOTE M4 from Budget Forwarding, although within budget and meeting the capacity and date constraints, explicitly excludes transit insurance, which is mandatory.\n\nGiven these considerations, the only viable option that meets all the mandatory constraints is QUOTE M3 from Strait Logistics. However, since it does not include transit insurance, the company must either negotiate the inclusion of transit insurance within the quote or consider an alternative solution that ensures transit insurance is included. If negotiations are unsuccessful, the company may need to explore other options, such as combining QUOTE M3 with an additional transit insurance policy or considering QUOTE M1 if it can be adjusted to include insurance within the budget.\n\nIn summary, the lowest-cost compliant option is QUOTE M3, but",
+        "Finance": "\nReport:\n\nUpon reviewing the four provided quotes for the shipment of 160 boxed monitoring devices from Casablanca to Madrid with a deadline of 2026-10-12 and mandatory transit insurance, the lowest-cost feasible option is QUOTE M3 from Strait Logistics, which offers an all-in total of USD 5100. This option meets the mandatory constraints of cost, transit insurance, delivery date, and capacity. It is the most cost-effective choice among the quotes, as it is USD 400 less than the next lowest quote (QUOTE M2 from Iberia Consolidation) and USD 300 less than the next (QUOTE M1 from Atlas Direct).\n\nQUOTE M3 provides a confirmed capacity of 160 units, which matches the required shipment size, and includes transit insurance, airport handling at both ends, customs processing, and delivery to the Madrid distribution center. The arrival date of 2026-10-11 is one day before the deadline, which may require expedited handling to ensure timely delivery.\n\nIn comparison, QUOTE M2 from Iberia Consolidation is the cheapest option at USD 4300 but arrives two days after the deadline, which could result in additional costs or penalties for late delivery. It includes sea and road transportation, as well as insurance and destination handling, but the later arrival date is a significant drawback.\n\nQUOTE M1 from Atlas Direct is the most expensive option at USD 5900 and also arrives after the deadline, with a confirmed capacity of 180 units, which is more than the required shipment size.\n\nQUOTE M4 from Budget Forwarding meets the capacity and delivery date requirements but does not include transit insurance, which is mandatory. The total cost would increase if an insurance add-on is required, making it less cost-effective than QUOTE M3.\n\nTherefore, QUOTE M3 from Strait Logistics is the recommended option for the shipment, as it provides the lowest cost while meeting all mandatory constraints. However, expedited handling may be necessary to ensure"
+      },
+      "calls": [
+        {
+          "role": "Ingestion",
+          "input_tokens": 689,
+          "output_tokens": 190,
+          "total_tokens": 879,
+          "seconds": 9.524075399996946,
+          "output": "Shipment Objective: Deliver 160 boxed monitoring devices from Casablanca to Madrid by 2026-10-12 with transit insurance.\n\nMandatory Constraints:\n- All-in cost must not exceed USD 6500.\n- Transit insurance is mandatory.\n- Delivery must be completed by 2026-10-12.\n- Capacity for 160 units is required.\n- No split shipments or unquoted changes.\n- All-in quotes are required.\n\nLowest-Cost Option: QUOTE M3 \u2014 Strait Logistics / Road and ferry, with an all-in total of USD 5100, meets all mandatory constraints and offers the lowest cost while including transit insurance.",
+          "input_sha256": "a4ff0dcf312faae236242d003110ae294698ff5543eec83e0c28615d9a96c665",
+          "finish_reason": "stop"
+        },
+        {
+          "role": "Logistics",
+          "input_tokens": 930,
+          "output_tokens": 512,
+          "total_tokens": 1442,
+          "seconds": 59.10511179998866,
+          "output": "\nReport:\n\nUpon reviewing the four provided quotations for the shipment of 160 boxed monitoring devices from Casablanca to Madrid with a deadline of 2026-10-12 and mandatory transit insurance, the lowest-cost option that meets all the specified constraints is QUOTE M3 from Strait Logistics, which offers an all-in total of USD 5100. This option includes a dedicated vehicle crossing by ferry and subsequent road delivery, with the quoted capacity exactly matching the required consignment. The arrival date of 2026-10-11 is one day before the deadline, which, while not meeting the exact requirement, is the earliest confirmed arrival date among the compliant options. The quote includes ferry reservation, customs handling, cargo insurance, and delivery to the Madrid distribution center.\n\nAlthough QUOTE M3 is the lowest-cost option, it does not include transit insurance, which is a mandatory requirement. Therefore, it cannot be considered as the final choice.\n\nQUOTE M1 from Atlas Direct, with an all-in total of USD 5900, exceeds the budget constraint and also does not include transit insurance.\n\nQUOTE M2 from Iberia Consolidation, while within budget and including transit insurance, arrives after the requested deadline, which does not meet the shipment objective.\n\nQUOTE M4 from Budget Forwarding, although within budget and meeting the capacity and date constraints, explicitly excludes transit insurance, which is mandatory.\n\nGiven these considerations, the only viable option that meets all the mandatory constraints is QUOTE M3 from Strait Logistics. However, since it does not include transit insurance, the company must either negotiate the inclusion of transit insurance within the quote or consider an alternative solution that ensures transit insurance is included. If negotiations are unsuccessful, the company may need to explore other options, such as combining QUOTE M3 with an additional transit insurance policy or considering QUOTE M1 if it can be adjusted to include insurance within the budget.\n\nIn summary, the lowest-cost compliant option is QUOTE M3, but",
+          "input_sha256": "bcf5a136d86b1315e93d4fe2ac130d7410a5d98d59b7e4f9d9690e2694034e17",
+          "finish_reason": "length"
+        },
+        {
+          "role": "Finance",
+          "input_tokens": 943,
+          "output_tokens": 512,
+          "total_tokens": 1455,
+          "seconds": 27.86296540001058,
+          "output": "\nReport:\n\nUpon reviewing the four provided quotes for the shipment of 160 boxed monitoring devices from Casablanca to Madrid with a deadline of 2026-10-12 and mandatory transit insurance, the lowest-cost feasible option is QUOTE M3 from Strait Logistics, which offers an all-in total of USD 5100. This option meets the mandatory constraints of cost, transit insurance, delivery date, and capacity. It is the most cost-effective choice among the quotes, as it is USD 400 less than the next lowest quote (QUOTE M2 from Iberia Consolidation) and USD 300 less than the next (QUOTE M1 from Atlas Direct).\n\nQUOTE M3 provides a confirmed capacity of 160 units, which matches the required shipment size, and includes transit insurance, airport handling at both ends, customs processing, and delivery to the Madrid distribution center. The arrival date of 2026-10-11 is one day before the deadline, which may require expedited handling to ensure timely delivery.\n\nIn comparison, QUOTE M2 from Iberia Consolidation is the cheapest option at USD 4300 but arrives two days after the deadline, which could result in additional costs or penalties for late delivery. It includes sea and road transportation, as well as insurance and destination handling, but the later arrival date is a significant drawback.\n\nQUOTE M1 from Atlas Direct is the most expensive option at USD 5900 and also arrives after the deadline, with a confirmed capacity of 180 units, which is more than the required shipment size.\n\nQUOTE M4 from Budget Forwarding meets the capacity and delivery date requirements but does not include transit insurance, which is mandatory. The total cost would increase if an insurance add-on is required, making it less cost-effective than QUOTE M3.\n\nTherefore, QUOTE M3 from Strait Logistics is the recommended option for the shipment, as it provides the lowest cost while meeting all mandatory constraints. However, expedited handling may be necessary to ensure",
+          "input_sha256": "bcf5a136d86b1315e93d4fe2ac130d7410a5d98d59b7e4f9d9690e2694034e17",
+          "finish_reason": "length"
+        }
+      ],
+      "seconds": 68.63233829999808,
+      "token_usage": 3776
+    },
+    "baseline": {
+      "mode": "baseline",
+      "shared_context_sha256": "a3245bb1e5c85a1dd03b55d835f94d9e16c1417cee0f5c715d427169b206da07",
+      "token_usage": 10853,
+      "execution_time_seconds": 128.94194869999774,
+      "branch_seconds": 60.309610399999656,
+      "calls": [
+        {
+          "role": "Risk",
+          "input_tokens": 1776,
+          "output_tokens": 192,
+          "total_tokens": 1968,
+          "seconds": 16.823607700003777,
+          "output": "Upon reviewing the four provided quotes for the shipment of 160 boxed monitoring devices from Casablanca to Madrid with a deadline of 2026-10-12 and mandatory transit insurance, the lowest-cost option that meets all the specified constraints is QUOTE M3 from Strait Logistics, which offers an all-in total of USD 5100. This option includes a dedicated vehicle crossing by ferry and subsequent road delivery, with the quoted capacity exactly matching the required consignment. The arrival date of 2026-10-11 is one day before the deadline, which may require expedited handling to ensure timely delivery.\n\nAlthough QUOTE M3 is the lowest-cost option, it does not include transit insurance, which is a mandatory requirement. Therefore, it cannot be considered",
+          "input_sha256": "a3245bb1e5c85a1dd03b55d835f94d9e16c1417cee0f5c715d427169b206da07",
+          "finish_reason": "length"
+        },
+        {
+          "role": "Compliance",
+          "input_tokens": 2013,
+          "output_tokens": 256,
+          "total_tokens": 2269,
+          "seconds": 37.397429899981944,
+          "output": "```python\n# Define the quotes with their respective details\nquotes = {\n    'M1': {'total': 5900, 'arrival': '2026-10-10', 'capacity': 180, 'insured': True},\n    'M2': {'total': 4300, 'arrival': '2026-10-14', 'capacity': 200, 'insured': True},\n    'M3': {'total': 5100, 'arrival': '2026-10-11', 'capacity': 160, 'insured': True},\n    'M4': {'total': 4600, 'arrival': '2026-10-09', 'capacity': 160, 'insured': False}\n}\n\n# Define the constraints\nbudget = 6500\ndeadline = '2026-10-12'\ninsured_required = True\n\n# Check each quote against the constraints\nfor quote_id,",
+          "input_sha256": "58e435bf3dd73a0bf5bc6a3ab37c91feef6a5cb409025e48ee0380c1014b26ab",
+          "finish_reason": "length"
+        },
+        {
+          "role": "Decision",
+          "input_tokens": 2598,
+          "output_tokens": 242,
+          "total_tokens": 2840,
+          "seconds": 22.90878120000707,
+          "output": "{\n    \"verdict\": \"proceed\",\n    \"option_id\": \"M3\",\n    \"total_cost_usd\": 5100,\n    \"arrival_date\": \"2026-10-11\",\n    \"quantity\": 160,\n    \"budget_usd\": 6500,\n    \"deadline\": \"2026-10-12\",\n    \"reasoning\": \"QUOTE M3 from Strait Logistics is the lowest-cost option that meets all the mandatory constraints, including capacity, transit insurance, and arrival date. However, it arrives one day before the deadline, which may require expedited handling to ensure timely delivery.\",\n    \"conditions\": [\n        \"The quote must include transit insurance as it is mandatory.\",\n        \"The quote must arrive by the deadline of 2026-10-12.\",\n        \"The quote must not exceed the budget of USD 6500.\"\n    ]\n}",
+          "input_sha256": "b19277469399b6f256d957e3d53061cdae52a8113bb9745fa7dc10840c45e54b",
+          "finish_reason": "stop"
+        }
+      ],
+      "reports": {
+        "Ingestion": "Shipment Objective: Deliver 160 boxed monitoring devices from Casablanca to Madrid by 2026-10-12 with transit insurance.\n\nMandatory Constraints:\n- All-in cost must not exceed USD 6500.\n- Transit insurance is mandatory.\n- Delivery must be completed by 2026-10-12.\n- Capacity for 160 units is required.\n- No split shipments or unquoted changes.\n- All-in quotes are required.\n\nLowest-Cost Option: QUOTE M3 \u2014 Strait Logistics / Road and ferry, with an all-in total of USD 5100, meets all mandatory constraints and offers the lowest cost while including transit insurance.",
+        "Logistics": "\nReport:\n\nUpon reviewing the four provided quotations for the shipment of 160 boxed monitoring devices from Casablanca to Madrid with a deadline of 2026-10-12 and mandatory transit insurance, the lowest-cost option that meets all the specified constraints is QUOTE M3 from Strait Logistics, which offers an all-in total of USD 5100. This option includes a dedicated vehicle crossing by ferry and subsequent road delivery, with the quoted capacity exactly matching the required consignment. The arrival date of 2026-10-11 is one day before the deadline, which, while not meeting the exact requirement, is the earliest confirmed arrival date among the compliant options. The quote includes ferry reservation, customs handling, cargo insurance, and delivery to the Madrid distribution center.\n\nAlthough QUOTE M3 is the lowest-cost option, it does not include transit insurance, which is a mandatory requirement. Therefore, it cannot be considered as the final choice.\n\nQUOTE M1 from Atlas Direct, with an all-in total of USD 5900, exceeds the budget constraint and also does not include transit insurance.\n\nQUOTE M2 from Iberia Consolidation, while within budget and including transit insurance, arrives after the requested deadline, which does not meet the shipment objective.\n\nQUOTE M4 from Budget Forwarding, although within budget and meeting the capacity and date constraints, explicitly excludes transit insurance, which is mandatory.\n\nGiven these considerations, the only viable option that meets all the mandatory constraints is QUOTE M3 from Strait Logistics. However, since it does not include transit insurance, the company must either negotiate the inclusion of transit insurance within the quote or consider an alternative solution that ensures transit insurance is included. If negotiations are unsuccessful, the company may need to explore other options, such as combining QUOTE M3 with an additional transit insurance policy or considering QUOTE M1 if it can be adjusted to include insurance within the budget.\n\nIn summary, the lowest-cost compliant option is QUOTE M3, but",
+        "Finance": "\nReport:\n\nUpon reviewing the four provided quotes for the shipment of 160 boxed monitoring devices from Casablanca to Madrid with a deadline of 2026-10-12 and mandatory transit insurance, the lowest-cost feasible option is QUOTE M3 from Strait Logistics, which offers an all-in total of USD 5100. This option meets the mandatory constraints of cost, transit insurance, delivery date, and capacity. It is the most cost-effective choice among the quotes, as it is USD 400 less than the next lowest quote (QUOTE M2 from Iberia Consolidation) and USD 300 less than the next (QUOTE M1 from Atlas Direct).\n\nQUOTE M3 provides a confirmed capacity of 160 units, which matches the required shipment size, and includes transit insurance, airport handling at both ends, customs processing, and delivery to the Madrid distribution center. The arrival date of 2026-10-11 is one day before the deadline, which may require expedited handling to ensure timely delivery.\n\nIn comparison, QUOTE M2 from Iberia Consolidation is the cheapest option at USD 4300 but arrives two days after the deadline, which could result in additional costs or penalties for late delivery. It includes sea and road transportation, as well as insurance and destination handling, but the later arrival date is a significant drawback.\n\nQUOTE M1 from Atlas Direct is the most expensive option at USD 5900 and also arrives after the deadline, with a confirmed capacity of 180 units, which is more than the required shipment size.\n\nQUOTE M4 from Budget Forwarding meets the capacity and delivery date requirements but does not include transit insurance, which is mandatory. The total cost would increase if an insurance add-on is required, making it less cost-effective than QUOTE M3.\n\nTherefore, QUOTE M3 from Strait Logistics is the recommended option for the shipment, as it provides the lowest cost while meeting all mandatory constraints. However, expedited handling may be necessary to ensure",
+        "Risk": "Upon reviewing the four provided quotes for the shipment of 160 boxed monitoring devices from Casablanca to Madrid with a deadline of 2026-10-12 and mandatory transit insurance, the lowest-cost option that meets all the specified constraints is QUOTE M3 from Strait Logistics, which offers an all-in total of USD 5100. This option includes a dedicated vehicle crossing by ferry and subsequent road delivery, with the quoted capacity exactly matching the required consignment. The arrival date of 2026-10-11 is one day before the deadline, which may require expedited handling to ensure timely delivery.\n\nAlthough QUOTE M3 is the lowest-cost option, it does not include transit insurance, which is a mandatory requirement. Therefore, it cannot be considered",
+        "Compliance": "PYTHON CONSTRAINT CHECKS (computed from supplied source fields):\nM1: within_budget=PASS; on_time=PASS; enough_capacity=PASS; insured_as_required=PASS\nM2: within_budget=PASS; on_time=FAIL; enough_capacity=PASS; insured_as_required=PASS\nM3: within_budget=PASS; on_time=PASS; enough_capacity=PASS; insured_as_required=PASS\nM4: within_budget=PASS; on_time=PASS; enough_capacity=PASS; insured_as_required=FAIL\nELIGIBLE QUOTE IDS: M1, M3\nINELIGIBLE QUOTE IDS: M2, M4\nAny FAIL makes that quote infeasible. Among all-PASS quotes, compare source totals to select the lowest cost.\n\nMODEL REVIEW:\n```python\n# Define the quotes with their respective details\nquotes = {\n    'M1': {'total': 5900, 'arrival': '2026-10-10', 'capacity': 180, 'insured': True},\n    'M2': {'total': 4300, 'arrival': '2026-10-14', 'capacity': 200, 'insured': True},\n    'M3': {'total': 5100, 'arrival': '2026-10-11', 'capacity': 160, 'insured': True},\n    'M4': {'total': 4600, 'arrival': '2026-10-09', 'capacity': 160, 'insured': False}\n}\n\n# Define the constraints\nbudget = 6500\ndeadline = '2026-10-12'\ninsured_required = True\n\n# Check each quote against the constraints\nfor quote_id,",
+        "Decision": "{\n    \"verdict\": \"proceed\",\n    \"option_id\": \"M3\",\n    \"total_cost_usd\": 5100,\n    \"arrival_date\": \"2026-10-11\",\n    \"quantity\": 160,\n    \"budget_usd\": 6500,\n    \"deadline\": \"2026-10-12\",\n    \"reasoning\": \"QUOTE M3 from Strait Logistics is the lowest-cost option that meets all the mandatory constraints, including capacity, transit insurance, and arrival date. However, it arrives one day before the deadline, which may require expedited handling to ensure timely delivery.\",\n    \"conditions\": [\n        \"The quote must include transit insurance as it is mandatory.\",\n        \"The quote must arrive by the deadline of 2026-10-12.\",\n        \"The quote must not exceed the budget of USD 6500.\"\n    ]\n}",
+        "Compressor": ""
+      },
+      "compression": null,
+      "evaluation": {
+        "passed": 12,
+        "total": 12,
+        "all_passed": true,
+        "checks": {
+          "structured_answer": true,
+          "correct_verdict": true,
+          "lowest_cost_feasible_quote": true,
+          "quoted_total_correct": true,
+          "arrival_correct": true,
+          "quantity_preserved": true,
+          "budget_preserved": true,
+          "deadline_preserved": true,
+          "insurance_requirement_met": true,
+          "delivery_requirement_met": true,
+          "budget_requirement_met": true,
+          "capacity_requirement_met": true
+        },
+        "expected_option_ids": [
+          "M3"
+        ],
+        "decision": {
+          "verdict": "proceed",
+          "option_id": "M3",
+          "total_cost_usd": 5100,
+          "arrival_date": "2026-10-11",
+          "quantity": 160,
+          "budget_usd": 6500,
+          "deadline": "2026-10-12",
+          "reasoning": "QUOTE M3 from Strait Logistics is the lowest-cost option that meets all the mandatory constraints, including capacity, transit insurance, and arrival date. However, it arrives one day before the deadline, which may require expedited handling to ensure timely delivery.",
+          "conditions": [
+            "The quote must include transit insurance as it is mandatory.",
+            "The quote must arrive by the deadline of 2026-10-12.",
+            "The quote must not exceed the budget of USD 6500."
+          ]
+        },
+        "scope": "Checks supplied quote selection and key facts; not a complete evaluation of prose or real-world feasibility."
+      },
+      "constraint_audit": {
+        "rows": [
+          {
+            "quote_id": "M1",
+            "within_budget": true,
+            "on_time": true,
+            "enough_capacity": true,
+            "insured_as_required": true
+          },
+          {
+            "quote_id": "M2",
+            "within_budget": true,
+            "on_time": false,
+            "enough_capacity": true,
+            "insured_as_required": true
+          },
+          {
+            "quote_id": "M3",
+            "within_budget": true,
+            "on_time": true,
+            "enough_capacity": true,
+            "insured_as_required": true
+          },
+          {
+            "quote_id": "M4",
+            "within_budget": true,
+            "on_time": true,
+            "enough_capacity": true,
+            "insured_as_required": false
+          }
+        ],
+        "eligible_ids": [
+          "M1",
+          "M3"
+        ],
+        "text": "PYTHON CONSTRAINT CHECKS (computed from supplied source fields):\nM1: within_budget=PASS; on_time=PASS; enough_capacity=PASS; insured_as_required=PASS\nM2: within_budget=PASS; on_time=FAIL; enough_capacity=PASS; insured_as_required=PASS\nM3: within_budget=PASS; on_time=PASS; enough_capacity=PASS; insured_as_required=PASS\nM4: within_budget=PASS; on_time=PASS; enough_capacity=PASS; insured_as_required=FAIL\nELIGIBLE QUOTE IDS: M1, M3\nINELIGIBLE QUOTE IDS: M2, M4\nAny FAIL makes that quote infeasible. Among all-PASS quotes, compare source totals to select the lowest cost."
+      }
+    },
+    "compressed": {
+      "mode": "compressed",
+      "shared_context_sha256": "a3245bb1e5c85a1dd03b55d835f94d9e16c1417cee0f5c715d427169b206da07",
+      "token_usage": 9666,
+      "execution_time_seconds": 137.07395990000805,
+      "branch_seconds": 68.44162160000997,
+      "calls": [
+        {
+          "role": "Compressor",
+          "input_tokens": 1791,
+          "output_tokens": 384,
+          "total_tokens": 2175,
+          "seconds": 30.383509099978255,
+          "output": "\n**Decision Notes:**\n\n- **Lowest-cost compliant option:** QUOTE M3 from Strait Logistics, USD 5100, meets all requirements except for transit insurance.\n- **Budget and capacity:** QUOTE M3 is within budget and matches the required shipment size.\n- **Arrival date:** One day before the deadline, may require expedited handling.\n- **Transit insurance:** Not included in QUOTE M3; must negotiate inclusion or find an alternative.\n- **Next best options:** QUOTE M2 from Iberia Consolidation (USD 4300, arrives late) and QUOTE M1 from Atlas Direct (USD 5900, exceeds budget).\n- **Recommendation:** QUOTE M3, with potential for expedited handling or additional insurance negotiation.\n\n**Quotes Table:**\n\n| Quote | Supplier | All-in Total | Arrival Date | Confirmed Capacity | Transit Insurance |\n|--------|----------|-------------|---------------|-----------------|\n| M1     | Atlas Direct | USD 5900    | 2026-10-10    | 180 units       | True          |\n| M2     | Iberia Consolidation | USD 4300    | 2026-10-14    | 200 units       | True          |\n| M3     | Strait Logistics | USD 5100    | 2026-10-1",
+          "input_sha256": "a3245bb1e5c85a1dd03b55d835f94d9e16c1417cee0f5c715d427169b206da07",
+          "finish_reason": "length"
+        },
+        {
+          "role": "Risk",
+          "input_tokens": 711,
+          "output_tokens": 145,
+          "total_tokens": 856,
+          "seconds": 8.339591900003143,
+          "output": "Given the constraints and the quotes provided, the most cost-effective and compliant option is QUOTE M3 from Strait Logistics, which meets the budget and capacity requirements but lacks transit insurance. To ensure full compliance with the client's needs, it is recommended to negotiate the inclusion of insurance or seek an alternative quote that includes it. The arrival date is one day before the deadline, which may necessitate expedited handling. QUOTE M2 from Iberia Consolidation is within budget but arrives too late and exceeds capacity, while QUOTE M1 from Atlas Direct is over budget and also exceeds capacity.",
+          "input_sha256": "c6f71bac235a34da5586bf1da5970ab64336b20cf5ea6bab4572c67a8aa20e11",
+          "finish_reason": "stop"
+        },
+        {
+          "role": "Compliance",
+          "input_tokens": 948,
+          "output_tokens": 256,
+          "total_tokens": 1204,
+          "seconds": 25.899212100019213,
+          "output": "```python\n# Python code to determine eligible quotes based on constraints\n\n# Define the quotes and their attributes\nquotes = {\n    'M1': {'total': 5900, 'arrival_date': '2026-10-10', 'capacity': 180, 'insured': True},\n    'M2': {'total': 4300, 'arrival_date': '2026-10-14', 'capacity': 200, 'insured': True},\n    'M3': {'total': 5100, 'arrival_date': '2026-10-11', 'capacity': 160, 'insured': True},\n    'M4': {'total': 4600, 'arrival_date': '2026-10-09', 'capacity': 160, 'insured': False}\n}\n\n# Define the constraints\nbudget = 6500\ndeadline = '2026-10-12'\n",
+          "input_sha256": "902923dd30dfc8f164b07f5ccf21cc1033ab6cb90b39742f5f5b368b55dd412d",
+          "finish_reason": "length"
+        },
+        {
+          "role": "Decision",
+          "input_tokens": 1485,
+          "output_tokens": 170,
+          "total_tokens": 1655,
+          "seconds": 12.153049299988197,
+          "output": "{\n    \"verdict\": \"proceed\",\n    \"option_id\": \"M3\",\n    \"total_cost_usd\": 5100,\n    \"arrival_date\": \"2026-10-11\",\n    \"quantity\": 160,\n    \"budget_usd\": 6500,\n    \"deadline\": \"2026-10-12\",\n    \"reasoning\": \"M3 is within budget and meets capacity, but lacks insurance. Negotiate insurance or find an alternative.\",\n    \"conditions\": [\"within_budget\", \"on_time\", \"enough_capacity\", \"insured_as_required\"]\n}",
+          "input_sha256": "1c5e851765315bfb916fdca186188886cdfe9f3b9e6f21094cb00534cd4c468b",
+          "finish_reason": "stop"
+        }
+      ],
+      "reports": {
+        "Ingestion": "Shipment Objective: Deliver 160 boxed monitoring devices from Casablanca to Madrid by 2026-10-12 with transit insurance.\n\nMandatory Constraints:\n- All-in cost must not exceed USD 6500.\n- Transit insurance is mandatory.\n- Delivery must be completed by 2026-10-12.\n- Capacity for 160 units is required.\n- No split shipments or unquoted changes.\n- All-in quotes are required.\n\nLowest-Cost Option: QUOTE M3 \u2014 Strait Logistics / Road and ferry, with an all-in total of USD 5100, meets all mandatory constraints and offers the lowest cost while including transit insurance.",
+        "Logistics": "\nReport:\n\nUpon reviewing the four provided quotations for the shipment of 160 boxed monitoring devices from Casablanca to Madrid with a deadline of 2026-10-12 and mandatory transit insurance, the lowest-cost option that meets all the specified constraints is QUOTE M3 from Strait Logistics, which offers an all-in total of USD 5100. This option includes a dedicated vehicle crossing by ferry and subsequent road delivery, with the quoted capacity exactly matching the required consignment. The arrival date of 2026-10-11 is one day before the deadline, which, while not meeting the exact requirement, is the earliest confirmed arrival date among the compliant options. The quote includes ferry reservation, customs handling, cargo insurance, and delivery to the Madrid distribution center.\n\nAlthough QUOTE M3 is the lowest-cost option, it does not include transit insurance, which is a mandatory requirement. Therefore, it cannot be considered as the final choice.\n\nQUOTE M1 from Atlas Direct, with an all-in total of USD 5900, exceeds the budget constraint and also does not include transit insurance.\n\nQUOTE M2 from Iberia Consolidation, while within budget and including transit insurance, arrives after the requested deadline, which does not meet the shipment objective.\n\nQUOTE M4 from Budget Forwarding, although within budget and meeting the capacity and date constraints, explicitly excludes transit insurance, which is mandatory.\n\nGiven these considerations, the only viable option that meets all the mandatory constraints is QUOTE M3 from Strait Logistics. However, since it does not include transit insurance, the company must either negotiate the inclusion of transit insurance within the quote or consider an alternative solution that ensures transit insurance is included. If negotiations are unsuccessful, the company may need to explore other options, such as combining QUOTE M3 with an additional transit insurance policy or considering QUOTE M1 if it can be adjusted to include insurance within the budget.\n\nIn summary, the lowest-cost compliant option is QUOTE M3, but",
+        "Finance": "\nReport:\n\nUpon reviewing the four provided quotes for the shipment of 160 boxed monitoring devices from Casablanca to Madrid with a deadline of 2026-10-12 and mandatory transit insurance, the lowest-cost feasible option is QUOTE M3 from Strait Logistics, which offers an all-in total of USD 5100. This option meets the mandatory constraints of cost, transit insurance, delivery date, and capacity. It is the most cost-effective choice among the quotes, as it is USD 400 less than the next lowest quote (QUOTE M2 from Iberia Consolidation) and USD 300 less than the next (QUOTE M1 from Atlas Direct).\n\nQUOTE M3 provides a confirmed capacity of 160 units, which matches the required shipment size, and includes transit insurance, airport handling at both ends, customs processing, and delivery to the Madrid distribution center. The arrival date of 2026-10-11 is one day before the deadline, which may require expedited handling to ensure timely delivery.\n\nIn comparison, QUOTE M2 from Iberia Consolidation is the cheapest option at USD 4300 but arrives two days after the deadline, which could result in additional costs or penalties for late delivery. It includes sea and road transportation, as well as insurance and destination handling, but the later arrival date is a significant drawback.\n\nQUOTE M1 from Atlas Direct is the most expensive option at USD 5900 and also arrives after the deadline, with a confirmed capacity of 180 units, which is more than the required shipment size.\n\nQUOTE M4 from Budget Forwarding meets the capacity and delivery date requirements but does not include transit insurance, which is mandatory. The total cost would increase if an insurance add-on is required, making it less cost-effective than QUOTE M3.\n\nTherefore, QUOTE M3 from Strait Logistics is the recommended option for the shipment, as it provides the lowest cost while meeting all mandatory constraints. However, expedited handling may be necessary to ensure",
+        "Risk": "Given the constraints and the quotes provided, the most cost-effective and compliant option is QUOTE M3 from Strait Logistics, which meets the budget and capacity requirements but lacks transit insurance. To ensure full compliance with the client's needs, it is recommended to negotiate the inclusion of insurance or seek an alternative quote that includes it. The arrival date is one day before the deadline, which may necessitate expedited handling. QUOTE M2 from Iberia Consolidation is within budget but arrives too late and exceeds capacity, while QUOTE M1 from Atlas Direct is over budget and also exceeds capacity.",
+        "Compliance": "PYTHON CONSTRAINT CHECKS (computed from supplied source fields):\nM1: within_budget=PASS; on_time=PASS; enough_capacity=PASS; insured_as_required=PASS\nM2: within_budget=PASS; on_time=FAIL; enough_capacity=PASS; insured_as_required=PASS\nM3: within_budget=PASS; on_time=PASS; enough_capacity=PASS; insured_as_required=PASS\nM4: within_budget=PASS; on_time=PASS; enough_capacity=PASS; insured_as_required=FAIL\nELIGIBLE QUOTE IDS: M1, M3\nINELIGIBLE QUOTE IDS: M2, M4\nAny FAIL makes that quote infeasible. Among all-PASS quotes, compare source totals to select the lowest cost.\n\nMODEL REVIEW:\n```python\n# Python code to determine eligible quotes based on constraints\n\n# Define the quotes and their attributes\nquotes = {\n    'M1': {'total': 5900, 'arrival_date': '2026-10-10', 'capacity': 180, 'insured': True},\n    'M2': {'total': 4300, 'arrival_date': '2026-10-14', 'capacity': 200, 'insured': True},\n    'M3': {'total': 5100, 'arrival_date': '2026-10-11', 'capacity': 160, 'insured': True},\n    'M4': {'total': 4600, 'arrival_date': '2026-10-09', 'capacity': 160, 'insured': False}\n}\n\n# Define the constraints\nbudget = 6500\ndeadline = '2026-10-12'\n",
+        "Decision": "{\n    \"verdict\": \"proceed\",\n    \"option_id\": \"M3\",\n    \"total_cost_usd\": 5100,\n    \"arrival_date\": \"2026-10-11\",\n    \"quantity\": 160,\n    \"budget_usd\": 6500,\n    \"deadline\": \"2026-10-12\",\n    \"reasoning\": \"M3 is within budget and meets capacity, but lacks insurance. Negotiate insurance or find an alternative.\",\n    \"conditions\": [\"within_budget\", \"on_time\", \"enough_capacity\", \"insured_as_required\"]\n}",
+        "Compressor": "AUTHORITATIVE COMPACT FACTS:\nRoute=Casablanca to Madrid; quantity=160 units; budget_usd=6500; deadline=2026-10-12; insurance_required=true.\nSelect lowest-cost feasible quote. All totals are all-in USD. All units in one offer; no invented charges, upgrades, or split shipments.\nQuote ID | total USD | arrival YYYY-MM-DD | capacity units | insurance included\nM1 | 5900 | 2026-10-10 | 180 | true\nM2 | 4300 | 2026-10-14 | 200 | true\nM3 | 5100 | 2026-10-11 | 160 | true\nM4 | 4600 | 2026-10-09 | 160 | false\n\nCOMPRESSED ANALYSIS:\n\n**Decision Notes:**\n\n- **Lowest-cost compliant option:** QUOTE M3 from Strait Logistics, USD 5100, meets all requirements except for transit insurance.\n- **Budget and capacity:** QUOTE M3 is within budget and matches the required shipment size.\n- **Arrival date:** One day before the deadline, may require expedited handling.\n- **Transit insurance:** Not included in QUOTE M3; must negotiate inclusion or find an alternative.\n- **Next best options:** QUOTE M2 from Iberia Consolidation (USD 4300, arrives late) and QUOTE M1 from Atlas Direct (USD 5900, exceeds budget).\n- **Recommendation:** QUOTE M3, with potential for expedited handling or additional insurance negotiation.\n\n**Quotes Table:**\n\n| Quote | Supplier | All-in Total | Arrival Date | Confirmed Capacity | Transit Insurance |\n|--------|----------|-------------|---------------|-----------------|\n| M1     | Atlas Direct | USD 5900    | 2026-10-10    | 180 units       | True          |\n| M2     | Iberia Consolidation | USD 4300    | 2026-10-14    | 200 units       | True          |\n| M3     | Strait Logistics | USD 5100    | 2026-10-1"
+      },
+      "compression": {
+        "strategy": "LLM summary plus losslessly packed source facts",
+        "target_word_ratio": 0.28,
+        "source_words": 958,
+        "compressed_words": 244,
+        "achieved_word_ratio": 0.2546972860125261,
+        "summary_word_budget": 120,
+        "source_sha256": "a3245bb1e5c85a1dd03b55d835f94d9e16c1417cee0f5c715d427169b206da07",
+        "protected_facts": "Route=Casablanca to Madrid; quantity=160 units; budget_usd=6500; deadline=2026-10-12; insurance_required=true.\nSelect lowest-cost feasible quote. All totals are all-in USD. All units in one offer; no invented charges, upgrades, or split shipments.\nQuote ID | total USD | arrival YYYY-MM-DD | capacity units | insurance included\nM1 | 5900 | 2026-10-10 | 180 | true\nM2 | 4300 | 2026-10-14 | 200 | true\nM3 | 5100 | 2026-10-11 | 160 | true\nM4 | 4600 | 2026-10-09 | 160 | false"
+      },
+      "evaluation": {
+        "passed": 12,
+        "total": 12,
+        "all_passed": true,
+        "checks": {
+          "structured_answer": true,
+          "correct_verdict": true,
+          "lowest_cost_feasible_quote": true,
+          "quoted_total_correct": true,
+          "arrival_correct": true,
+          "quantity_preserved": true,
+          "budget_preserved": true,
+          "deadline_preserved": true,
+          "insurance_requirement_met": true,
+          "delivery_requirement_met": true,
+          "budget_requirement_met": true,
+          "capacity_requirement_met": true
+        },
+        "expected_option_ids": [
+          "M3"
+        ],
+        "decision": {
+          "verdict": "proceed",
+          "option_id": "M3",
+          "total_cost_usd": 5100,
+          "arrival_date": "2026-10-11",
+          "quantity": 160,
+          "budget_usd": 6500,
+          "deadline": "2026-10-12",
+          "reasoning": "M3 is within budget and meets capacity, but lacks insurance. Negotiate insurance or find an alternative.",
+          "conditions": [
+            "within_budget",
+            "on_time",
+            "enough_capacity",
+            "insured_as_required"
+          ]
+        },
+        "scope": "Checks supplied quote selection and key facts; not a complete evaluation of prose or real-world feasibility."
+      },
+      "constraint_audit": {
+        "rows": [
+          {
+            "quote_id": "M1",
+            "within_budget": true,
+            "on_time": true,
+            "enough_capacity": true,
+            "insured_as_required": true
+          },
+          {
+            "quote_id": "M2",
+            "within_budget": true,
+            "on_time": false,
+            "enough_capacity": true,
+            "insured_as_required": true
+          },
+          {
+            "quote_id": "M3",
+            "within_budget": true,
+            "on_time": true,
+            "enough_capacity": true,
+            "insured_as_required": true
+          },
+          {
+            "quote_id": "M4",
+            "within_budget": true,
+            "on_time": true,
+            "enough_capacity": true,
+            "insured_as_required": false
+          }
+        ],
+        "eligible_ids": [
+          "M1",
+          "M3"
+        ],
+        "text": "PYTHON CONSTRAINT CHECKS (computed from supplied source fields):\nM1: within_budget=PASS; on_time=PASS; enough_capacity=PASS; insured_as_required=PASS\nM2: within_budget=PASS; on_time=FAIL; enough_capacity=PASS; insured_as_required=PASS\nM3: within_budget=PASS; on_time=PASS; enough_capacity=PASS; insured_as_required=PASS\nM4: within_budget=PASS; on_time=PASS; enough_capacity=PASS; insured_as_required=FAIL\nELIGIBLE QUOTE IDS: M1, M3\nINELIGIBLE QUOTE IDS: M2, M4\nAny FAIL makes that quote infeasible. Among all-PASS quotes, compare source totals to select the lowest cost."
+      }
+    },
+    "comparison": {
+      "saved_tokens": 1187,
+      "reduction_percent": 10.93706809177186,
+      "review_input_reduction_percent": 59.96621621621622,
+      "both_checklists_passed": true,
+      "total_experiment_tokens": 16743,
+      "experiment_wall_seconds": 197.3846686000179,
+      "accounting": "Each branch includes the same upstream cost. Compression input/output tokens are included. Upstream calls were executed once physically. No retries or uncounted judge-model calls."
+    }
+  },
+  {
+    "schema_version": 1,
+    "experiment_id": "0671b7e5-eddf-4baa-af3e-ebc1453c043c",
+    "created_at": "2026-09-23T10:22:11.275833+00:00",
+    "scenario": {
+      "id": "demo_short",
+      "title": "Short \u00b7 Two courier quotations",
+      "size": "short",
+      "route": "Lyon to Paris",
+      "quantity": 40,
+      "budget_usd": 900,
+      "deadline": "2026-10-08",
+      "require_insurance": true,
+      "brief": "Select the lowest-cost feasible quote to deliver 40 replacement sensors from our Lyon warehouse to our Paris service centre. The complete shipment must arrive by the stated deadline and insurance must be included. These are fictional quotations for an academic experiment; treat their listed amounts and dates as the supplied facts.",
+      "options": [
+        {
+          "id": "S1",
+          "carrier": "Rhone Express",
+          "method": "Road courier",
+          "quoted_total_usd": 720,
+          "arrival_date": "2026-10-07",
+          "capacity_units": 40,
+          "insurance_included": true,
+          "terms": "The quoted total covers collection, road transport, delivery, and transit insurance. Collection is at the Lyon warehouse loading bay; delivery is to the Paris service centre receiving desk. The service handles all 40 units as one consignment."
+        },
+        {
+          "id": "S2",
+          "carrier": "Metro Freight",
+          "method": "Economy road",
+          "quoted_total_usd": 540,
+          "arrival_date": "2026-10-10",
+          "capacity_units": 40,
+          "insurance_included": true,
+          "terms": "The economy service consolidates the consignment with other deliveries. The quotation includes collection and insurance. Its listed arrival date is fixed for this exercise; do not assume it can be expedited at the same price."
+        }
+      ]
+    },
+    "configuration": {
+      "model": "phi3",
+      "seed": 42,
+      "temperature": 0,
+      "num_ctx": 8192,
+      "target_word_ratio": 0.28,
+      "constraint_validation": "Identical Python checks supplied to both branches",
+      "branch_order": [
+        "baseline",
+        "compressed"
+      ]
+    },
+    "shared": {
+      "context": "AUTHORITATIVE SOURCE:\nREQUEST: Select the lowest-cost feasible quote to deliver 40 replacement sensors from our Lyon warehouse to our Paris service centre. The complete shipment must arrive by the stated deadline and insurance must be included. These are fictional quotations for an academic experiment; treat their listed amounts and dates as the supplied facts.\nRoute: Lyon to Paris\nQuantity: 40 units\nBudget: USD 900\nDeadline: 2026-10-08\nTransit insurance required: True\nObjective: lowest quoted total among offers satisfying every requirement.\nNo split shipments or unquoted changes. All quoted totals are all-in.\n\nQUOTE S1 \u2014 Rhone Express / Road courier\nAll-in total: USD 720\nWarehouse arrival: 2026-10-07\nConfirmed capacity: 40 units\nTransit insurance included: True\nSupplier terms: The quoted total covers collection, road transport, delivery, and transit insurance. Collection is at the Lyon warehouse loading bay; delivery is to the Paris service centre receiving desk. The service handles all 40 units as one consignment.\n\nQUOTE S2 \u2014 Metro Freight / Economy road\nAll-in total: USD 540\nWarehouse arrival: 2026-10-10\nConfirmed capacity: 40 units\nTransit insurance included: True\nSupplier terms: The economy service consolidates the consignment with other deliveries. The quotation includes collection and insurance. Its listed arrival date is fixed for this exercise; do not assume it can be expedited at the same price.\n\nLOGISTICS REPORT:\n\nReport:\n\nUpon reviewing the provided quotes for the shipment of 40 replacement sensors from the Lyon warehouse to the Paris service center with a deadline of 2026-10-08 and transit insurance included, Quote S1 from Rhone Express/Road courier is the most suitable option. It meets all the mandatory constraints with a total cost of USD 720, which is within the budget of USD 900, and ensures delivery by the required date of 2026-10-07. The quote includes collection at the Lyon warehouse loading bay, road transport, and delivery to the Paris service center receiving desk, with all 40 units consolidated into one consignment.\n\nQuote S2 from Metro Freight/Economy road courier, although cheaper at USD 540, arrives on 2026-10-10, which is one day after the deadline. Despite the lower cost, it fails to meet the delivery deadline constraint.\n\nTherefore, Quote S1 from Rhone Express/Road courier is the recommended choice as it offers the lowest-cost feasible option that satisfies all the given requirements. It provides a balance between cost and timely delivery, ensuring the shipment arrives before the deadline and includes the necessary transit insurance. The capacity of 40 units is confirmed, and the quote is from a reliable supplier.\n\nIt is important to note that while Quote S1 is the most suitable option based on the provided constraints, there is a slight uncertainty regarding the exact arrival date, as it is one day prior to the deadline. However, this does not violate the deadline constraint, and the shipment should arrive in time for the required date.\n\nIn conclusion, Quote S1 from Rhone Express/Road courier is the recommended option for the shipment, as it meets all the mandatory constraints and offers the lowest quoted total among the available options. The shipment will arrive one day before the deadline, with a confirmed capacity of 40 units and all-inclusive transit insurance.\n\nFINANCE REPORT:\n\n**Report:**\n\nUpon reviewing the provided quotes for the shipment of 40 replacement sensors from Lyon to Paris with a deadline of 2026-10-08 and transit insurance included, the lowest-cost feasible option is Quote S2 from Metro Freight / Economy road, which offers an all-in total of USD 540. This quote meets the budget constraint of USD 900 and ensures delivery by the required deadline. Although the arrival date is two days later than the competing quote from Rhone Express / Road courier, it is within the acceptable timeframe for the shipment's purpose.\n\nRhone Express / Road courier'deal (Quote S1) is more expensive by USD 180, with an all-in total of USD 720, and arrives one day earlier. However, the cost is higher for the same service, which includes collection, road transport, and transit insurance.\n\nThe Metro Freight / Economy road option provides a lower total cost while still meeting the delivery deadline and insurance requirement. It is essential to note that the arrival date is two days later than the Rhone Express / Road courier, which may be a trade-off to consider if the sensors' condition is not time-sensitive.\n\nIn conclusion, the Metro Freight / Economy road option is the most cost-effective choice, saving USD 180 compared to the Rhone Express / Road courier. This option aligns with the budget and mandatory constraints, ensuring timely delivery and transit insurance. However, if the sensors' condition is critical and the delivery date is a priority, the Rhone Express / Road courier may be a better choice despite the higher cost.\n\n\n**Recommendation:**\n\nGiven the budget and mandatory constraints, Metro Freight / Economy road is the recommended option for the shipment. It provides the necessary services within the budget and meets the delivery deadline, albeit with a later arrival date. If the sensors' condition is not time-sensitive, the cost savings from choosing Metro Freight / Economy road are significant, and the later arrival date should not be a concern.\n\n\n**Trade-offs:**\n\nThe primary trade-",
+      "context_sha256": "0637da32f14cd014d50497a0b8d65966b5a365fec6f07c8ac376063614a63e04",
+      "reports": {
+        "Ingestion": "Shipment Objective: Deliver 40 replacement sensors from Lyon warehouse to Paris service center by 2026-10-08 with transit insurance included.\nMandatory Constraints:\n- Total cost must not exceed USD 900.\n- Delivery must be completed by the deadline of 2026-10-08.\n- Transit insurance is mandatory.\n- All shipments are to be consolidated into one consignment.\n- No split shipments or unquoted changes.\n- Quoted totals are all-inclusive.\n- Collection is at the Lyon warehouse loading bay, delivery at the Paris service center receiving desk.\n- Quotes must be from confirmed suppliers.",
+        "Logistics": "\nReport:\n\nUpon reviewing the provided quotes for the shipment of 40 replacement sensors from the Lyon warehouse to the Paris service center with a deadline of 2026-10-08 and transit insurance included, Quote S1 from Rhone Express/Road courier is the most suitable option. It meets all the mandatory constraints with a total cost of USD 720, which is within the budget of USD 900, and ensures delivery by the required date of 2026-10-07. The quote includes collection at the Lyon warehouse loading bay, road transport, and delivery to the Paris service center receiving desk, with all 40 units consolidated into one consignment.\n\nQuote S2 from Metro Freight/Economy road courier, although cheaper at USD 540, arrives on 2026-10-10, which is one day after the deadline. Despite the lower cost, it fails to meet the delivery deadline constraint.\n\nTherefore, Quote S1 from Rhone Express/Road courier is the recommended choice as it offers the lowest-cost feasible option that satisfies all the given requirements. It provides a balance between cost and timely delivery, ensuring the shipment arrives before the deadline and includes the necessary transit insurance. The capacity of 40 units is confirmed, and the quote is from a reliable supplier.\n\nIt is important to note that while Quote S1 is the most suitable option based on the provided constraints, there is a slight uncertainty regarding the exact arrival date, as it is one day prior to the deadline. However, this does not violate the deadline constraint, and the shipment should arrive in time for the required date.\n\nIn conclusion, Quote S1 from Rhone Express/Road courier is the recommended option for the shipment, as it meets all the mandatory constraints and offers the lowest quoted total among the available options. The shipment will arrive one day before the deadline, with a confirmed capacity of 40 units and all-inclusive transit insurance.",
+        "Finance": "\n**Report:**\n\nUpon reviewing the provided quotes for the shipment of 40 replacement sensors from Lyon to Paris with a deadline of 2026-10-08 and transit insurance included, the lowest-cost feasible option is Quote S2 from Metro Freight / Economy road, which offers an all-in total of USD 540. This quote meets the budget constraint of USD 900 and ensures delivery by the required deadline. Although the arrival date is two days later than the competing quote from Rhone Express / Road courier, it is within the acceptable timeframe for the shipment's purpose.\n\nRhone Express / Road courier'deal (Quote S1) is more expensive by USD 180, with an all-in total of USD 720, and arrives one day earlier. However, the cost is higher for the same service, which includes collection, road transport, and transit insurance.\n\nThe Metro Freight / Economy road option provides a lower total cost while still meeting the delivery deadline and insurance requirement. It is essential to note that the arrival date is two days later than the Rhone Express / Road courier, which may be a trade-off to consider if the sensors' condition is not time-sensitive.\n\nIn conclusion, the Metro Freight / Economy road option is the most cost-effective choice, saving USD 180 compared to the Rhone Express / Road courier. This option aligns with the budget and mandatory constraints, ensuring timely delivery and transit insurance. However, if the sensors' condition is critical and the delivery date is a priority, the Rhone Express / Road courier may be a better choice despite the higher cost.\n\n\n**Recommendation:**\n\nGiven the budget and mandatory constraints, Metro Freight / Economy road is the recommended option for the shipment. It provides the necessary services within the budget and meets the delivery deadline, albeit with a later arrival date. If the sensors' condition is not time-sensitive, the cost savings from choosing Metro Freight / Economy road are significant, and the later arrival date should not be a concern.\n\n\n**Trade-offs:**\n\nThe primary trade-"
+      },
+      "calls": [
+        {
+          "role": "Ingestion",
+          "input_tokens": 429,
+          "output_tokens": 174,
+          "total_tokens": 603,
+          "seconds": 8.391628899989882,
+          "output": "Shipment Objective: Deliver 40 replacement sensors from Lyon warehouse to Paris service center by 2026-10-08 with transit insurance included.\nMandatory Constraints:\n- Total cost must not exceed USD 900.\n- Delivery must be completed by the deadline of 2026-10-08.\n- Transit insurance is mandatory.\n- All shipments are to be consolidated into one consignment.\n- No split shipments or unquoted changes.\n- Quoted totals are all-inclusive.\n- Collection is at the Lyon warehouse loading bay, delivery at the Paris service center receiving desk.\n- Quotes must be from confirmed suppliers.",
+          "input_sha256": "3c0be84ff5e2f879328974c54506c009db2aa36f64e18f4c5f75e7a786e910d7",
+          "finish_reason": "stop"
+        },
+        {
+          "role": "Logistics",
+          "input_tokens": 654,
+          "output_tokens": 478,
+          "total_tokens": 1132,
+          "seconds": 28.446160299994517,
+          "output": "\nReport:\n\nUpon reviewing the provided quotes for the shipment of 40 replacement sensors from the Lyon warehouse to the Paris service center with a deadline of 2026-10-08 and transit insurance included, Quote S1 from Rhone Express/Road courier is the most suitable option. It meets all the mandatory constraints with a total cost of USD 720, which is within the budget of USD 900, and ensures delivery by the required date of 2026-10-07. The quote includes collection at the Lyon warehouse loading bay, road transport, and delivery to the Paris service center receiving desk, with all 40 units consolidated into one consignment.\n\nQuote S2 from Metro Freight/Economy road courier, although cheaper at USD 540, arrives on 2026-10-10, which is one day after the deadline. Despite the lower cost, it fails to meet the delivery deadline constraint.\n\nTherefore, Quote S1 from Rhone Express/Road courier is the recommended choice as it offers the lowest-cost feasible option that satisfies all the given requirements. It provides a balance between cost and timely delivery, ensuring the shipment arrives before the deadline and includes the necessary transit insurance. The capacity of 40 units is confirmed, and the quote is from a reliable supplier.\n\nIt is important to note that while Quote S1 is the most suitable option based on the provided constraints, there is a slight uncertainty regarding the exact arrival date, as it is one day prior to the deadline. However, this does not violate the deadline constraint, and the shipment should arrive in time for the required date.\n\nIn conclusion, Quote S1 from Rhone Express/Road courier is the recommended option for the shipment, as it meets all the mandatory constraints and offers the lowest quoted total among the available options. The shipment will arrive one day before the deadline, with a confirmed capacity of 40 units and all-inclusive transit insurance.",
+          "input_sha256": "0fe3703fbaafc68203b944b7bb0fae2a30931ab3fd6ab834dd049c1aede38e58",
+          "finish_reason": "stop"
+        },
+        {
+          "role": "Finance",
+          "input_tokens": 667,
+          "output_tokens": 512,
+          "total_tokens": 1179,
+          "seconds": 58.59040029998869,
+          "output": "\n**Report:**\n\nUpon reviewing the provided quotes for the shipment of 40 replacement sensors from Lyon to Paris with a deadline of 2026-10-08 and transit insurance included, the lowest-cost feasible option is Quote S2 from Metro Freight / Economy road, which offers an all-in total of USD 540. This quote meets the budget constraint of USD 900 and ensures delivery by the required deadline. Although the arrival date is two days later than the competing quote from Rhone Express / Road courier, it is within the acceptable timeframe for the shipment's purpose.\n\nRhone Express / Road courier'deal (Quote S1) is more expensive by USD 180, with an all-in total of USD 720, and arrives one day earlier. However, the cost is higher for the same service, which includes collection, road transport, and transit insurance.\n\nThe Metro Freight / Economy road option provides a lower total cost while still meeting the delivery deadline and insurance requirement. It is essential to note that the arrival date is two days later than the Rhone Express / Road courier, which may be a trade-off to consider if the sensors' condition is not time-sensitive.\n\nIn conclusion, the Metro Freight / Economy road option is the most cost-effective choice, saving USD 180 compared to the Rhone Express / Road courier. This option aligns with the budget and mandatory constraints, ensuring timely delivery and transit insurance. However, if the sensors' condition is critical and the delivery date is a priority, the Rhone Express / Road courier may be a better choice despite the higher cost.\n\n\n**Recommendation:**\n\nGiven the budget and mandatory constraints, Metro Freight / Economy road is the recommended option for the shipment. It provides the necessary services within the budget and meets the delivery deadline, albeit with a later arrival date. If the sensors' condition is not time-sensitive, the cost savings from choosing Metro Freight / Economy road are significant, and the later arrival date should not be a concern.\n\n\n**Trade-offs:**\n\nThe primary trade-",
+          "input_sha256": "0fe3703fbaafc68203b944b7bb0fae2a30931ab3fd6ab834dd049c1aede38e58",
+          "finish_reason": "length"
+        }
+      ],
+      "seconds": 66.98729980000644,
+      "token_usage": 2914
+    },
+    "baseline": {
+      "mode": "baseline",
+      "shared_context_sha256": "0637da32f14cd014d50497a0b8d65966b5a365fec6f07c8ac376063614a63e04",
+      "token_usage": 8816,
+      "execution_time_seconds": 118.50447880002321,
+      "branch_seconds": 51.51717900001677,
+      "calls": [
+        {
+          "role": "Risk",
+          "input_tokens": 1481,
+          "output_tokens": 156,
+          "total_tokens": 1637,
+          "seconds": 14.603865399985807,
+          "output": "\nThe main trade-off between the two quotes is the balance between cost and delivery time. Quote S1 from Rhone Express/Road courier is more expensive but ensures delivery before the deadline, while Quote S2 from Metro Freight/Economy road courier is cheaper but arrives one day after the deadline. The decision should be based on the sensors' condition and the importance of meeting the deadline. If the sensors' condition is not time-sensitive, Metro Freight / Economy road is the recommended option for cost savings. If the sensors' condition is critical and the delivery date is a priority, Rhone Express / Road courier may be a better choice despite the higher cost.",
+          "input_sha256": "0637da32f14cd014d50497a0b8d65966b5a365fec6f07c8ac376063614a63e04",
+          "finish_reason": "stop"
+        },
+        {
+          "role": "Compliance",
+          "input_tokens": 1647,
+          "output_tokens": 256,
+          "total_tokens": 1903,
+          "seconds": 35.70444349999889,
+          "output": "```python\n# Python code to check the feasibility of the quotes\n\nfrom datetime import datetime\n\n# Define the quotes and constraints\nquotes = {\n    'S1': {'total': 720, 'arrival_date': datetime(2026, 10, 7), 'capacity': 40, 'insured': True},\n    'S2': {'total': 540, 'arrival_date': datetime(2026, 10, 10), 'capacity': 40, 'insured': True}\n}\n\ndeadline = datetime(2026, 10, 8)\n\n# Define the constraints\nconstraints = {\n    'within_budget': lambda quote: quote['total'] <= 900,\n    'on_time': lambda quote: quote['arrival_date'] <= deadline,\n    'enough_capacity': lambda quote: quote['capacity'] >= 40,\n    'insured_as_required': lambda quote: quote['insured']\n}\n\n# Check each quote\nfor",
+          "input_sha256": "993b7509e2ba734a563ee6abacb94a6bf70ba4302efd22aa32586bc6f513b4fd",
+          "finish_reason": "length"
+        },
+        {
+          "role": "Decision",
+          "input_tokens": 2195,
+          "output_tokens": 167,
+          "total_tokens": 2362,
+          "seconds": 15.808737499988638,
+          "output": "{\n    \"verdict\": \"proceed\",\n    \"option_id\": \"S1\",\n    \"total_cost_usd\": 720,\n    \"arrival_date\": \"2026-10-07\",\n    \"quantity\": 40,\n    \"budget_usd\": 900,\n    \"deadline\": \"2026-10-08\",\n    \"reasoning\": \"Quote S1 meets all requirements, including budget, capacity, and insurance, and arrives before the deadline.\",\n    \"conditions\": [\"within_budget\", \"on_time\", \"enough_capacity\", \"insured_as_required\"]\n}",
+          "input_sha256": "883c1d02bba378a26d1a9bd00fecb6d7c2ec17601228c3d677477831b172ab30",
+          "finish_reason": "stop"
+        }
+      ],
+      "reports": {
+        "Ingestion": "Shipment Objective: Deliver 40 replacement sensors from Lyon warehouse to Paris service center by 2026-10-08 with transit insurance included.\nMandatory Constraints:\n- Total cost must not exceed USD 900.\n- Delivery must be completed by the deadline of 2026-10-08.\n- Transit insurance is mandatory.\n- All shipments are to be consolidated into one consignment.\n- No split shipments or unquoted changes.\n- Quoted totals are all-inclusive.\n- Collection is at the Lyon warehouse loading bay, delivery at the Paris service center receiving desk.\n- Quotes must be from confirmed suppliers.",
+        "Logistics": "\nReport:\n\nUpon reviewing the provided quotes for the shipment of 40 replacement sensors from the Lyon warehouse to the Paris service center with a deadline of 2026-10-08 and transit insurance included, Quote S1 from Rhone Express/Road courier is the most suitable option. It meets all the mandatory constraints with a total cost of USD 720, which is within the budget of USD 900, and ensures delivery by the required date of 2026-10-07. The quote includes collection at the Lyon warehouse loading bay, road transport, and delivery to the Paris service center receiving desk, with all 40 units consolidated into one consignment.\n\nQuote S2 from Metro Freight/Economy road courier, although cheaper at USD 540, arrives on 2026-10-10, which is one day after the deadline. Despite the lower cost, it fails to meet the delivery deadline constraint.\n\nTherefore, Quote S1 from Rhone Express/Road courier is the recommended choice as it offers the lowest-cost feasible option that satisfies all the given requirements. It provides a balance between cost and timely delivery, ensuring the shipment arrives before the deadline and includes the necessary transit insurance. The capacity of 40 units is confirmed, and the quote is from a reliable supplier.\n\nIt is important to note that while Quote S1 is the most suitable option based on the provided constraints, there is a slight uncertainty regarding the exact arrival date, as it is one day prior to the deadline. However, this does not violate the deadline constraint, and the shipment should arrive in time for the required date.\n\nIn conclusion, Quote S1 from Rhone Express/Road courier is the recommended option for the shipment, as it meets all the mandatory constraints and offers the lowest quoted total among the available options. The shipment will arrive one day before the deadline, with a confirmed capacity of 40 units and all-inclusive transit insurance.",
+        "Finance": "\n**Report:**\n\nUpon reviewing the provided quotes for the shipment of 40 replacement sensors from Lyon to Paris with a deadline of 2026-10-08 and transit insurance included, the lowest-cost feasible option is Quote S2 from Metro Freight / Economy road, which offers an all-in total of USD 540. This quote meets the budget constraint of USD 900 and ensures delivery by the required deadline. Although the arrival date is two days later than the competing quote from Rhone Express / Road courier, it is within the acceptable timeframe for the shipment's purpose.\n\nRhone Express / Road courier'deal (Quote S1) is more expensive by USD 180, with an all-in total of USD 720, and arrives one day earlier. However, the cost is higher for the same service, which includes collection, road transport, and transit insurance.\n\nThe Metro Freight / Economy road option provides a lower total cost while still meeting the delivery deadline and insurance requirement. It is essential to note that the arrival date is two days later than the Rhone Express / Road courier, which may be a trade-off to consider if the sensors' condition is not time-sensitive.\n\nIn conclusion, the Metro Freight / Economy road option is the most cost-effective choice, saving USD 180 compared to the Rhone Express / Road courier. This option aligns with the budget and mandatory constraints, ensuring timely delivery and transit insurance. However, if the sensors' condition is critical and the delivery date is a priority, the Rhone Express / Road courier may be a better choice despite the higher cost.\n\n\n**Recommendation:**\n\nGiven the budget and mandatory constraints, Metro Freight / Economy road is the recommended option for the shipment. It provides the necessary services within the budget and meets the delivery deadline, albeit with a later arrival date. If the sensors' condition is not time-sensitive, the cost savings from choosing Metro Freight / Economy road are significant, and the later arrival date should not be a concern.\n\n\n**Trade-offs:**\n\nThe primary trade-",
+        "Risk": "\nThe main trade-off between the two quotes is the balance between cost and delivery time. Quote S1 from Rhone Express/Road courier is more expensive but ensures delivery before the deadline, while Quote S2 from Metro Freight/Economy road courier is cheaper but arrives one day after the deadline. The decision should be based on the sensors' condition and the importance of meeting the deadline. If the sensors' condition is not time-sensitive, Metro Freight / Economy road is the recommended option for cost savings. If the sensors' condition is critical and the delivery date is a priority, Rhone Express / Road courier may be a better choice despite the higher cost.",
+        "Compliance": "PYTHON CONSTRAINT CHECKS (computed from supplied source fields):\nS1: within_budget=PASS; on_time=PASS; enough_capacity=PASS; insured_as_required=PASS\nS2: within_budget=PASS; on_time=FAIL; enough_capacity=PASS; insured_as_required=PASS\nELIGIBLE QUOTE IDS: S1\nINELIGIBLE QUOTE IDS: S2\nAny FAIL makes that quote infeasible. Among all-PASS quotes, compare source totals to select the lowest cost.\n\nMODEL REVIEW:\n```python\n# Python code to check the feasibility of the quotes\n\nfrom datetime import datetime\n\n# Define the quotes and constraints\nquotes = {\n    'S1': {'total': 720, 'arrival_date': datetime(2026, 10, 7), 'capacity': 40, 'insured': True},\n    'S2': {'total': 540, 'arrival_date': datetime(2026, 10, 10), 'capacity': 40, 'insured': True}\n}\n\ndeadline = datetime(2026, 10, 8)\n\n# Define the constraints\nconstraints = {\n    'within_budget': lambda quote: quote['total'] <= 900,\n    'on_time': lambda quote: quote['arrival_date'] <= deadline,\n    'enough_capacity': lambda quote: quote['capacity'] >= 40,\n    'insured_as_required': lambda quote: quote['insured']\n}\n\n# Check each quote\nfor",
+        "Decision": "{\n    \"verdict\": \"proceed\",\n    \"option_id\": \"S1\",\n    \"total_cost_usd\": 720,\n    \"arrival_date\": \"2026-10-07\",\n    \"quantity\": 40,\n    \"budget_usd\": 900,\n    \"deadline\": \"2026-10-08\",\n    \"reasoning\": \"Quote S1 meets all requirements, including budget, capacity, and insurance, and arrives before the deadline.\",\n    \"conditions\": [\"within_budget\", \"on_time\", \"enough_capacity\", \"insured_as_required\"]\n}",
+        "Compressor": ""
+      },
+      "compression": null,
+      "evaluation": {
+        "passed": 12,
+        "total": 12,
+        "all_passed": true,
+        "checks": {
+          "structured_answer": true,
+          "correct_verdict": true,
+          "lowest_cost_feasible_quote": true,
+          "quoted_total_correct": true,
+          "arrival_correct": true,
+          "quantity_preserved": true,
+          "budget_preserved": true,
+          "deadline_preserved": true,
+          "insurance_requirement_met": true,
+          "delivery_requirement_met": true,
+          "budget_requirement_met": true,
+          "capacity_requirement_met": true
+        },
+        "expected_option_ids": [
+          "S1"
+        ],
+        "decision": {
+          "verdict": "proceed",
+          "option_id": "S1",
+          "total_cost_usd": 720,
+          "arrival_date": "2026-10-07",
+          "quantity": 40,
+          "budget_usd": 900,
+          "deadline": "2026-10-08",
+          "reasoning": "Quote S1 meets all requirements, including budget, capacity, and insurance, and arrives before the deadline.",
+          "conditions": [
+            "within_budget",
+            "on_time",
+            "enough_capacity",
+            "insured_as_required"
+          ]
+        },
+        "scope": "Checks supplied quote selection and key facts; not a complete evaluation of prose or real-world feasibility."
+      },
+      "constraint_audit": {
+        "rows": [
+          {
+            "quote_id": "S1",
+            "within_budget": true,
+            "on_time": true,
+            "enough_capacity": true,
+            "insured_as_required": true
+          },
+          {
+            "quote_id": "S2",
+            "within_budget": true,
+            "on_time": false,
+            "enough_capacity": true,
+            "insured_as_required": true
+          }
+        ],
+        "eligible_ids": [
+          "S1"
+        ],
+        "text": "PYTHON CONSTRAINT CHECKS (computed from supplied source fields):\nS1: within_budget=PASS; on_time=PASS; enough_capacity=PASS; insured_as_required=PASS\nS2: within_budget=PASS; on_time=FAIL; enough_capacity=PASS; insured_as_required=PASS\nELIGIBLE QUOTE IDS: S1\nINELIGIBLE QUOTE IDS: S2\nAny FAIL makes that quote infeasible. Among all-PASS quotes, compare source totals to select the lowest cost."
+      }
+    },
+    "compressed": {
+      "mode": "compressed",
+      "shared_context_sha256": "0637da32f14cd014d50497a0b8d65966b5a365fec6f07c8ac376063614a63e04",
+      "token_usage": 7944,
+      "execution_time_seconds": 116.05266990000382,
+      "branch_seconds": 49.06537009999738,
+      "calls": [
+        {
+          "role": "Compressor",
+          "input_tokens": 1496,
+          "output_tokens": 384,
+          "total_tokens": 1880,
+          "seconds": 26.597793099994306,
+          "output": "**Decision Notes:**\n\n- **Quote S1 (Rhone Express/Road courier):**\n  - Total cost: USD 720\n  - Arrival date: 2026-10-07\n  - Capacity: 40 units\n  - Includes collection, road transport, and transit insurance\n  - Meets budget and deadline constraints\n  - Slight uncertainty regarding exact arrival date (one day before deadline)\n\n- **Quote S2 (Metro Freight/Economy road):**\n  - Total cost: USD 540\n  - Arrival date: 2026-10-10\n  - Meets budget and deadline constraints\n  - Lower cost, but later arrival date\n\n**Recommendation:**\n\nGiven the budget and mandatory constraints, Metro Freight / Economy road is the recommended option for the shipment. It provides the necessary services within the budget and meets the delivery deadline, albeit with a later arrival date. If the sensors' condition is not time-sensitive, the cost savings from choosing Metro Freight / Economy road are significant, and the later arrival date should not be a concern.\n\n**Trade-offs:**\n\nThe primary trade-off is between cost and delivery time, with Metro Freight / Economy road offering a lower cost but a later arrival date compared to Rhone Express / Road courier. The decision should consider the sensors' condition and the importance of meeting the delivery deadline. If the sensors' condition is not time-sensitive, Metro Freight / Economy road is the more cost-effective choice. If the sensors' condition is critical and",
+          "input_sha256": "0637da32f14cd014d50497a0b8d65966b5a365fec6f07c8ac376063614a63e04",
+          "finish_reason": "length"
+        },
+        {
+          "role": "Risk",
+          "input_tokens": 647,
+          "output_tokens": 34,
+          "total_tokens": 681,
+          "seconds": 2.146922399988398,
+          "output": "Rhone Express / Road courier is recommended for its earlier arrival date, despite the higher cost, to ensure the sensors' condition is not compromised.",
+          "input_sha256": "ab31bba4b1a0ab886fd8e82cee1ee813d3cdf9eabb06fd5e3c493574b00daa30",
+          "finish_reason": "stop"
+        },
+        {
+          "role": "Compliance",
+          "input_tokens": 813,
+          "output_tokens": 256,
+          "total_tokens": 1069,
+          "seconds": 13.739789899991592,
+          "output": "```python\n# Python code to determine eligible quote IDs\n\n# Define quotes with their attributes\nquotes = {\n    'S1': {'total_usd': 720, 'arrival_date': '2026-10-07', 'capacity_units': 40, 'insurance_included': True},\n    'S2': {'total_usd': 540, 'arrival_date': '2026-10-10', 'capacity_units': 40, 'insurance_included': True}\n}\n\n# Define constraints\nbudget_usd = 900\ndeadline = '2026-10-08'\n\n# Function to check constraints\ndef check_constraints(quote):\n    within_budget = quote['total_usd'] <= budget_usd\n    on_time = quote['arrival_date'] <= deadline\n    enough_capacity = quote['capacity_units'] >= 40\n    insured_as_required = quote['insurance_includ",
+          "input_sha256": "6060b41040df5c8f187e90e4ee91d4f31288c9a4b9926a1af1dcaed7c67fff31",
+          "finish_reason": "length"
+        },
+        {
+          "role": "Decision",
+          "input_tokens": 1239,
+          "output_tokens": 161,
+          "total_tokens": 1400,
+          "seconds": 8.722862200025702,
+          "output": "{\n    \"verdict\": \"proceed\",\n    \"option_id\": \"S1\",\n    \"total_cost_usd\": 720,\n    \"arrival_date\": \"2026-10-07\",\n    \"quantity\": 40,\n    \"budget_usd\": 900,\n    \"deadline\": \"2026-10-08\",\n    \"reasoning\": \"S1 meets all constraints and has the lowest cost, despite a slight uncertainty regarding the exact arrival date.\",\n    \"conditions\": [\"Meets budget and deadline constraints\", \"Includes required insurance\", \"Slight uncertainty regarding exact arrival date\"]\n}",
+          "input_sha256": "fc62d35de892a6b074ba1a7177227663238c2eff623bb8bfed0bbaa3c71b853a",
+          "finish_reason": "stop"
+        }
+      ],
+      "reports": {
+        "Ingestion": "Shipment Objective: Deliver 40 replacement sensors from Lyon warehouse to Paris service center by 2026-10-08 with transit insurance included.\nMandatory Constraints:\n- Total cost must not exceed USD 900.\n- Delivery must be completed by the deadline of 2026-10-08.\n- Transit insurance is mandatory.\n- All shipments are to be consolidated into one consignment.\n- No split shipments or unquoted changes.\n- Quoted totals are all-inclusive.\n- Collection is at the Lyon warehouse loading bay, delivery at the Paris service center receiving desk.\n- Quotes must be from confirmed suppliers.",
+        "Logistics": "\nReport:\n\nUpon reviewing the provided quotes for the shipment of 40 replacement sensors from the Lyon warehouse to the Paris service center with a deadline of 2026-10-08 and transit insurance included, Quote S1 from Rhone Express/Road courier is the most suitable option. It meets all the mandatory constraints with a total cost of USD 720, which is within the budget of USD 900, and ensures delivery by the required date of 2026-10-07. The quote includes collection at the Lyon warehouse loading bay, road transport, and delivery to the Paris service center receiving desk, with all 40 units consolidated into one consignment.\n\nQuote S2 from Metro Freight/Economy road courier, although cheaper at USD 540, arrives on 2026-10-10, which is one day after the deadline. Despite the lower cost, it fails to meet the delivery deadline constraint.\n\nTherefore, Quote S1 from Rhone Express/Road courier is the recommended choice as it offers the lowest-cost feasible option that satisfies all the given requirements. It provides a balance between cost and timely delivery, ensuring the shipment arrives before the deadline and includes the necessary transit insurance. The capacity of 40 units is confirmed, and the quote is from a reliable supplier.\n\nIt is important to note that while Quote S1 is the most suitable option based on the provided constraints, there is a slight uncertainty regarding the exact arrival date, as it is one day prior to the deadline. However, this does not violate the deadline constraint, and the shipment should arrive in time for the required date.\n\nIn conclusion, Quote S1 from Rhone Express/Road courier is the recommended option for the shipment, as it meets all the mandatory constraints and offers the lowest quoted total among the available options. The shipment will arrive one day before the deadline, with a confirmed capacity of 40 units and all-inclusive transit insurance.",
+        "Finance": "\n**Report:**\n\nUpon reviewing the provided quotes for the shipment of 40 replacement sensors from Lyon to Paris with a deadline of 2026-10-08 and transit insurance included, the lowest-cost feasible option is Quote S2 from Metro Freight / Economy road, which offers an all-in total of USD 540. This quote meets the budget constraint of USD 900 and ensures delivery by the required deadline. Although the arrival date is two days later than the competing quote from Rhone Express / Road courier, it is within the acceptable timeframe for the shipment's purpose.\n\nRhone Express / Road courier'deal (Quote S1) is more expensive by USD 180, with an all-in total of USD 720, and arrives one day earlier. However, the cost is higher for the same service, which includes collection, road transport, and transit insurance.\n\nThe Metro Freight / Economy road option provides a lower total cost while still meeting the delivery deadline and insurance requirement. It is essential to note that the arrival date is two days later than the Rhone Express / Road courier, which may be a trade-off to consider if the sensors' condition is not time-sensitive.\n\nIn conclusion, the Metro Freight / Economy road option is the most cost-effective choice, saving USD 180 compared to the Rhone Express / Road courier. This option aligns with the budget and mandatory constraints, ensuring timely delivery and transit insurance. However, if the sensors' condition is critical and the delivery date is a priority, the Rhone Express / Road courier may be a better choice despite the higher cost.\n\n\n**Recommendation:**\n\nGiven the budget and mandatory constraints, Metro Freight / Economy road is the recommended option for the shipment. It provides the necessary services within the budget and meets the delivery deadline, albeit with a later arrival date. If the sensors' condition is not time-sensitive, the cost savings from choosing Metro Freight / Economy road are significant, and the later arrival date should not be a concern.\n\n\n**Trade-offs:**\n\nThe primary trade-",
+        "Risk": "Rhone Express / Road courier is recommended for its earlier arrival date, despite the higher cost, to ensure the sensors' condition is not compromised.",
+        "Compliance": "PYTHON CONSTRAINT CHECKS (computed from supplied source fields):\nS1: within_budget=PASS; on_time=PASS; enough_capacity=PASS; insured_as_required=PASS\nS2: within_budget=PASS; on_time=FAIL; enough_capacity=PASS; insured_as_required=PASS\nELIGIBLE QUOTE IDS: S1\nINELIGIBLE QUOTE IDS: S2\nAny FAIL makes that quote infeasible. Among all-PASS quotes, compare source totals to select the lowest cost.\n\nMODEL REVIEW:\n```python\n# Python code to determine eligible quote IDs\n\n# Define quotes with their attributes\nquotes = {\n    'S1': {'total_usd': 720, 'arrival_date': '2026-10-07', 'capacity_units': 40, 'insurance_included': True},\n    'S2': {'total_usd': 540, 'arrival_date': '2026-10-10', 'capacity_units': 40, 'insurance_included': True}\n}\n\n# Define constraints\nbudget_usd = 900\ndeadline = '2026-10-08'\n\n# Function to check constraints\ndef check_constraints(quote):\n    within_budget = quote['total_usd'] <= budget_usd\n    on_time = quote['arrival_date'] <= deadline\n    enough_capacity = quote['capacity_units'] >= 40\n    insured_as_required = quote['insurance_includ",
+        "Decision": "{\n    \"verdict\": \"proceed\",\n    \"option_id\": \"S1\",\n    \"total_cost_usd\": 720,\n    \"arrival_date\": \"2026-10-07\",\n    \"quantity\": 40,\n    \"budget_usd\": 900,\n    \"deadline\": \"2026-10-08\",\n    \"reasoning\": \"S1 meets all constraints and has the lowest cost, despite a slight uncertainty regarding the exact arrival date.\",\n    \"conditions\": [\"Meets budget and deadline constraints\", \"Includes required insurance\", \"Slight uncertainty regarding exact arrival date\"]\n}",
+        "Compressor": "AUTHORITATIVE COMPACT FACTS:\nRoute=Lyon to Paris; quantity=40 units; budget_usd=900; deadline=2026-10-08; insurance_required=true.\nSelect lowest-cost feasible quote. All totals are all-in USD. All units in one offer; no invented charges, upgrades, or split shipments.\nQuote ID | total USD | arrival YYYY-MM-DD | capacity units | insurance included\nS1 | 720 | 2026-10-07 | 40 | true\nS2 | 540 | 2026-10-10 | 40 | true\n\nCOMPRESSED ANALYSIS:\n**Decision Notes:**\n\n- **Quote S1 (Rhone Express/Road courier):**\n  - Total cost: USD 720\n  - Arrival date: 2026-10-07\n  - Capacity: 40 units\n  - Includes collection, road transport, and transit insurance\n  - Meets budget and deadline constraints\n  - Slight uncertainty regarding exact arrival date (one day before deadline)\n\n- **Quote S2 (Metro Freight/Economy road):**\n  - Total cost: USD 540\n  - Arrival date: 2026-10-10\n  - Meets budget and deadline constraints\n  - Lower cost, but later arrival date\n\n**Recommendation:**\n\nGiven the budget and mandatory constraints, Metro Freight / Economy road is the recommended option for the shipment. It provides the necessary services within the budget and meets the delivery deadline, albeit with a later arrival date. If the sensors' condition is not time-sensitive, the cost savings from choosing Metro Freight / Economy road are significant, and the later arrival date should not be a concern.\n\n**Trade-offs:**\n\nThe primary trade-off is between cost and delivery time, with Metro Freight / Economy road offering a lower cost but a later arrival date compared to Rhone Express / Road courier. The decision should consider the sensors' condition and the importance of meeting the delivery deadline. If the sensors' condition is not time-sensitive, Metro Freight / Economy road is the more cost-effective choice. If the sensors' condition is critical and"
+      },
+      "compression": {
+        "strategy": "LLM summary plus losslessly packed source facts",
+        "target_word_ratio": 0.28,
+        "source_words": 849,
+        "compressed_words": 278,
+        "achieved_word_ratio": 0.32744405182567726,
+        "summary_word_budget": 120,
+        "source_sha256": "0637da32f14cd014d50497a0b8d65966b5a365fec6f07c8ac376063614a63e04",
+        "protected_facts": "Route=Lyon to Paris; quantity=40 units; budget_usd=900; deadline=2026-10-08; insurance_required=true.\nSelect lowest-cost feasible quote. All totals are all-in USD. All units in one offer; no invented charges, upgrades, or split shipments.\nQuote ID | total USD | arrival YYYY-MM-DD | capacity units | insurance included\nS1 | 720 | 2026-10-07 | 40 | true\nS2 | 540 | 2026-10-10 | 40 | true"
+      },
+      "evaluation": {
+        "passed": 12,
+        "total": 12,
+        "all_passed": true,
+        "checks": {
+          "structured_answer": true,
+          "correct_verdict": true,
+          "lowest_cost_feasible_quote": true,
+          "quoted_total_correct": true,
+          "arrival_correct": true,
+          "quantity_preserved": true,
+          "budget_preserved": true,
+          "deadline_preserved": true,
+          "insurance_requirement_met": true,
+          "delivery_requirement_met": true,
+          "budget_requirement_met": true,
+          "capacity_requirement_met": true
+        },
+        "expected_option_ids": [
+          "S1"
+        ],
+        "decision": {
+          "verdict": "proceed",
+          "option_id": "S1",
+          "total_cost_usd": 720,
+          "arrival_date": "2026-10-07",
+          "quantity": 40,
+          "budget_usd": 900,
+          "deadline": "2026-10-08",
+          "reasoning": "S1 meets all constraints and has the lowest cost, despite a slight uncertainty regarding the exact arrival date.",
+          "conditions": [
+            "Meets budget and deadline constraints",
+            "Includes required insurance",
+            "Slight uncertainty regarding exact arrival date"
+          ]
+        },
+        "scope": "Checks supplied quote selection and key facts; not a complete evaluation of prose or real-world feasibility."
+      },
+      "constraint_audit": {
+        "rows": [
+          {
+            "quote_id": "S1",
+            "within_budget": true,
+            "on_time": true,
+            "enough_capacity": true,
+            "insured_as_required": true
+          },
+          {
+            "quote_id": "S2",
+            "within_budget": true,
+            "on_time": false,
+            "enough_capacity": true,
+            "insured_as_required": true
+          }
+        ],
+        "eligible_ids": [
+          "S1"
+        ],
+        "text": "PYTHON CONSTRAINT CHECKS (computed from supplied source fields):\nS1: within_budget=PASS; on_time=PASS; enough_capacity=PASS; insured_as_required=PASS\nS2: within_budget=PASS; on_time=FAIL; enough_capacity=PASS; insured_as_required=PASS\nELIGIBLE QUOTE IDS: S1\nINELIGIBLE QUOTE IDS: S2\nAny FAIL makes that quote infeasible. Among all-PASS quotes, compare source totals to select the lowest cost."
+      }
+    },
+    "comparison": {
+      "saved_tokens": 872,
+      "reduction_percent": 9.891107078039928,
+      "review_input_reduction_percent": 56.3133018230925,
+      "both_checklists_passed": true,
+      "total_experiment_tokens": 13846,
+      "experiment_wall_seconds": 167.57058820000384,
+      "accounting": "Each branch includes the same upstream cost. Compression input/output tokens are included. Upstream calls were executed once physically. No retries or uncounted judge-model calls."
+    }
+  }
+]

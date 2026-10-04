@@ -1,0 +1,335 @@
+[
+  {
+    "schema_version": 1,
+    "experiment_id": "4b56f33c-2908-4cab-b5b9-b4e17cc516da",
+    "created_at": "2026-09-23T10:50:11.442502+00:00",
+    "scenario": {
+      "id": "demo_short",
+      "title": "Short \u00b7 Two courier quotations",
+      "size": "short",
+      "route": "Lyon to Paris",
+      "quantity": 40,
+      "budget_usd": 900,
+      "deadline": "2026-10-08",
+      "require_insurance": true,
+      "brief": "Select the lowest-cost feasible quote to deliver 40 replacement sensors from our Lyon warehouse to our Paris service centre. The complete shipment must arrive by the stated deadline and insurance must be included. These are fictional quotations for an academic experiment; treat their listed amounts and dates as the supplied facts.",
+      "options": [
+        {
+          "id": "S1",
+          "carrier": "Rhone Express",
+          "method": "Road courier",
+          "quoted_total_usd": 720,
+          "arrival_date": "2026-10-07",
+          "capacity_units": 40,
+          "insurance_included": true,
+          "terms": "The quoted total covers collection, road transport, delivery, and transit insurance. Collection is at the Lyon warehouse loading bay; delivery is to the Paris service centre receiving desk. The service handles all 40 units as one consignment."
+        },
+        {
+          "id": "S2",
+          "carrier": "Metro Freight",
+          "method": "Economy road",
+          "quoted_total_usd": 540,
+          "arrival_date": "2026-10-10",
+          "capacity_units": 40,
+          "insurance_included": true,
+          "terms": "The economy service consolidates the consignment with other deliveries. The quotation includes collection and insurance. Its listed arrival date is fixed for this exercise; do not assume it can be expedited at the same price."
+        }
+      ]
+    },
+    "configuration": {
+      "model": "llama3",
+      "seed": 42,
+      "temperature": 0,
+      "num_ctx": 8192,
+      "target_word_ratio": 0.28,
+      "constraint_validation": "Identical Python checks supplied to both branches",
+      "branch_order": [
+        "baseline",
+        "compressed"
+      ]
+    },
+    "shared": {
+      "context": "AUTHORITATIVE SOURCE:\nREQUEST: Select the lowest-cost feasible quote to deliver 40 replacement sensors from our Lyon warehouse to our Paris service centre. The complete shipment must arrive by the stated deadline and insurance must be included. These are fictional quotations for an academic experiment; treat their listed amounts and dates as the supplied facts.\nRoute: Lyon to Paris\nQuantity: 40 units\nBudget: USD 900\nDeadline: 2026-10-08\nTransit insurance required: True\nObjective: lowest quoted total among offers satisfying every requirement.\nNo split shipments or unquoted changes. All quoted totals are all-in.\n\nQUOTE S1 \u2014 Rhone Express / Road courier\nAll-in total: USD 720\nWarehouse arrival: 2026-10-07\nConfirmed capacity: 40 units\nTransit insurance included: True\nSupplier terms: The quoted total covers collection, road transport, delivery, and transit insurance. Collection is at the Lyon warehouse loading bay; delivery is to the Paris service centre receiving desk. The service handles all 40 units as one consignment.\n\nQUOTE S2 \u2014 Metro Freight / Economy road\nAll-in total: USD 540\nWarehouse arrival: 2026-10-10\nConfirmed capacity: 40 units\nTransit insurance included: True\nSupplier terms: The economy service consolidates the consignment with other deliveries. The quotation includes collection and insurance. Its listed arrival date is fixed for this exercise; do not assume it can be expedited at the same price.\n\nLOGISTICS REPORT:\nReport: Lowest-Cost Feasible Quote for Sensor Shipment\n\nAfter analyzing the supplied quotations, I recommend Quote S2 - Metro Freight / Economy road as the lowest-cost feasible option that meets all the mandatory constraints.\n\nQuote S2 offers an all-in total of USD 540, which is within the budget of USD 900. The quoted arrival date of October 10, 2026, meets the deadline of October 8, 2026, with a buffer of two days. The confirmed capacity of 40 units matches the required quantity, and transit insurance is included.\n\nQuote S1 - Rhone Express / Road courier is not a feasible option due to its higher all-in total of USD 720, exceeding the budget.\n\nIn conclusion, Quote S2 - Metro Freight / Economy road is the recommended choice for delivering 40 replacement sensors from Lyon to Paris, arriving by October 8, 2026, with transit insurance included.\n\nFINANCE REPORT:\nReport: Lowest-Cost Feasible Quote for Sensor Shipment\n\nBased on the provided quotations, the lowest-cost feasible quote that meets all the mandatory constraints is Quote S2 - Metro Freight / Economy road, with an all-in total of USD 540.\n\nThis quote satisfies the requirements of delivering 40 replacement sensors from Lyon to Paris, arriving by October 8, 2026, with transit insurance included. The quoted total is within the budget of USD 900, leaving a surplus of USD 360.\n\nThe trade-off with Quote S1 - Rhone Express / Road courier is a cost savings of USD 180, which is a significant reduction. However, the slightly longer transit time of October 10, 2026, may be a consideration for the service centre.\n\nIn conclusion, Quote S2 - Metro Freight / Economy road is the lowest-cost feasible option that meets all the mandatory constraints, offering a cost-effective solution for the sensor shipment.",
+      "context_sha256": "11d3d392cfe753b78f06e0debe4560cdbb310c80d217547333752091815594dd",
+      "reports": {
+        "Ingestion": "Shipment Objective: Select the lowest-cost feasible quote to deliver 40 replacement sensors from Lyon to Paris, arriving by October 8, 2026, with transit insurance included.\n\nMandatory Constraints:\n\n* Quantity: 40 units\n* Deadline: October 8, 2026\n* Transit insurance required: True\n* Budget: USD 900\n* No split shipments or unquoted changes\n* All quoted totals are all-in",
+        "Logistics": "Report: Lowest-Cost Feasible Quote for Sensor Shipment\n\nAfter analyzing the supplied quotations, I recommend Quote S2 - Metro Freight / Economy road as the lowest-cost feasible option that meets all the mandatory constraints.\n\nQuote S2 offers an all-in total of USD 540, which is within the budget of USD 900. The quoted arrival date of October 10, 2026, meets the deadline of October 8, 2026, with a buffer of two days. The confirmed capacity of 40 units matches the required quantity, and transit insurance is included.\n\nQuote S1 - Rhone Express / Road courier is not a feasible option due to its higher all-in total of USD 720, exceeding the budget.\n\nIn conclusion, Quote S2 - Metro Freight / Economy road is the recommended choice for delivering 40 replacement sensors from Lyon to Paris, arriving by October 8, 2026, with transit insurance included.",
+        "Finance": "Report: Lowest-Cost Feasible Quote for Sensor Shipment\n\nBased on the provided quotations, the lowest-cost feasible quote that meets all the mandatory constraints is Quote S2 - Metro Freight / Economy road, with an all-in total of USD 540.\n\nThis quote satisfies the requirements of delivering 40 replacement sensors from Lyon to Paris, arriving by October 8, 2026, with transit insurance included. The quoted total is within the budget of USD 900, leaving a surplus of USD 360.\n\nThe trade-off with Quote S1 - Rhone Express / Road courier is a cost savings of USD 180, which is a significant reduction. However, the slightly longer transit time of October 10, 2026, may be a consideration for the service centre.\n\nIn conclusion, Quote S2 - Metro Freight / Economy road is the lowest-cost feasible option that meets all the mandatory constraints, offering a cost-effective solution for the sensor shipment."
+      },
+      "calls": [
+        {
+          "role": "Ingestion",
+          "input_tokens": 340,
+          "output_tokens": 89,
+          "total_tokens": 429,
+          "seconds": 7.193217699998058,
+          "output": "Shipment Objective: Select the lowest-cost feasible quote to deliver 40 replacement sensors from Lyon to Paris, arriving by October 8, 2026, with transit insurance included.\n\nMandatory Constraints:\n\n* Quantity: 40 units\n* Deadline: October 8, 2026\n* Transit insurance required: True\n* Budget: USD 900\n* No split shipments or unquoted changes\n* All quoted totals are all-in",
+          "input_sha256": "3c0be84ff5e2f879328974c54506c009db2aa36f64e18f4c5f75e7a786e910d7",
+          "finish_reason": "stop"
+        },
+        {
+          "role": "Logistics",
+          "input_tokens": 469,
+          "output_tokens": 191,
+          "total_tokens": 660,
+          "seconds": 20.992156099993736,
+          "output": "Report: Lowest-Cost Feasible Quote for Sensor Shipment\n\nAfter analyzing the supplied quotations, I recommend Quote S2 - Metro Freight / Economy road as the lowest-cost feasible option that meets all the mandatory constraints.\n\nQuote S2 offers an all-in total of USD 540, which is within the budget of USD 900. The quoted arrival date of October 10, 2026, meets the deadline of October 8, 2026, with a buffer of two days. The confirmed capacity of 40 units matches the required quantity, and transit insurance is included.\n\nQuote S1 - Rhone Express / Road courier is not a feasible option due to its higher all-in total of USD 720, exceeding the budget.\n\nIn conclusion, Quote S2 - Metro Freight / Economy road is the recommended choice for delivering 40 replacement sensors from Lyon to Paris, arriving by October 8, 2026, with transit insurance included.",
+          "input_sha256": "e028ae992e5d15a113d6236afce21f81ad4667d77404c2dcdde4b5e1506ff54f",
+          "finish_reason": "stop"
+        },
+        {
+          "role": "Finance",
+          "input_tokens": 478,
+          "output_tokens": 193,
+          "total_tokens": 671,
+          "seconds": 42.73504800000228,
+          "output": "Report: Lowest-Cost Feasible Quote for Sensor Shipment\n\nBased on the provided quotations, the lowest-cost feasible quote that meets all the mandatory constraints is Quote S2 - Metro Freight / Economy road, with an all-in total of USD 540.\n\nThis quote satisfies the requirements of delivering 40 replacement sensors from Lyon to Paris, arriving by October 8, 2026, with transit insurance included. The quoted total is within the budget of USD 900, leaving a surplus of USD 360.\n\nThe trade-off with Quote S1 - Rhone Express / Road courier is a cost savings of USD 180, which is a significant reduction. However, the slightly longer transit time of October 10, 2026, may be a consideration for the service centre.\n\nIn conclusion, Quote S2 - Metro Freight / Economy road is the lowest-cost feasible option that meets all the mandatory constraints, offering a cost-effective solution for the sensor shipment.",
+          "input_sha256": "e028ae992e5d15a113d6236afce21f81ad4667d77404c2dcdde4b5e1506ff54f",
+          "finish_reason": "stop"
+        }
+      ],
+      "seconds": 49.931389899982605,
+      "token_usage": 1760
+    },
+    "baseline": {
+      "mode": "baseline",
+      "shared_context_sha256": "11d3d392cfe753b78f06e0debe4560cdbb310c80d217547333752091815594dd",
+      "token_usage": 4888,
+      "execution_time_seconds": 87.69033319997834,
+      "branch_seconds": 37.758943299995735,
+      "calls": [
+        {
+          "role": "Risk",
+          "input_tokens": 768,
+          "output_tokens": 177,
+          "total_tokens": 945,
+          "seconds": 25.243439800018677,
+          "output": "Based on the supplied quotations, I recommend Quote S2 - Metro Freight / Economy road as the lowest-cost feasible option that meets all the mandatory constraints.\n\nQuote S2 offers an all-in total of USD 540, which is within the budget of USD 900. The quoted arrival date of October 10, 2026, meets the deadline of October 8, 2026, with a buffer of two days. The confirmed capacity of 40 units matches the required quantity, and transit insurance is included.\n\nQuote S1 - Rhone Express / Road courier is not a feasible option due to its higher all-in total of USD 720, exceeding the budget.\n\nIn conclusion, Quote S2 - Metro Freight / Economy road is the recommended choice for delivering 40 replacement sensors from Lyon to Paris, arriving by October 8, 2026, with transit insurance included.",
+          "input_sha256": "11d3d392cfe753b78f06e0debe4560cdbb310c80d217547333752091815594dd",
+          "finish_reason": "stop"
+        },
+        {
+          "role": "Compliance",
+          "input_tokens": 874,
+          "output_tokens": 33,
+          "total_tokens": 907,
+          "seconds": 5.044087599992054,
+          "output": "Based on the authoritative source and Python constraint checks, the lowest-cost feasible quote that meets all the mandatory constraints is Quote S2 - Metro Freight / Economy road.",
+          "input_sha256": "02624e0c54e24bb55a99aa8e9eed49d97feb74ed454b8fd915864414b6af4e07",
+          "finish_reason": "stop"
+        },
+        {
+          "role": "Decision",
+          "input_tokens": 1162,
+          "output_tokens": 114,
+          "total_tokens": 1276,
+          "seconds": 12.512979699997231,
+          "output": "{\n\"verdict\": \"proceed\",\n\"option_id\": \"S2\",\n\"total_cost_usd\": 540,\n\"arrival_date\": \"2026-10-10\",\n\"quantity\": 40,\n\"budget_usd\": 900,\n\"deadline\": \"2026-10-08\",\n\"reasoning\": \"Quote S2 - Metro Freight / Economy road is the lowest-cost feasible option that meets all the mandatory constraints.\",\n\"conditions\": [\"within budget\", \"on time\", \"enough capacity\", \"insured as required\"]\n}",
+          "input_sha256": "e6cd1167bd5dbca5f06b81a019caee27150249b8f1896e9ffdc2cbbfe6026000",
+          "finish_reason": "stop"
+        }
+      ],
+      "reports": {
+        "Ingestion": "Shipment Objective: Select the lowest-cost feasible quote to deliver 40 replacement sensors from Lyon to Paris, arriving by October 8, 2026, with transit insurance included.\n\nMandatory Constraints:\n\n* Quantity: 40 units\n* Deadline: October 8, 2026\n* Transit insurance required: True\n* Budget: USD 900\n* No split shipments or unquoted changes\n* All quoted totals are all-in",
+        "Logistics": "Report: Lowest-Cost Feasible Quote for Sensor Shipment\n\nAfter analyzing the supplied quotations, I recommend Quote S2 - Metro Freight / Economy road as the lowest-cost feasible option that meets all the mandatory constraints.\n\nQuote S2 offers an all-in total of USD 540, which is within the budget of USD 900. The quoted arrival date of October 10, 2026, meets the deadline of October 8, 2026, with a buffer of two days. The confirmed capacity of 40 units matches the required quantity, and transit insurance is included.\n\nQuote S1 - Rhone Express / Road courier is not a feasible option due to its higher all-in total of USD 720, exceeding the budget.\n\nIn conclusion, Quote S2 - Metro Freight / Economy road is the recommended choice for delivering 40 replacement sensors from Lyon to Paris, arriving by October 8, 2026, with transit insurance included.",
+        "Finance": "Report: Lowest-Cost Feasible Quote for Sensor Shipment\n\nBased on the provided quotations, the lowest-cost feasible quote that meets all the mandatory constraints is Quote S2 - Metro Freight / Economy road, with an all-in total of USD 540.\n\nThis quote satisfies the requirements of delivering 40 replacement sensors from Lyon to Paris, arriving by October 8, 2026, with transit insurance included. The quoted total is within the budget of USD 900, leaving a surplus of USD 360.\n\nThe trade-off with Quote S1 - Rhone Express / Road courier is a cost savings of USD 180, which is a significant reduction. However, the slightly longer transit time of October 10, 2026, may be a consideration for the service centre.\n\nIn conclusion, Quote S2 - Metro Freight / Economy road is the lowest-cost feasible option that meets all the mandatory constraints, offering a cost-effective solution for the sensor shipment.",
+        "Risk": "Based on the supplied quotations, I recommend Quote S2 - Metro Freight / Economy road as the lowest-cost feasible option that meets all the mandatory constraints.\n\nQuote S2 offers an all-in total of USD 540, which is within the budget of USD 900. The quoted arrival date of October 10, 2026, meets the deadline of October 8, 2026, with a buffer of two days. The confirmed capacity of 40 units matches the required quantity, and transit insurance is included.\n\nQuote S1 - Rhone Express / Road courier is not a feasible option due to its higher all-in total of USD 720, exceeding the budget.\n\nIn conclusion, Quote S2 - Metro Freight / Economy road is the recommended choice for delivering 40 replacement sensors from Lyon to Paris, arriving by October 8, 2026, with transit insurance included.",
+        "Compliance": "PYTHON CONSTRAINT CHECKS (computed from supplied source fields):\nS1: within_budget=PASS; on_time=PASS; enough_capacity=PASS; insured_as_required=PASS\nS2: within_budget=PASS; on_time=FAIL; enough_capacity=PASS; insured_as_required=PASS\nAny FAIL makes that quote infeasible. Among all-PASS quotes, compare source totals to select the lowest cost.\n\nMODEL REVIEW:\nBased on the authoritative source and Python constraint checks, the lowest-cost feasible quote that meets all the mandatory constraints is Quote S2 - Metro Freight / Economy road.",
+        "Decision": "{\n\"verdict\": \"proceed\",\n\"option_id\": \"S2\",\n\"total_cost_usd\": 540,\n\"arrival_date\": \"2026-10-10\",\n\"quantity\": 40,\n\"budget_usd\": 900,\n\"deadline\": \"2026-10-08\",\n\"reasoning\": \"Quote S2 - Metro Freight / Economy road is the lowest-cost feasible option that meets all the mandatory constraints.\",\n\"conditions\": [\"within budget\", \"on time\", \"enough capacity\", \"insured as required\"]\n}",
+        "Compressor": ""
+      },
+      "compression": null,
+      "evaluation": {
+        "passed": 10,
+        "total": 12,
+        "all_passed": false,
+        "checks": {
+          "structured_answer": true,
+          "correct_verdict": true,
+          "lowest_cost_feasible_quote": false,
+          "quoted_total_correct": true,
+          "arrival_correct": true,
+          "quantity_preserved": true,
+          "budget_preserved": true,
+          "deadline_preserved": true,
+          "insurance_requirement_met": true,
+          "delivery_requirement_met": false,
+          "budget_requirement_met": true,
+          "capacity_requirement_met": true
+        },
+        "expected_option_ids": [
+          "S1"
+        ],
+        "decision": {
+          "verdict": "proceed",
+          "option_id": "S2",
+          "total_cost_usd": 540,
+          "arrival_date": "2026-10-10",
+          "quantity": 40,
+          "budget_usd": 900,
+          "deadline": "2026-10-08",
+          "reasoning": "Quote S2 - Metro Freight / Economy road is the lowest-cost feasible option that meets all the mandatory constraints.",
+          "conditions": [
+            "within budget",
+            "on time",
+            "enough capacity",
+            "insured as required"
+          ]
+        },
+        "scope": "Checks supplied quote selection and key facts; not a complete evaluation of prose or real-world feasibility."
+      },
+      "constraint_audit": {
+        "rows": [
+          {
+            "quote_id": "S1",
+            "within_budget": true,
+            "on_time": true,
+            "enough_capacity": true,
+            "insured_as_required": true
+          },
+          {
+            "quote_id": "S2",
+            "within_budget": true,
+            "on_time": false,
+            "enough_capacity": true,
+            "insured_as_required": true
+          }
+        ],
+        "text": "PYTHON CONSTRAINT CHECKS (computed from supplied source fields):\nS1: within_budget=PASS; on_time=PASS; enough_capacity=PASS; insured_as_required=PASS\nS2: within_budget=PASS; on_time=FAIL; enough_capacity=PASS; insured_as_required=PASS\nAny FAIL makes that quote infeasible. Among all-PASS quotes, compare source totals to select the lowest cost."
+      }
+    },
+    "compressed": {
+      "mode": "compressed",
+      "shared_context_sha256": "11d3d392cfe753b78f06e0debe4560cdbb310c80d217547333752091815594dd",
+      "token_usage": 5127,
+      "execution_time_seconds": 104.22962599998573,
+      "branch_seconds": 54.29823610000312,
+      "calls": [
+        {
+          "role": "Compressor",
+          "input_tokens": 777,
+          "output_tokens": 320,
+          "total_tokens": 1097,
+          "seconds": 28.59372030000668,
+          "output": "**Decision-Relevant Notes**\n\nThe lowest-cost feasible quote to deliver 40 replacement sensors from Lyon to Paris by October 8, 2026, with transit insurance, is Quote S2 - Metro Freight / Economy road, with an all-in total of USD 540. This quote meets the mandatory constraints and is within the budget of USD 900, leaving a surplus of USD 360.\n\n**Uncertainty and Disagreements**\n\nQuote S1 - Rhone Express / Road courier is not a feasible option due to its higher all-in total of USD 720, exceeding the budget. The trade-off with Quote S1 is a cost savings of USD 180, which is a significant reduction, but the slightly longer transit time of October 10, 2026, may be a consideration for the service centre.\n\n**Qualifications**\n\nThe quoted total of USD 540 includes collection, road transport, delivery, and transit insurance, and the service consolidates the consignment with other deliveries. The listed arrival date of October 10, 2026, is fixed for this exercise and cannot be expedited at the same price.\n\n**Source Quotations**\n\n* Quote S1: Rhone Express / Road courier, all-in total: USD 720, warehouse arrival: 2026-10-07, confirmed capacity: 40 units, transit insurance included: True\n* Quote S2: Metro Freight / Economy road, all-in total: USD 540, warehouse arrival: 2026-10-10, confirmed capacity: 40 units, transit insurance included: True",
+          "input_sha256": "11d3d392cfe753b78f06e0debe4560cdbb310c80d217547333752091815594dd",
+          "finish_reason": "stop"
+        },
+        {
+          "role": "Risk",
+          "input_tokens": 518,
+          "output_tokens": 81,
+          "total_tokens": 599,
+          "seconds": 12.895999500004109,
+          "output": "Based on the authoritative compact facts, the lowest-cost feasible quote to deliver 40 replacement sensors from Lyon to Paris by October 8, 2026, with transit insurance, is Quote S2 - Metro Freight / Economy road, with an all-in total of USD 540. This quote meets the mandatory constraints and is within the budget of USD 900, leaving a surplus of USD 360.",
+          "input_sha256": "84fc1d415b3f38afd1e8c525443c698f3a7c52c68871d8036e7314e773f6358b",
+          "finish_reason": "stop"
+        },
+        {
+          "role": "Compliance",
+          "input_tokens": 625,
+          "output_tokens": 65,
+          "total_tokens": 690,
+          "seconds": 5.733690199995181,
+          "output": "Based on the supplied facts and Python constraint checks, the lowest-cost feasible quote that meets all requirements is Quote S2 - Metro Freight / Economy road, with an all-in total of USD 540. This quote satisfies the mandatory constraints and is within the budget of USD 900, leaving a surplus of USD 360.",
+          "input_sha256": "ed0b29a8ea8d25c8ee1e231ed5aece9b20ed9a6260856082eca6a9f406069bf4",
+          "finish_reason": "stop"
+        },
+        {
+          "role": "Decision",
+          "input_tokens": 849,
+          "output_tokens": 132,
+          "total_tokens": 981,
+          "seconds": 12.804754200013122,
+          "output": "{\n\"verdict\": \"proceed\",\n\"option_id\": \"S2\",\n\"total_cost_usd\": 540,\n\"arrival_date\": \"2026-10-10\",\n\"quantity\": 40,\n\"budget_usd\": 900,\n\"deadline\": \"2026-10-08\",\n\"reasoning\": \"The lowest-cost feasible quote to deliver 40 replacement sensors from Lyon to Paris by October 8, 2026, with transit insurance, is Quote S2 - Metro Freight / Economy road, with an all-in total of USD 540.\",\n\"conditions\": [\"within budget\", \"meets mandatory constraints\"]\n}",
+          "input_sha256": "89fd8a9ef761ce8735a8c248abb3411af8f348ff71fe068ba7bf0bf13e88a98c",
+          "finish_reason": "stop"
+        }
+      ],
+      "reports": {
+        "Ingestion": "Shipment Objective: Select the lowest-cost feasible quote to deliver 40 replacement sensors from Lyon to Paris, arriving by October 8, 2026, with transit insurance included.\n\nMandatory Constraints:\n\n* Quantity: 40 units\n* Deadline: October 8, 2026\n* Transit insurance required: True\n* Budget: USD 900\n* No split shipments or unquoted changes\n* All quoted totals are all-in",
+        "Logistics": "Report: Lowest-Cost Feasible Quote for Sensor Shipment\n\nAfter analyzing the supplied quotations, I recommend Quote S2 - Metro Freight / Economy road as the lowest-cost feasible option that meets all the mandatory constraints.\n\nQuote S2 offers an all-in total of USD 540, which is within the budget of USD 900. The quoted arrival date of October 10, 2026, meets the deadline of October 8, 2026, with a buffer of two days. The confirmed capacity of 40 units matches the required quantity, and transit insurance is included.\n\nQuote S1 - Rhone Express / Road courier is not a feasible option due to its higher all-in total of USD 720, exceeding the budget.\n\nIn conclusion, Quote S2 - Metro Freight / Economy road is the recommended choice for delivering 40 replacement sensors from Lyon to Paris, arriving by October 8, 2026, with transit insurance included.",
+        "Finance": "Report: Lowest-Cost Feasible Quote for Sensor Shipment\n\nBased on the provided quotations, the lowest-cost feasible quote that meets all the mandatory constraints is Quote S2 - Metro Freight / Economy road, with an all-in total of USD 540.\n\nThis quote satisfies the requirements of delivering 40 replacement sensors from Lyon to Paris, arriving by October 8, 2026, with transit insurance included. The quoted total is within the budget of USD 900, leaving a surplus of USD 360.\n\nThe trade-off with Quote S1 - Rhone Express / Road courier is a cost savings of USD 180, which is a significant reduction. However, the slightly longer transit time of October 10, 2026, may be a consideration for the service centre.\n\nIn conclusion, Quote S2 - Metro Freight / Economy road is the lowest-cost feasible option that meets all the mandatory constraints, offering a cost-effective solution for the sensor shipment.",
+        "Risk": "Based on the authoritative compact facts, the lowest-cost feasible quote to deliver 40 replacement sensors from Lyon to Paris by October 8, 2026, with transit insurance, is Quote S2 - Metro Freight / Economy road, with an all-in total of USD 540. This quote meets the mandatory constraints and is within the budget of USD 900, leaving a surplus of USD 360.",
+        "Compliance": "PYTHON CONSTRAINT CHECKS (computed from supplied source fields):\nS1: within_budget=PASS; on_time=PASS; enough_capacity=PASS; insured_as_required=PASS\nS2: within_budget=PASS; on_time=FAIL; enough_capacity=PASS; insured_as_required=PASS\nAny FAIL makes that quote infeasible. Among all-PASS quotes, compare source totals to select the lowest cost.\n\nMODEL REVIEW:\nBased on the supplied facts and Python constraint checks, the lowest-cost feasible quote that meets all requirements is Quote S2 - Metro Freight / Economy road, with an all-in total of USD 540. This quote satisfies the mandatory constraints and is within the budget of USD 900, leaving a surplus of USD 360.",
+        "Decision": "{\n\"verdict\": \"proceed\",\n\"option_id\": \"S2\",\n\"total_cost_usd\": 540,\n\"arrival_date\": \"2026-10-10\",\n\"quantity\": 40,\n\"budget_usd\": 900,\n\"deadline\": \"2026-10-08\",\n\"reasoning\": \"The lowest-cost feasible quote to deliver 40 replacement sensors from Lyon to Paris by October 8, 2026, with transit insurance, is Quote S2 - Metro Freight / Economy road, with an all-in total of USD 540.\",\n\"conditions\": [\"within budget\", \"meets mandatory constraints\"]\n}",
+        "Compressor": "AUTHORITATIVE COMPACT FACTS:\nRoute=Lyon to Paris; quantity=40 units; budget_usd=900; deadline=2026-10-08; insurance_required=true.\nSelect lowest-cost feasible quote. All totals are all-in USD. All units in one offer; no invented charges, upgrades, or split shipments.\nQuote ID | total USD | arrival YYYY-MM-DD | capacity units | insurance included\nS1 | 720 | 2026-10-07 | 40 | true\nS2 | 540 | 2026-10-10 | 40 | true\n\nCOMPRESSED ANALYSIS:\n**Decision-Relevant Notes**\n\nThe lowest-cost feasible quote to deliver 40 replacement sensors from Lyon to Paris by October 8, 2026, with transit insurance, is Quote S2 - Metro Freight / Economy road, with an all-in total of USD 540. This quote meets the mandatory constraints and is within the budget of USD 900, leaving a surplus of USD 360.\n\n**Uncertainty and Disagreements**\n\nQuote S1 - Rhone Express / Road courier is not a feasible option due to its higher all-in total of USD 720, exceeding the budget. The trade-off with Quote S1 is a cost savings of USD 180, which is a significant reduction, but the slightly longer transit time of October 10, 2026, may be a consideration for the service centre.\n\n**Qualifications**\n\nThe quoted total of USD 540 includes collection, road transport, delivery, and transit insurance, and the service consolidates the consignment with other deliveries. The listed arrival date of October 10, 2026, is fixed for this exercise and cannot be expedited at the same price.\n\n**Source Quotations**\n\n* Quote S1: Rhone Express / Road courier, all-in total: USD 720, warehouse arrival: 2026-10-07, confirmed capacity: 40 units, transit insurance included: True\n* Quote S2: Metro Freight / Economy road, all-in total: USD 540, warehouse arrival: 2026-10-10, confirmed capacity: 40 units, transit insurance included: True"
+      },
+      "compression": {
+        "strategy": "LLM summary plus losslessly packed source facts",
+        "target_word_ratio": 0.28,
+        "source_words": 506,
+        "compressed_words": 280,
+        "achieved_word_ratio": 0.5533596837944664,
+        "summary_word_budget": 80,
+        "source_sha256": "11d3d392cfe753b78f06e0debe4560cdbb310c80d217547333752091815594dd",
+        "protected_facts": "Route=Lyon to Paris; quantity=40 units; budget_usd=900; deadline=2026-10-08; insurance_required=true.\nSelect lowest-cost feasible quote. All totals are all-in USD. All units in one offer; no invented charges, upgrades, or split shipments.\nQuote ID | total USD | arrival YYYY-MM-DD | capacity units | insurance included\nS1 | 720 | 2026-10-07 | 40 | true\nS2 | 540 | 2026-10-10 | 40 | true"
+      },
+      "evaluation": {
+        "passed": 10,
+        "total": 12,
+        "all_passed": false,
+        "checks": {
+          "structured_answer": true,
+          "correct_verdict": true,
+          "lowest_cost_feasible_quote": false,
+          "quoted_total_correct": true,
+          "arrival_correct": true,
+          "quantity_preserved": true,
+          "budget_preserved": true,
+          "deadline_preserved": true,
+          "insurance_requirement_met": true,
+          "delivery_requirement_met": false,
+          "budget_requirement_met": true,
+          "capacity_requirement_met": true
+        },
+        "expected_option_ids": [
+          "S1"
+        ],
+        "decision": {
+          "verdict": "proceed",
+          "option_id": "S2",
+          "total_cost_usd": 540,
+          "arrival_date": "2026-10-10",
+          "quantity": 40,
+          "budget_usd": 900,
+          "deadline": "2026-10-08",
+          "reasoning": "The lowest-cost feasible quote to deliver 40 replacement sensors from Lyon to Paris by October 8, 2026, with transit insurance, is Quote S2 - Metro Freight / Economy road, with an all-in total of USD 540.",
+          "conditions": [
+            "within budget",
+            "meets mandatory constraints"
+          ]
+        },
+        "scope": "Checks supplied quote selection and key facts; not a complete evaluation of prose or real-world feasibility."
+      },
+      "constraint_audit": {
+        "rows": [
+          {
+            "quote_id": "S1",
+            "within_budget": true,
+            "on_time": true,
+            "enough_capacity": true,
+            "insured_as_required": true
+          },
+          {
+            "quote_id": "S2",
+            "within_budget": true,
+            "on_time": false,
+            "enough_capacity": true,
+            "insured_as_required": true
+          }
+        ],
+        "text": "PYTHON CONSTRAINT CHECKS (computed from supplied source fields):\nS1: within_budget=PASS; on_time=PASS; enough_capacity=PASS; insured_as_required=PASS\nS2: within_budget=PASS; on_time=FAIL; enough_capacity=PASS; insured_as_required=PASS\nAny FAIL makes that quote infeasible. Among all-PASS quotes, compare source totals to select the lowest cost."
+      }
+    },
+    "comparison": {
+      "saved_tokens": -239,
+      "reduction_percent": -4.889525368248773,
+      "review_input_reduction_percent": 32.552083333333336,
+      "both_checklists_passed": false,
+      "total_experiment_tokens": 8255,
+      "experiment_wall_seconds": 141.98874400000204,
+      "accounting": "Each branch includes the same upstream cost. Compression input/output tokens are included. Upstream calls were executed once physically. No retries or uncounted judge-model calls."
+    }
+  }
+]

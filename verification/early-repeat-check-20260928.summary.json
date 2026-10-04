@@ -1,0 +1,32 @@
+{
+  "protocol": "validated-v3-early",
+  "phase": "repeat_check",
+  "created_at": "2026-09-28T15:10:07.971503+00:00",
+  "models": {
+    "llama3": {
+      "attempted_pairs": 2,
+      "completed_pairs": 2,
+      "execution_failures": 0,
+      "failed_validation_pairs": 0,
+      "compression_applied_pairs": 2,
+      "skipped_pairs": 0,
+      "validated_decisions": 4,
+      "total_decisions": 4,
+      "decision_accuracy": 1.0,
+      "completed_decision_accuracy": 1.0,
+      "factual_claim_accuracy": 1.0,
+      "claims_evaluated": 40,
+      "schema_failures": 0,
+      "rejected_items": 16,
+      "mean_applied_reduction_percent": 17.904363155575144,
+      "sd_applied_reduction_percent": 0.0,
+      "min_applied_reduction_percent": 17.904363155575144,
+      "negative_savings_pairs": 0,
+      "quality_preserving_savings_pairs": 2,
+      "measured_physical_tokens": 31174,
+      "mean_wall_seconds": 96.29992954999761,
+      "prediction_mae_tokens": 428.23
+    }
+  },
+  "scope": "Two llama3 pairs on the same detailed fictional-quote scenario. Seed 51 forced compression, seed 52 auto policy; branch order reversed. This is one pilot plus one held-out repeat, not a cross-scenario or cross-model result. Compressor cost, rejected claims and failed runs remain in raw records."
+}

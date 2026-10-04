@@ -1,0 +1,16 @@
+{
+  "llama3": {
+    "model": "llama3",
+    "protocol": "validated-v4-selective",
+    "sample_count": 1,
+    "experiment_ids": [
+      "5a66d462-3886-4e01-8add-ef03bd2868d9"
+    ],
+    "tokens_per_removed_character": 0.17652083152495907,
+    "compressor_tokens": 474,
+    "compressor_input_characters": 1658,
+    "safety_multiplier": 1.2,
+    "minimum_expected_saving": 100,
+    "scope": "Small pilot calibration; held-out results must verify generalization."
+  }
+}

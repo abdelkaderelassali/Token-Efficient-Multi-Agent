@@ -1,0 +1,25 @@
+[
+  {
+    "id": "scenario_1",
+    "domain": "Logistics & Finance",
+    "prompt": "We need to plan a supply chain route from New York to London for 500 units of electronics. The budget is strictly capped at $15,000. Delivery must be completed by October 15th, 2026. Please calculate the optimal route, shipping method, and provide a financial breakdown to ensure we stay under budget.",
+    "expected_constraints": [
+      "New York to London",
+      "500 units",
+      "$15,000",
+      "October 15"
+    ]
+  },
+  {
+    "id": "scenario_2",
+    "domain": "Logistics & Finance",
+    "prompt": "Evaluate the feasibility of shifting our manufacturing materials supplier from Shenzhen to Mexico City. We require 10,000 tons of raw steel per month. The current shipping cost is $1.2M per month. If we shift, the target shipping cost must not exceed $900,000 per month, and we need a delivery latency of under 7 days per batch.",
+    "expected_constraints": [
+      "Shenzhen to Mexico City",
+      "10,000 tons",
+      "$1.2M",
+      "$900,000",
+      "7 days"
+    ]
+  }
+]

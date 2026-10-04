@@ -1,0 +1,29 @@
+[
+  {
+    "title": "Custom test: Bristol to Cardiff",
+    "brief": "Choose the lowest-cost feasible supplied quote for 24 boxed replacement pumps. Deliver the full quantity together, within the deadline and budget, with transit insurance. Use the quoted all-in totals without adding costs.",
+    "route": "Bristol to Cardiff",
+    "quantity": 24,
+    "budget_usd": 1200,
+    "deadline": "2026-11-06",
+    "require_insurance": true,
+    "options": [
+      {"id": "C1", "carrier": "Westlink", "method": "Direct road", "quoted_total_usd": 980, "arrival_date": "2026-11-05", "capacity_units": 24, "insurance_included": true, "terms": "The price includes collection, delivery and transit insurance. All 24 boxes travel together in the allocated vehicle."},
+      {"id": "C2", "carrier": "Severn Freight", "method": "Consolidated road", "quoted_total_usd": 820, "arrival_date": "2026-11-07", "capacity_units": 40, "insurance_included": true, "terms": "Collection and transit insurance are included. Arrival is fixed on the supplied date; no earlier service has been offered."}
+    ]
+  },
+  {
+    "title": "Custom test: Glasgow to Dublin",
+    "brief": "Select the lowest-cost feasible supplied quote to move 75 boxed laboratory instruments from Glasgow to Dublin. The entire consignment must be delivered within the budget and deadline and must include transit insurance. These are fictional all-in prices. Do not assume additional capacity, new prices, partial shipments or unquoted upgrades. Compare the offers as supplied.",
+    "route": "Glasgow to Dublin",
+    "quantity": 75,
+    "budget_usd": 2400,
+    "deadline": "2026-11-15",
+    "require_insurance": true,
+    "options": [
+      {"id": "L1", "carrier": "Clyde Direct", "method": "Road and ferry", "quoted_total_usd": 1850, "arrival_date": "2026-11-13", "capacity_units": 80, "insurance_included": true, "terms": "Collection is from the Glasgow laboratory receiving bay, with final delivery to the Dublin research facility. The quoted price includes the reserved ferry crossing, handling and transit insurance. Eighty boxes are the confirmed vehicle allocation for this booking. The driver records the collection count and the receiving team signs for the delivered consignment. Dispatch labels identify each box and the shipment reference. The consignment remains together during road transport and the crossing. The arrival date is the committed date for the supplied quotation."},
+      {"id": "L2", "carrier": "Island Consolidation", "method": "Scheduled groupage", "quoted_total_usd": 1600, "arrival_date": "2026-11-16", "capacity_units": 100, "insurance_included": true, "terms": "The service consolidates the boxes with other consignments at the departure depot. The quoted amount includes collection, ferry transport, final delivery and transit insurance. The confirmed allocation is sufficient for one hundred boxes. Labels remain attached to the original packaging throughout the service. Tracking updates identify collection, depot departure and final delivery. The supplied arrival date is after the requested deadline. No earlier departure or expedited option has been quoted, and the listed service must be evaluated without assuming an upgrade."},
+      {"id": "L3", "carrier": "Research Cargo", "method": "Dedicated road and ferry", "quoted_total_usd": 2250, "arrival_date": "2026-11-14", "capacity_units": 75, "insurance_included": true, "terms": "A dedicated allocation carries all seventy-five boxes as one consignment. The quoted total includes collection, terminal handling, the crossing, cargo insurance and final delivery. Collection and delivery counts are recorded against the same shipment reference. The carrier uses the supplied destination address on every transport document. Loading is completed at the origin receiving bay and unloading at the destination receiving bay. The arrival date is within the requested deadline. The capacity shown is specific to this quotation rather than the carrier's general fleet capacity."}
+    ]
+  }
+]

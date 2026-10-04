@@ -1,0 +1,660 @@
+[
+  {
+    "schema_version": 1,
+    "experiment_id": "871b833c-d02f-4552-9cda-a7421f9b1b22",
+    "created_at": "2026-09-23T09:58:53.577197+00:00",
+    "scenario": {
+      "id": "demo_detailed",
+      "title": "Detailed \u00b7 International supplier quotations",
+      "size": "detailed",
+      "route": "New York to London",
+      "quantity": 500,
+      "budget_usd": 15000,
+      "deadline": "2026-10-15",
+      "require_insurance": true,
+      "brief": "Prepare an executive shipping decision for 500 boxed electronics units moving from New York to London. Select the lowest-cost feasible quotation from the six offers below. The shipment must stay within the USD 15,000 cap, carry all 500 units, arrive no later than 2026-10-15, and include transit insurance. The quoted totals already include transport, handling, customs charges, insurance where explicitly stated, and final delivery; do not add those charges a second time. No split shipments, unquoted upgrades, alternative carriers, or newly invented prices are allowed. These are fictional supplier documents supplied for this PFA experiment, not real market quotations. All dates are ISO dates and all prices are USD.",
+      "options": [
+        {
+          "id": "D1",
+          "carrier": "North Atlantic Economy",
+          "method": "Consolidated ocean freight",
+          "quoted_total_usd": 8600,
+          "arrival_date": "2026-10-18",
+          "capacity_units": 600,
+          "insurance_included": true,
+          "terms": "The supplier offers consolidated ocean freight with insured carriage and delivery to the London warehouse. The quoted arrival is the warehouse delivery date, not the vessel arrival date. Its lower price depends on a later consolidation schedule. The supplier has not confirmed any earlier delivery at this rate. Collection paperwork and carton labelling follow the standard warehouse process. The quote is otherwise complete and carries sufficient capacity; the scheduled arrival remains the deciding time restriction."
+        },
+        {
+          "id": "D2",
+          "carrier": "Atlantic Priority",
+          "method": "Priority ocean and road",
+          "quoted_total_usd": 12800,
+          "arrival_date": "2026-10-13",
+          "capacity_units": 500,
+          "insurance_included": true,
+          "terms": "This offer reserves priority ocean space for the full consignment, followed by direct road delivery to the London warehouse. The stated USD total is the final all-in amount for the shipment. Cargo insurance, origin handling, destination handling, customs charges, and last-mile delivery are included. Capacity is confirmed for exactly 500 units. The carrier provides a planned warehouse arrival of 2026-10-13. The booking requires the normal packing list and commercial invoice. There are no additional mandatory charges in this fictional quote."
+        },
+        {
+          "id": "D3",
+          "carrier": "Transatlantic Air",
+          "method": "Express air freight",
+          "quoted_total_usd": 16400,
+          "arrival_date": "2026-10-08",
+          "capacity_units": 700,
+          "insurance_included": true,
+          "terms": "Express air freight offers the earliest arrival among the supplied quotations and ample confirmed capacity. The total includes cargo insurance and both airport handling stages. This offer exceeds the allowed shipment budget, even though it satisfies the delivery, capacity, and insurance requirements. No discount is offered. The finance review must compare the full quoted total with the cap rather than assuming the urgency justifies exceeding it. Delivery is to the same London receiving facility as the other offers."
+        },
+        {
+          "id": "D4",
+          "carrier": "Harbour Budget",
+          "method": "Standard ocean freight",
+          "quoted_total_usd": 11900,
+          "arrival_date": "2026-10-12",
+          "capacity_units": 500,
+          "insurance_included": false,
+          "terms": "The supplier confirms timely delivery and capacity for the full shipment. However, cargo travels without transit insurance under this quotation. The terms explicitly exclude any insurance premium, and the supplier has not priced an insurance extension. The shipping team must not assume insurance is included in another cost line. Although this offer is cheaper than some insured options, insurance is a mandatory requirement. All the other fees are included in the quoted total; the exclusion is a coverage issue."
+        },
+        {
+          "id": "D5",
+          "carrier": "Portline Allocation",
+          "method": "Ocean freight",
+          "quoted_total_usd": 10700,
+          "arrival_date": "2026-10-11",
+          "capacity_units": 350,
+          "insurance_included": true,
+          "terms": "This carrier has confirmed only 350 units of space on the stated departure. The price and arrival apply to that available allocation, with insurance included. An additional departure could be requested separately, but no price, arrival, or capacity is supplied for it. The project requires a single feasible offer for all 500 units, and split shipments are not allowed. Consequently, do not extrapolate this quote proportionally or assume that the carrier can expand its allocation without a revised offer."
+        },
+        {
+          "id": "D6",
+          "carrier": "CityLink Freight",
+          "method": "Priority ocean and road",
+          "quoted_total_usd": 13900,
+          "arrival_date": "2026-10-14",
+          "capacity_units": 550,
+          "insurance_included": true,
+          "terms": "The supplier offers an insured service with enough capacity and an arrival before the deadline. Its total includes all stated charges and final warehouse delivery. This is a feasible backup option, but its quoted amount is higher than another feasible offer. The project objective is to choose the lowest-cost feasible offer, not simply the fastest service or the first one that meets the constraints. Keep this offer in the comparison so that the decision explains the trade-off using supplied facts."
+        }
+      ]
+    },
+    "configuration": {
+      "model": "llama3",
+      "seed": 42,
+      "temperature": 0,
+      "num_ctx": 8192,
+      "target_word_ratio": 0.28,
+      "branch_order": [
+        "baseline",
+        "compressed"
+      ]
+    },
+    "shared": {
+      "context": "AUTHORITATIVE SOURCE:\nREQUEST: Prepare an executive shipping decision for 500 boxed electronics units moving from New York to London. Select the lowest-cost feasible quotation from the six offers below. The shipment must stay within the USD 15,000 cap, carry all 500 units, arrive no later than 2026-10-15, and include transit insurance. The quoted totals already include transport, handling, customs charges, insurance where explicitly stated, and final delivery; do not add those charges a second time. No split shipments, unquoted upgrades, alternative carriers, or newly invented prices are allowed. These are fictional supplier documents supplied for this PFA experiment, not real market quotations. All dates are ISO dates and all prices are USD.\nRoute: New York to London\nQuantity: 500 units\nBudget: USD 15000\nDeadline: 2026-10-15\nTransit insurance required: True\nObjective: lowest quoted total among offers satisfying every requirement.\nNo split shipments or unquoted changes. All quoted totals are all-in.\n\nQUOTE D1 \u2014 North Atlantic Economy / Consolidated ocean freight\nAll-in total: USD 8600\nWarehouse arrival: 2026-10-18\nConfirmed capacity: 600 units\nTransit insurance included: True\nSupplier terms: The supplier offers consolidated ocean freight with insured carriage and delivery to the London warehouse. The quoted arrival is the warehouse delivery date, not the vessel arrival date. Its lower price depends on a later consolidation schedule. The supplier has not confirmed any earlier delivery at this rate. Collection paperwork and carton labelling follow the standard warehouse process. The quote is otherwise complete and carries sufficient capacity; the scheduled arrival remains the deciding time restriction.\n\nQUOTE D2 \u2014 Atlantic Priority / Priority ocean and road\nAll-in total: USD 12800\nWarehouse arrival: 2026-10-13\nConfirmed capacity: 500 units\nTransit insurance included: True\nSupplier terms: This offer reserves priority ocean space for the full consignment, followed by direct road delivery to the London warehouse. The stated USD total is the final all-in amount for the shipment. Cargo insurance, origin handling, destination handling, customs charges, and last-mile delivery are included. Capacity is confirmed for exactly 500 units. The carrier provides a planned warehouse arrival of 2026-10-13. The booking requires the normal packing list and commercial invoice. There are no additional mandatory charges in this fictional quote.\n\nQUOTE D3 \u2014 Transatlantic Air / Express air freight\nAll-in total: USD 16400\nWarehouse arrival: 2026-10-08\nConfirmed capacity: 700 units\nTransit insurance included: True\nSupplier terms: Express air freight offers the earliest arrival among the supplied quotations and ample confirmed capacity. The total includes cargo insurance and both airport handling stages. This offer exceeds the allowed shipment budget, even though it satisfies the delivery, capacity, and insurance requirements. No discount is offered. The finance review must compare the full quoted total with the cap rather than assuming the urgency justifies exceeding it. Delivery is to the same London receiving facility as the other offers.\n\nQUOTE D4 \u2014 Harbour Budget / Standard ocean freight\nAll-in total: USD 11900\nWarehouse arrival: 2026-10-12\nConfirmed capacity: 500 units\nTransit insurance included: False\nSupplier terms: The supplier confirms timely delivery and capacity for the full shipment. However, cargo travels without transit insurance under this quotation. The terms explicitly exclude any insurance premium, and the supplier has not priced an insurance extension. The shipping team must not assume insurance is included in another cost line. Although this offer is cheaper than some insured options, insurance is a mandatory requirement. All the other fees are included in the quoted total; the exclusion is a coverage issue.\n\nQUOTE D5 \u2014 Portline Allocation / Ocean freight\nAll-in total: USD 10700\nWarehouse arrival: 2026-10-11\nConfirmed capacity: 350 units\nTransit insurance included: True\nSupplier terms: This carrier has confirmed only 350 units of space on the stated departure. The price and arrival apply to that available allocation, with insurance included. An additional departure could be requested separately, but no price, arrival, or capacity is supplied for it. The project requires a single feasible offer for all 500 units, and split shipments are not allowed. Consequently, do not extrapolate this quote proportionally or assume that the carrier can expand its allocation without a revised offer.\n\nQUOTE D6 \u2014 CityLink Freight / Priority ocean and road\nAll-in total: USD 13900\nWarehouse arrival: 2026-10-14\nConfirmed capacity: 550 units\nTransit insurance included: True\nSupplier terms: The supplier offers an insured service with enough capacity and an arrival before the deadline. Its total includes all stated charges and final warehouse delivery. This is a feasible backup option, but its quoted amount is higher than another feasible offer. The project objective is to choose the lowest-cost feasible offer, not simply the fastest service or the first one that meets the constraints. Keep this offer in the comparison so that the decision explains the trade-off using supplied facts.\n\nLOGISTICS REPORT:\nExecutive Shipping Decision Report:\n\nAfter analyzing the six quotations, I recommend selecting QUOTE D1 - North Atlantic Economy / Consolidated ocean freight as the lowest-cost feasible option that satisfies all requirements.\n\nThe total cost of USD 8,600 is well within the budget of USD 15,000 and meets the mandatory constraints. The quotation provides confirmed capacity for 600 units, which exceeds the required 500 units. The scheduled arrival date of 2026-10-18 is within the deadline of 2026-10-15. Transit insurance is included in the quote, meeting the mandatory requirement.\n\nWhile QUOTE D2 - Atlantic Priority / Priority ocean and road is a close second, its total cost of USD 12,800 exceeds the budget. QUOTE D3 - Transatlantic Air / Express air freight is not a viable option due to its high total cost of USD 16,400, which exceeds the budget by USD 1,400.\n\nThe other quotations, QUOTE D4 - Harbour Budget / Standard ocean freight and QUOTE D5 - Portline Allocation / Ocean freight, do not meet the mandatory constraint of providing transit insurance. QUOTE D6 - CityLink Freight / Priority ocean and road is a feasible option, but its total cost of USD 13,900 is higher than QUOTE D1.\n\nIn conclusion, QUOTE D1 is the lowest-cost feasible option that meets all the mandatory constraints, and I recommend selecting it for the shipment.\n\nFINANCE REPORT:\nExecutive Shipping Decision Report:\n\nAfter analyzing the six quotations, I recommend selecting QUOTE D1 - North Atlantic Economy / Consolidated ocean freight as the lowest-cost feasible option that satisfies all requirements.\n\nThe total cost of QUOTE D1 is USD 8,600, which is well within the budget of USD 15,000. This quotation also meets the mandatory constraints, including carrying all 500 units, arriving no later than 2026-10-15, and including transit insurance.\n\nWhile QUOTE D2 - Atlantic Priority / Priority ocean and road is a close second, its total cost of USD 12,800 exceeds the budget. QUOTE D3 - Transatlantic Air / Express air freight is the most expensive option, with a total cost of USD 16,400, which is above the budget.\n\nThe other quotations, QUOTE D4 - Harbour Budget / Standard ocean freight and QUOTE D5 - Portline Allocation / Ocean freight, do not meet the mandatory constraint of including transit insurance. QUOTE D6 - CityLink Freight / Priority ocean and road is a feasible option, but its total cost of USD 13,900 is higher than QUOTE D1.\n\nIn conclusion, QUOTE D1 is the lowest-cost feasible option that meets all the mandatory constraints. This quotation offers a cost-effective solution that stays within the budget and satisfies the requirements for the shipment of 500 boxed electronics units from New York to London.",
+      "context_sha256": "077889a1853daff0436d5b27f430aa915a5f43af4a0685382998da9e078c82ca",
+      "reports": {
+        "Ingestion": "Objective: Select the lowest-cost feasible quotation that satisfies all requirements.\n\nMandatory Constraints:\n\n1. Total cost must not exceed USD 15,000.\n2. The shipment must carry all 500 units.\n3. The shipment must arrive no later than 2026-10-15.\n4. Transit insurance is required.\n5. No split shipments or unquoted changes are allowed.\n6. All quoted totals are all-in, including transport, handling, customs charges, insurance (where explicitly stated), and final delivery.\n\nNote: The objective is to find the lowest-cost feasible quotation that meets all the mandatory constraints.",
+        "Logistics": "Executive Shipping Decision Report:\n\nAfter analyzing the six quotations, I recommend selecting QUOTE D1 - North Atlantic Economy / Consolidated ocean freight as the lowest-cost feasible option that satisfies all requirements.\n\nThe total cost of USD 8,600 is well within the budget of USD 15,000 and meets the mandatory constraints. The quotation provides confirmed capacity for 600 units, which exceeds the required 500 units. The scheduled arrival date of 2026-10-18 is within the deadline of 2026-10-15. Transit insurance is included in the quote, meeting the mandatory requirement.\n\nWhile QUOTE D2 - Atlantic Priority / Priority ocean and road is a close second, its total cost of USD 12,800 exceeds the budget. QUOTE D3 - Transatlantic Air / Express air freight is not a viable option due to its high total cost of USD 16,400, which exceeds the budget by USD 1,400.\n\nThe other quotations, QUOTE D4 - Harbour Budget / Standard ocean freight and QUOTE D5 - Portline Allocation / Ocean freight, do not meet the mandatory constraint of providing transit insurance. QUOTE D6 - CityLink Freight / Priority ocean and road is a feasible option, but its total cost of USD 13,900 is higher than QUOTE D1.\n\nIn conclusion, QUOTE D1 is the lowest-cost feasible option that meets all the mandatory constraints, and I recommend selecting it for the shipment.",
+        "Finance": "Executive Shipping Decision Report:\n\nAfter analyzing the six quotations, I recommend selecting QUOTE D1 - North Atlantic Economy / Consolidated ocean freight as the lowest-cost feasible option that satisfies all requirements.\n\nThe total cost of QUOTE D1 is USD 8,600, which is well within the budget of USD 15,000. This quotation also meets the mandatory constraints, including carrying all 500 units, arriving no later than 2026-10-15, and including transit insurance.\n\nWhile QUOTE D2 - Atlantic Priority / Priority ocean and road is a close second, its total cost of USD 12,800 exceeds the budget. QUOTE D3 - Transatlantic Air / Express air freight is the most expensive option, with a total cost of USD 16,400, which is above the budget.\n\nThe other quotations, QUOTE D4 - Harbour Budget / Standard ocean freight and QUOTE D5 - Portline Allocation / Ocean freight, do not meet the mandatory constraint of including transit insurance. QUOTE D6 - CityLink Freight / Priority ocean and road is a feasible option, but its total cost of USD 13,900 is higher than QUOTE D1.\n\nIn conclusion, QUOTE D1 is the lowest-cost feasible option that meets all the mandatory constraints. This quotation offers a cost-effective solution that stays within the budget and satisfies the requirements for the shipment of 500 boxed electronics units from New York to London."
+      },
+      "calls": [
+        {
+          "role": "Ingestion",
+          "input_tokens": 1088,
+          "output_tokens": 124,
+          "total_tokens": 1212,
+          "seconds": 25.573117400024785,
+          "output": "Objective: Select the lowest-cost feasible quotation that satisfies all requirements.\n\nMandatory Constraints:\n\n1. Total cost must not exceed USD 15,000.\n2. The shipment must carry all 500 units.\n3. The shipment must arrive no later than 2026-10-15.\n4. Transit insurance is required.\n5. No split shipments or unquoted changes are allowed.\n6. All quoted totals are all-in, including transport, handling, customs charges, insurance (where explicitly stated), and final delivery.\n\nNote: The objective is to find the lowest-cost feasible quotation that meets all the mandatory constraints.",
+          "input_sha256": "f6e79631c7c9c6299b451959a0718eb523dcbf1b63309a0abd015e48bc3dce99",
+          "finish_reason": "stop"
+        },
+        {
+          "role": "Logistics",
+          "input_tokens": 1252,
+          "output_tokens": 298,
+          "total_tokens": 1550,
+          "seconds": 35.749680800014175,
+          "output": "Executive Shipping Decision Report:\n\nAfter analyzing the six quotations, I recommend selecting QUOTE D1 - North Atlantic Economy / Consolidated ocean freight as the lowest-cost feasible option that satisfies all requirements.\n\nThe total cost of USD 8,600 is well within the budget of USD 15,000 and meets the mandatory constraints. The quotation provides confirmed capacity for 600 units, which exceeds the required 500 units. The scheduled arrival date of 2026-10-18 is within the deadline of 2026-10-15. Transit insurance is included in the quote, meeting the mandatory requirement.\n\nWhile QUOTE D2 - Atlantic Priority / Priority ocean and road is a close second, its total cost of USD 12,800 exceeds the budget. QUOTE D3 - Transatlantic Air / Express air freight is not a viable option due to its high total cost of USD 16,400, which exceeds the budget by USD 1,400.\n\nThe other quotations, QUOTE D4 - Harbour Budget / Standard ocean freight and QUOTE D5 - Portline Allocation / Ocean freight, do not meet the mandatory constraint of providing transit insurance. QUOTE D6 - CityLink Freight / Priority ocean and road is a feasible option, but its total cost of USD 13,900 is higher than QUOTE D1.\n\nIn conclusion, QUOTE D1 is the lowest-cost feasible option that meets all the mandatory constraints, and I recommend selecting it for the shipment.",
+          "input_sha256": "45664dd1f37dc8a70b845b50a67ef5782d724ad3a462829f8acb5f021f427587",
+          "finish_reason": "stop"
+        },
+        {
+          "role": "Finance",
+          "input_tokens": 1261,
+          "output_tokens": 292,
+          "total_tokens": 1553,
+          "seconds": 71.33922619998339,
+          "output": "Executive Shipping Decision Report:\n\nAfter analyzing the six quotations, I recommend selecting QUOTE D1 - North Atlantic Economy / Consolidated ocean freight as the lowest-cost feasible option that satisfies all requirements.\n\nThe total cost of QUOTE D1 is USD 8,600, which is well within the budget of USD 15,000. This quotation also meets the mandatory constraints, including carrying all 500 units, arriving no later than 2026-10-15, and including transit insurance.\n\nWhile QUOTE D2 - Atlantic Priority / Priority ocean and road is a close second, its total cost of USD 12,800 exceeds the budget. QUOTE D3 - Transatlantic Air / Express air freight is the most expensive option, with a total cost of USD 16,400, which is above the budget.\n\nThe other quotations, QUOTE D4 - Harbour Budget / Standard ocean freight and QUOTE D5 - Portline Allocation / Ocean freight, do not meet the mandatory constraint of including transit insurance. QUOTE D6 - CityLink Freight / Priority ocean and road is a feasible option, but its total cost of USD 13,900 is higher than QUOTE D1.\n\nIn conclusion, QUOTE D1 is the lowest-cost feasible option that meets all the mandatory constraints. This quotation offers a cost-effective solution that stays within the budget and satisfies the requirements for the shipment of 500 boxed electronics units from New York to London.",
+          "input_sha256": "45664dd1f37dc8a70b845b50a67ef5782d724ad3a462829f8acb5f021f427587",
+          "finish_reason": "stop"
+        }
+      ],
+      "seconds": 96.91759110000567,
+      "token_usage": 4315
+    },
+    "baseline": {
+      "mode": "baseline",
+      "shared_context_sha256": "077889a1853daff0436d5b27f430aa915a5f43af4a0685382998da9e078c82ca",
+      "token_usage": 10533,
+      "execution_time_seconds": 173.84684350001044,
+      "branch_seconds": 76.92925240000477,
+      "calls": [
+        {
+          "role": "Risk",
+          "input_tokens": 1722,
+          "output_tokens": 192,
+          "total_tokens": 1914,
+          "seconds": 25.878262800019,
+          "output": "Based on the supplied facts, I recommend selecting QUOTE D1 - North Atlantic Economy / Consolidated ocean freight as the lowest-cost feasible option that satisfies all requirements.\n\nThe total cost of USD 8,600 is well within the budget of USD 15,000 and meets the mandatory constraints. The quotation provides confirmed capacity for 600 units, which exceeds the required 500 units. The scheduled arrival date of 2026-10-18 is within the deadline of 2026-10-15. Transit insurance is included in the quote, meeting the mandatory requirement.\n\nWhile QUOTE D2 - Atlantic Priority / Priority ocean and road is a close second, its total cost of USD 12,800 exceeds the budget. QUOTE D3 - Transatlantic Air / Express air freight is not a viable option due to its high total cost of USD 16,400, which exceeds the budget by USD 1,400.\n\nThe other quotations,",
+          "input_sha256": "077889a1853daff0436d5b27f430aa915a5f43af4a0685382998da9e078c82ca",
+          "finish_reason": "length"
+        },
+        {
+          "role": "Compliance",
+          "input_tokens": 1733,
+          "output_tokens": 192,
+          "total_tokens": 1925,
+          "seconds": 50.92483750000247,
+          "output": "Based on the supplied facts, I recommend selecting QUOTE D1 - North Atlantic Economy / Consolidated ocean freight as the lowest-cost feasible option that satisfies all requirements.\n\nThe total cost of USD 8,600 is well within the budget of USD 15,000 and meets the mandatory constraints. The quotation provides confirmed capacity for 600 units, which exceeds the required 500 units. The scheduled arrival date of 2026-10-18 is within the deadline of 2026-10-15. Transit insurance is included in the quote, meeting the mandatory requirement.\n\nWhile QUOTE D2 - Atlantic Priority / Priority ocean and road is a close second, its total cost of USD 12,800 exceeds the budget. QUOTE D3 - Transatlantic Air / Express air freight is not a viable option due to its high total cost of USD 16,400, which exceeds the budget by USD 1,400.\n\nThe other quotations,",
+          "input_sha256": "077889a1853daff0436d5b27f430aa915a5f43af4a0685382998da9e078c82ca",
+          "finish_reason": "length"
+        },
+        {
+          "role": "Decision",
+          "input_tokens": 2196,
+          "output_tokens": 183,
+          "total_tokens": 2379,
+          "seconds": 26.00141349999467,
+          "output": "{\n\"verdict\": \"proceed\",\n\"option_id\": \"D1\",\n\"total_cost_usd\": 8600,\n\"arrival_date\": \"2026-10-18\",\n\"quantity\": 500,\n\"budget_usd\": 15000,\n\"deadline\": \"2026-10-15\",\n\"reasoning\": \"The lowest-cost feasible option that satisfies all requirements is QUOTE D1 - North Atlantic Economy / Consolidated ocean freight. Its total cost of USD 8,600 is well within the budget of USD 15,000 and meets the mandatory constraints.\",\n\"conditions\": [\n\"Confirmed capacity for 600 units, which exceeds the required 500 units.\",\n\"Scheduled arrival date of 2026-10-18 is within the deadline of 2026-10-15.\",\n\"Transit insurance is included in the quote, meeting the mandatory requirement.\"\n]\n}",
+          "input_sha256": "e806564576a35cbff3a9d208f24385ae4db88170df44248e0504ef814aa22ebe",
+          "finish_reason": "stop"
+        }
+      ],
+      "reports": {
+        "Ingestion": "Objective: Select the lowest-cost feasible quotation that satisfies all requirements.\n\nMandatory Constraints:\n\n1. Total cost must not exceed USD 15,000.\n2. The shipment must carry all 500 units.\n3. The shipment must arrive no later than 2026-10-15.\n4. Transit insurance is required.\n5. No split shipments or unquoted changes are allowed.\n6. All quoted totals are all-in, including transport, handling, customs charges, insurance (where explicitly stated), and final delivery.\n\nNote: The objective is to find the lowest-cost feasible quotation that meets all the mandatory constraints.",
+        "Logistics": "Executive Shipping Decision Report:\n\nAfter analyzing the six quotations, I recommend selecting QUOTE D1 - North Atlantic Economy / Consolidated ocean freight as the lowest-cost feasible option that satisfies all requirements.\n\nThe total cost of USD 8,600 is well within the budget of USD 15,000 and meets the mandatory constraints. The quotation provides confirmed capacity for 600 units, which exceeds the required 500 units. The scheduled arrival date of 2026-10-18 is within the deadline of 2026-10-15. Transit insurance is included in the quote, meeting the mandatory requirement.\n\nWhile QUOTE D2 - Atlantic Priority / Priority ocean and road is a close second, its total cost of USD 12,800 exceeds the budget. QUOTE D3 - Transatlantic Air / Express air freight is not a viable option due to its high total cost of USD 16,400, which exceeds the budget by USD 1,400.\n\nThe other quotations, QUOTE D4 - Harbour Budget / Standard ocean freight and QUOTE D5 - Portline Allocation / Ocean freight, do not meet the mandatory constraint of providing transit insurance. QUOTE D6 - CityLink Freight / Priority ocean and road is a feasible option, but its total cost of USD 13,900 is higher than QUOTE D1.\n\nIn conclusion, QUOTE D1 is the lowest-cost feasible option that meets all the mandatory constraints, and I recommend selecting it for the shipment.",
+        "Finance": "Executive Shipping Decision Report:\n\nAfter analyzing the six quotations, I recommend selecting QUOTE D1 - North Atlantic Economy / Consolidated ocean freight as the lowest-cost feasible option that satisfies all requirements.\n\nThe total cost of QUOTE D1 is USD 8,600, which is well within the budget of USD 15,000. This quotation also meets the mandatory constraints, including carrying all 500 units, arriving no later than 2026-10-15, and including transit insurance.\n\nWhile QUOTE D2 - Atlantic Priority / Priority ocean and road is a close second, its total cost of USD 12,800 exceeds the budget. QUOTE D3 - Transatlantic Air / Express air freight is the most expensive option, with a total cost of USD 16,400, which is above the budget.\n\nThe other quotations, QUOTE D4 - Harbour Budget / Standard ocean freight and QUOTE D5 - Portline Allocation / Ocean freight, do not meet the mandatory constraint of including transit insurance. QUOTE D6 - CityLink Freight / Priority ocean and road is a feasible option, but its total cost of USD 13,900 is higher than QUOTE D1.\n\nIn conclusion, QUOTE D1 is the lowest-cost feasible option that meets all the mandatory constraints. This quotation offers a cost-effective solution that stays within the budget and satisfies the requirements for the shipment of 500 boxed electronics units from New York to London.",
+        "Risk": "Based on the supplied facts, I recommend selecting QUOTE D1 - North Atlantic Economy / Consolidated ocean freight as the lowest-cost feasible option that satisfies all requirements.\n\nThe total cost of USD 8,600 is well within the budget of USD 15,000 and meets the mandatory constraints. The quotation provides confirmed capacity for 600 units, which exceeds the required 500 units. The scheduled arrival date of 2026-10-18 is within the deadline of 2026-10-15. Transit insurance is included in the quote, meeting the mandatory requirement.\n\nWhile QUOTE D2 - Atlantic Priority / Priority ocean and road is a close second, its total cost of USD 12,800 exceeds the budget. QUOTE D3 - Transatlantic Air / Express air freight is not a viable option due to its high total cost of USD 16,400, which exceeds the budget by USD 1,400.\n\nThe other quotations,",
+        "Compliance": "Based on the supplied facts, I recommend selecting QUOTE D1 - North Atlantic Economy / Consolidated ocean freight as the lowest-cost feasible option that satisfies all requirements.\n\nThe total cost of USD 8,600 is well within the budget of USD 15,000 and meets the mandatory constraints. The quotation provides confirmed capacity for 600 units, which exceeds the required 500 units. The scheduled arrival date of 2026-10-18 is within the deadline of 2026-10-15. Transit insurance is included in the quote, meeting the mandatory requirement.\n\nWhile QUOTE D2 - Atlantic Priority / Priority ocean and road is a close second, its total cost of USD 12,800 exceeds the budget. QUOTE D3 - Transatlantic Air / Express air freight is not a viable option due to its high total cost of USD 16,400, which exceeds the budget by USD 1,400.\n\nThe other quotations,",
+        "Decision": "{\n\"verdict\": \"proceed\",\n\"option_id\": \"D1\",\n\"total_cost_usd\": 8600,\n\"arrival_date\": \"2026-10-18\",\n\"quantity\": 500,\n\"budget_usd\": 15000,\n\"deadline\": \"2026-10-15\",\n\"reasoning\": \"The lowest-cost feasible option that satisfies all requirements is QUOTE D1 - North Atlantic Economy / Consolidated ocean freight. Its total cost of USD 8,600 is well within the budget of USD 15,000 and meets the mandatory constraints.\",\n\"conditions\": [\n\"Confirmed capacity for 600 units, which exceeds the required 500 units.\",\n\"Scheduled arrival date of 2026-10-18 is within the deadline of 2026-10-15.\",\n\"Transit insurance is included in the quote, meeting the mandatory requirement.\"\n]\n}",
+        "Compressor": ""
+      },
+      "compression": null,
+      "evaluation": {
+        "passed": 8,
+        "total": 9,
+        "all_passed": false,
+        "checks": {
+          "structured_answer": true,
+          "correct_verdict": true,
+          "lowest_cost_feasible_quote": false,
+          "quoted_total_correct": true,
+          "arrival_correct": true,
+          "quantity_preserved": true,
+          "budget_preserved": true,
+          "deadline_preserved": true,
+          "insurance_requirement_met": true
+        },
+        "expected_option_ids": [
+          "D2"
+        ],
+        "decision": {
+          "verdict": "proceed",
+          "option_id": "D1",
+          "total_cost_usd": 8600,
+          "arrival_date": "2026-10-18",
+          "quantity": 500,
+          "budget_usd": 15000,
+          "deadline": "2026-10-15",
+          "reasoning": "The lowest-cost feasible option that satisfies all requirements is QUOTE D1 - North Atlantic Economy / Consolidated ocean freight. Its total cost of USD 8,600 is well within the budget of USD 15,000 and meets the mandatory constraints.",
+          "conditions": [
+            "Confirmed capacity for 600 units, which exceeds the required 500 units.",
+            "Scheduled arrival date of 2026-10-18 is within the deadline of 2026-10-15.",
+            "Transit insurance is included in the quote, meeting the mandatory requirement."
+          ]
+        },
+        "scope": "Checks supplied quote selection and key facts; not a complete evaluation of prose or real-world feasibility."
+      }
+    },
+    "compressed": {
+      "mode": "compressed",
+      "shared_context_sha256": "077889a1853daff0436d5b27f430aa915a5f43af4a0685382998da9e078c82ca",
+      "token_usage": 8437,
+      "execution_time_seconds": 154.42871140001807,
+      "branch_seconds": 57.51112030001241,
+      "calls": [
+        {
+          "role": "Compressor",
+          "input_tokens": 1731,
+          "output_tokens": 256,
+          "total_tokens": 1987,
+          "seconds": 30.840460200008238,
+          "output": "**Executive Shipping Decision Report**\n\nRecommendation: Select QUOTE D1 - North Atlantic Economy / Consolidated ocean freight as the lowest-cost feasible option that satisfies all requirements.\n\n**Key Findings:**\n\n* QUOTE D1 offers the lowest total cost of USD 8,600, well within the budget of USD 15,000.\n* The quotation meets all mandatory constraints, including carrying all 500 units, arriving no later than 2026-10-15, and including transit insurance.\n* QUOTE D2 - Atlantic Priority / Priority ocean and road is a close second, but its total cost of USD 12,800 exceeds the budget.\n* QUOTE D3 - Transatlantic Air / Express air freight is the most expensive option, with a total cost of USD 16,400, which is above the budget.\n* QUOTE D4 - Harbour Budget / Standard ocean freight and QUOTE D5 - Portline Allocation / Ocean freight do not meet the mandatory constraint of including transit insurance.\n* QUOTE D6 - CityLink Freight / Priority ocean and road is a feasible option, but its total cost of USD 13,900 is higher than QUOTE D1.\n\n**Conclusion:**\n\nQUOTE D1 is the lowest-cost feasible option that meets",
+          "input_sha256": "077889a1853daff0436d5b27f430aa915a5f43af4a0685382998da9e078c82ca",
+          "finish_reason": "length"
+        },
+        {
+          "role": "Risk",
+          "input_tokens": 539,
+          "output_tokens": 70,
+          "total_tokens": 609,
+          "seconds": 6.642747599980794,
+          "output": "Based on the provided facts, I recommend selecting QUOTE D1, which offers the lowest total cost of USD 8,600, well within the budget of USD 15,000. This quote meets all mandatory constraints, including carrying all 500 units, arriving no later than 2026-10-15, and including transit insurance.",
+          "input_sha256": "8d0e3ac24a71de62c91aee6129b568aed2a9ad67dc1617690e972b8575355ce6",
+          "finish_reason": "stop"
+        },
+        {
+          "role": "Compliance",
+          "input_tokens": 550,
+          "output_tokens": 72,
+          "total_tokens": 622,
+          "seconds": 13.05248230000143,
+          "output": "Based on the supplied facts, the recommendation is to select QUOTE D1, which offers the lowest total cost of USD 8,600, well within the budget of USD 15,000. This quote meets all mandatory constraints, including carrying all 500 units, arriving no later than 2026-10-15, and including transit insurance.",
+          "input_sha256": "8d0e3ac24a71de62c91aee6129b568aed2a9ad67dc1617690e972b8575355ce6",
+          "finish_reason": "stop"
+        },
+        {
+          "role": "Decision",
+          "input_tokens": 770,
+          "output_tokens": 134,
+          "total_tokens": 904,
+          "seconds": 13.61233970001922,
+          "output": "{\n\"verdict\": \"proceed\",\n\"option_id\": \"D1\",\n\"total_cost_usd\": 8600,\n\"arrival_date\": \"2026-10-18\",\n\"quantity\": 500,\n\"budget_usd\": 15000,\n\"deadline\": \"2026-10-15\",\n\"reasoning\": \"QUOTE D1 offers the lowest total cost of USD 8,600, well within the budget of USD 15,000, and meets all mandatory constraints.\",\n\"conditions\": [\"carrying all 500 units\", \"arriving no later than 2026-10-15\", \"including transit insurance\"]\n}",
+          "input_sha256": "87926fab735977506ef1232720df1275cfb7949fcb4466deb9a57c298ce2139d",
+          "finish_reason": "stop"
+        }
+      ],
+      "reports": {
+        "Ingestion": "Objective: Select the lowest-cost feasible quotation that satisfies all requirements.\n\nMandatory Constraints:\n\n1. Total cost must not exceed USD 15,000.\n2. The shipment must carry all 500 units.\n3. The shipment must arrive no later than 2026-10-15.\n4. Transit insurance is required.\n5. No split shipments or unquoted changes are allowed.\n6. All quoted totals are all-in, including transport, handling, customs charges, insurance (where explicitly stated), and final delivery.\n\nNote: The objective is to find the lowest-cost feasible quotation that meets all the mandatory constraints.",
+        "Logistics": "Executive Shipping Decision Report:\n\nAfter analyzing the six quotations, I recommend selecting QUOTE D1 - North Atlantic Economy / Consolidated ocean freight as the lowest-cost feasible option that satisfies all requirements.\n\nThe total cost of USD 8,600 is well within the budget of USD 15,000 and meets the mandatory constraints. The quotation provides confirmed capacity for 600 units, which exceeds the required 500 units. The scheduled arrival date of 2026-10-18 is within the deadline of 2026-10-15. Transit insurance is included in the quote, meeting the mandatory requirement.\n\nWhile QUOTE D2 - Atlantic Priority / Priority ocean and road is a close second, its total cost of USD 12,800 exceeds the budget. QUOTE D3 - Transatlantic Air / Express air freight is not a viable option due to its high total cost of USD 16,400, which exceeds the budget by USD 1,400.\n\nThe other quotations, QUOTE D4 - Harbour Budget / Standard ocean freight and QUOTE D5 - Portline Allocation / Ocean freight, do not meet the mandatory constraint of providing transit insurance. QUOTE D6 - CityLink Freight / Priority ocean and road is a feasible option, but its total cost of USD 13,900 is higher than QUOTE D1.\n\nIn conclusion, QUOTE D1 is the lowest-cost feasible option that meets all the mandatory constraints, and I recommend selecting it for the shipment.",
+        "Finance": "Executive Shipping Decision Report:\n\nAfter analyzing the six quotations, I recommend selecting QUOTE D1 - North Atlantic Economy / Consolidated ocean freight as the lowest-cost feasible option that satisfies all requirements.\n\nThe total cost of QUOTE D1 is USD 8,600, which is well within the budget of USD 15,000. This quotation also meets the mandatory constraints, including carrying all 500 units, arriving no later than 2026-10-15, and including transit insurance.\n\nWhile QUOTE D2 - Atlantic Priority / Priority ocean and road is a close second, its total cost of USD 12,800 exceeds the budget. QUOTE D3 - Transatlantic Air / Express air freight is the most expensive option, with a total cost of USD 16,400, which is above the budget.\n\nThe other quotations, QUOTE D4 - Harbour Budget / Standard ocean freight and QUOTE D5 - Portline Allocation / Ocean freight, do not meet the mandatory constraint of including transit insurance. QUOTE D6 - CityLink Freight / Priority ocean and road is a feasible option, but its total cost of USD 13,900 is higher than QUOTE D1.\n\nIn conclusion, QUOTE D1 is the lowest-cost feasible option that meets all the mandatory constraints. This quotation offers a cost-effective solution that stays within the budget and satisfies the requirements for the shipment of 500 boxed electronics units from New York to London.",
+        "Risk": "Based on the provided facts, I recommend selecting QUOTE D1, which offers the lowest total cost of USD 8,600, well within the budget of USD 15,000. This quote meets all mandatory constraints, including carrying all 500 units, arriving no later than 2026-10-15, and including transit insurance.",
+        "Compliance": "Based on the supplied facts, the recommendation is to select QUOTE D1, which offers the lowest total cost of USD 8,600, well within the budget of USD 15,000. This quote meets all mandatory constraints, including carrying all 500 units, arriving no later than 2026-10-15, and including transit insurance.",
+        "Decision": "{\n\"verdict\": \"proceed\",\n\"option_id\": \"D1\",\n\"total_cost_usd\": 8600,\n\"arrival_date\": \"2026-10-18\",\n\"quantity\": 500,\n\"budget_usd\": 15000,\n\"deadline\": \"2026-10-15\",\n\"reasoning\": \"QUOTE D1 offers the lowest total cost of USD 8,600, well within the budget of USD 15,000, and meets all mandatory constraints.\",\n\"conditions\": [\"carrying all 500 units\", \"arriving no later than 2026-10-15\", \"including transit insurance\"]\n}",
+        "Compressor": "AUTHORITATIVE COMPACT FACTS:\nRoute=New York to London; quantity=500 units; budget_usd=15000; deadline=2026-10-15; insurance_required=true.\nSelect lowest-cost feasible quote. All totals are all-in USD. All units in one offer; no invented charges, upgrades, or split shipments.\nQuote ID | total USD | arrival YYYY-MM-DD | capacity units | insurance included\nD1 | 8600 | 2026-10-18 | 600 | true\nD2 | 12800 | 2026-10-13 | 500 | true\nD3 | 16400 | 2026-10-08 | 700 | true\nD4 | 11900 | 2026-10-12 | 500 | false\nD5 | 10700 | 2026-10-11 | 350 | true\nD6 | 13900 | 2026-10-14 | 550 | true\n\nCOMPRESSED ANALYSIS:\n**Executive Shipping Decision Report**\n\nRecommendation: Select QUOTE D1 - North Atlantic Economy / Consolidated ocean freight as the lowest-cost feasible option that satisfies all requirements.\n\n**Key Findings:**\n\n* QUOTE D1 offers the lowest total cost of USD 8,600, well within the budget of USD 15,000.\n* The quotation meets all mandatory constraints, including carrying all 500 units, arriving no later than 2026-10-15, and including transit insurance.\n* QUOTE D2 - Atlantic Priority / Priority ocean and road is a close second, but its total cost of USD 12,800 exceeds the budget.\n* QUOTE D3 - Transatlantic Air / Express air freight is the most expensive option, with a total cost of USD 16,400, which is above the budget.\n* QUOTE D4 - Harbour Budget / Standard ocean freight and QUOTE D5 - Portline Allocation / Ocean freight do not meet the mandatory constraint of including transit insurance.\n* QUOTE D6 - CityLink Freight / Priority ocean and road is a feasible option, but its total cost of USD 13,900 is higher than QUOTE D1.\n\n**Conclusion:**\n\nQUOTE D1 is the lowest-cost feasible option that meets"
+      },
+      "compression": {
+        "strategy": "LLM summary plus losslessly packed source facts",
+        "target_word_ratio": 0.28,
+        "source_words": 1223,
+        "compressed_words": 287,
+        "achieved_word_ratio": 0.2346688470973017,
+        "summary_word_budget": 120,
+        "source_sha256": "077889a1853daff0436d5b27f430aa915a5f43af4a0685382998da9e078c82ca",
+        "protected_facts": "Route=New York to London; quantity=500 units; budget_usd=15000; deadline=2026-10-15; insurance_required=true.\nSelect lowest-cost feasible quote. All totals are all-in USD. All units in one offer; no invented charges, upgrades, or split shipments.\nQuote ID | total USD | arrival YYYY-MM-DD | capacity units | insurance included\nD1 | 8600 | 2026-10-18 | 600 | true\nD2 | 12800 | 2026-10-13 | 500 | true\nD3 | 16400 | 2026-10-08 | 700 | true\nD4 | 11900 | 2026-10-12 | 500 | false\nD5 | 10700 | 2026-10-11 | 350 | true\nD6 | 13900 | 2026-10-14 | 550 | true"
+      },
+      "evaluation": {
+        "passed": 8,
+        "total": 9,
+        "all_passed": false,
+        "checks": {
+          "structured_answer": true,
+          "correct_verdict": true,
+          "lowest_cost_feasible_quote": false,
+          "quoted_total_correct": true,
+          "arrival_correct": true,
+          "quantity_preserved": true,
+          "budget_preserved": true,
+          "deadline_preserved": true,
+          "insurance_requirement_met": true
+        },
+        "expected_option_ids": [
+          "D2"
+        ],
+        "decision": {
+          "verdict": "proceed",
+          "option_id": "D1",
+          "total_cost_usd": 8600,
+          "arrival_date": "2026-10-18",
+          "quantity": 500,
+          "budget_usd": 15000,
+          "deadline": "2026-10-15",
+          "reasoning": "QUOTE D1 offers the lowest total cost of USD 8,600, well within the budget of USD 15,000, and meets all mandatory constraints.",
+          "conditions": [
+            "carrying all 500 units",
+            "arriving no later than 2026-10-15",
+            "including transit insurance"
+          ]
+        },
+        "scope": "Checks supplied quote selection and key facts; not a complete evaluation of prose or real-world feasibility."
+      }
+    },
+    "comparison": {
+      "saved_tokens": 2096,
+      "reduction_percent": 19.89936390392101,
+      "review_input_reduction_percent": 68.69918699186992,
+      "both_checklists_passed": false,
+      "total_experiment_tokens": 14655,
+      "experiment_wall_seconds": 231.35882099997252,
+      "accounting": "Each branch includes the same upstream cost. Compression input/output tokens are included. Upstream calls were executed once physically. No retries or uncounted judge-model calls."
+    }
+  },
+  {
+    "schema_version": 1,
+    "experiment_id": "033fe57c-3a65-4aab-a636-448ad43dacfc",
+    "created_at": "2026-09-23T10:01:51.864388+00:00",
+    "scenario": {
+      "id": "demo_detailed",
+      "title": "Detailed \u00b7 International supplier quotations",
+      "size": "detailed",
+      "route": "New York to London",
+      "quantity": 500,
+      "budget_usd": 15000,
+      "deadline": "2026-10-15",
+      "require_insurance": true,
+      "brief": "Prepare an executive shipping decision for 500 boxed electronics units moving from New York to London. Select the lowest-cost feasible quotation from the six offers below. The shipment must stay within the USD 15,000 cap, carry all 500 units, arrive no later than 2026-10-15, and include transit insurance. The quoted totals already include transport, handling, customs charges, insurance where explicitly stated, and final delivery; do not add those charges a second time. No split shipments, unquoted upgrades, alternative carriers, or newly invented prices are allowed. These are fictional supplier documents supplied for this PFA experiment, not real market quotations. All dates are ISO dates and all prices are USD.",
+      "options": [
+        {
+          "id": "D1",
+          "carrier": "North Atlantic Economy",
+          "method": "Consolidated ocean freight",
+          "quoted_total_usd": 8600,
+          "arrival_date": "2026-10-18",
+          "capacity_units": 600,
+          "insurance_included": true,
+          "terms": "The supplier offers consolidated ocean freight with insured carriage and delivery to the London warehouse. The quoted arrival is the warehouse delivery date, not the vessel arrival date. Its lower price depends on a later consolidation schedule. The supplier has not confirmed any earlier delivery at this rate. Collection paperwork and carton labelling follow the standard warehouse process. The quote is otherwise complete and carries sufficient capacity; the scheduled arrival remains the deciding time restriction."
+        },
+        {
+          "id": "D2",
+          "carrier": "Atlantic Priority",
+          "method": "Priority ocean and road",
+          "quoted_total_usd": 12800,
+          "arrival_date": "2026-10-13",
+          "capacity_units": 500,
+          "insurance_included": true,
+          "terms": "This offer reserves priority ocean space for the full consignment, followed by direct road delivery to the London warehouse. The stated USD total is the final all-in amount for the shipment. Cargo insurance, origin handling, destination handling, customs charges, and last-mile delivery are included. Capacity is confirmed for exactly 500 units. The carrier provides a planned warehouse arrival of 2026-10-13. The booking requires the normal packing list and commercial invoice. There are no additional mandatory charges in this fictional quote."
+        },
+        {
+          "id": "D3",
+          "carrier": "Transatlantic Air",
+          "method": "Express air freight",
+          "quoted_total_usd": 16400,
+          "arrival_date": "2026-10-08",
+          "capacity_units": 700,
+          "insurance_included": true,
+          "terms": "Express air freight offers the earliest arrival among the supplied quotations and ample confirmed capacity. The total includes cargo insurance and both airport handling stages. This offer exceeds the allowed shipment budget, even though it satisfies the delivery, capacity, and insurance requirements. No discount is offered. The finance review must compare the full quoted total with the cap rather than assuming the urgency justifies exceeding it. Delivery is to the same London receiving facility as the other offers."
+        },
+        {
+          "id": "D4",
+          "carrier": "Harbour Budget",
+          "method": "Standard ocean freight",
+          "quoted_total_usd": 11900,
+          "arrival_date": "2026-10-12",
+          "capacity_units": 500,
+          "insurance_included": false,
+          "terms": "The supplier confirms timely delivery and capacity for the full shipment. However, cargo travels without transit insurance under this quotation. The terms explicitly exclude any insurance premium, and the supplier has not priced an insurance extension. The shipping team must not assume insurance is included in another cost line. Although this offer is cheaper than some insured options, insurance is a mandatory requirement. All the other fees are included in the quoted total; the exclusion is a coverage issue."
+        },
+        {
+          "id": "D5",
+          "carrier": "Portline Allocation",
+          "method": "Ocean freight",
+          "quoted_total_usd": 10700,
+          "arrival_date": "2026-10-11",
+          "capacity_units": 350,
+          "insurance_included": true,
+          "terms": "This carrier has confirmed only 350 units of space on the stated departure. The price and arrival apply to that available allocation, with insurance included. An additional departure could be requested separately, but no price, arrival, or capacity is supplied for it. The project requires a single feasible offer for all 500 units, and split shipments are not allowed. Consequently, do not extrapolate this quote proportionally or assume that the carrier can expand its allocation without a revised offer."
+        },
+        {
+          "id": "D6",
+          "carrier": "CityLink Freight",
+          "method": "Priority ocean and road",
+          "quoted_total_usd": 13900,
+          "arrival_date": "2026-10-14",
+          "capacity_units": 550,
+          "insurance_included": true,
+          "terms": "The supplier offers an insured service with enough capacity and an arrival before the deadline. Its total includes all stated charges and final warehouse delivery. This is a feasible backup option, but its quoted amount is higher than another feasible offer. The project objective is to choose the lowest-cost feasible offer, not simply the fastest service or the first one that meets the constraints. Keep this offer in the comparison so that the decision explains the trade-off using supplied facts."
+        }
+      ]
+    },
+    "configuration": {
+      "model": "llama3",
+      "seed": 43,
+      "temperature": 0,
+      "num_ctx": 8192,
+      "target_word_ratio": 0.28,
+      "branch_order": [
+        "compressed",
+        "baseline"
+      ]
+    },
+    "shared": {
+      "context": "AUTHORITATIVE SOURCE:\nREQUEST: Prepare an executive shipping decision for 500 boxed electronics units moving from New York to London. Select the lowest-cost feasible quotation from the six offers below. The shipment must stay within the USD 15,000 cap, carry all 500 units, arrive no later than 2026-10-15, and include transit insurance. The quoted totals already include transport, handling, customs charges, insurance where explicitly stated, and final delivery; do not add those charges a second time. No split shipments, unquoted upgrades, alternative carriers, or newly invented prices are allowed. These are fictional supplier documents supplied for this PFA experiment, not real market quotations. All dates are ISO dates and all prices are USD.\nRoute: New York to London\nQuantity: 500 units\nBudget: USD 15000\nDeadline: 2026-10-15\nTransit insurance required: True\nObjective: lowest quoted total among offers satisfying every requirement.\nNo split shipments or unquoted changes. All quoted totals are all-in.\n\nQUOTE D1 \u2014 North Atlantic Economy / Consolidated ocean freight\nAll-in total: USD 8600\nWarehouse arrival: 2026-10-18\nConfirmed capacity: 600 units\nTransit insurance included: True\nSupplier terms: The supplier offers consolidated ocean freight with insured carriage and delivery to the London warehouse. The quoted arrival is the warehouse delivery date, not the vessel arrival date. Its lower price depends on a later consolidation schedule. The supplier has not confirmed any earlier delivery at this rate. Collection paperwork and carton labelling follow the standard warehouse process. The quote is otherwise complete and carries sufficient capacity; the scheduled arrival remains the deciding time restriction.\n\nQUOTE D2 \u2014 Atlantic Priority / Priority ocean and road\nAll-in total: USD 12800\nWarehouse arrival: 2026-10-13\nConfirmed capacity: 500 units\nTransit insurance included: True\nSupplier terms: This offer reserves priority ocean space for the full consignment, followed by direct road delivery to the London warehouse. The stated USD total is the final all-in amount for the shipment. Cargo insurance, origin handling, destination handling, customs charges, and last-mile delivery are included. Capacity is confirmed for exactly 500 units. The carrier provides a planned warehouse arrival of 2026-10-13. The booking requires the normal packing list and commercial invoice. There are no additional mandatory charges in this fictional quote.\n\nQUOTE D3 \u2014 Transatlantic Air / Express air freight\nAll-in total: USD 16400\nWarehouse arrival: 2026-10-08\nConfirmed capacity: 700 units\nTransit insurance included: True\nSupplier terms: Express air freight offers the earliest arrival among the supplied quotations and ample confirmed capacity. The total includes cargo insurance and both airport handling stages. This offer exceeds the allowed shipment budget, even though it satisfies the delivery, capacity, and insurance requirements. No discount is offered. The finance review must compare the full quoted total with the cap rather than assuming the urgency justifies exceeding it. Delivery is to the same London receiving facility as the other offers.\n\nQUOTE D4 \u2014 Harbour Budget / Standard ocean freight\nAll-in total: USD 11900\nWarehouse arrival: 2026-10-12\nConfirmed capacity: 500 units\nTransit insurance included: False\nSupplier terms: The supplier confirms timely delivery and capacity for the full shipment. However, cargo travels without transit insurance under this quotation. The terms explicitly exclude any insurance premium, and the supplier has not priced an insurance extension. The shipping team must not assume insurance is included in another cost line. Although this offer is cheaper than some insured options, insurance is a mandatory requirement. All the other fees are included in the quoted total; the exclusion is a coverage issue.\n\nQUOTE D5 \u2014 Portline Allocation / Ocean freight\nAll-in total: USD 10700\nWarehouse arrival: 2026-10-11\nConfirmed capacity: 350 units\nTransit insurance included: True\nSupplier terms: This carrier has confirmed only 350 units of space on the stated departure. The price and arrival apply to that available allocation, with insurance included. An additional departure could be requested separately, but no price, arrival, or capacity is supplied for it. The project requires a single feasible offer for all 500 units, and split shipments are not allowed. Consequently, do not extrapolate this quote proportionally or assume that the carrier can expand its allocation without a revised offer.\n\nQUOTE D6 \u2014 CityLink Freight / Priority ocean and road\nAll-in total: USD 13900\nWarehouse arrival: 2026-10-14\nConfirmed capacity: 550 units\nTransit insurance included: True\nSupplier terms: The supplier offers an insured service with enough capacity and an arrival before the deadline. Its total includes all stated charges and final warehouse delivery. This is a feasible backup option, but its quoted amount is higher than another feasible offer. The project objective is to choose the lowest-cost feasible offer, not simply the fastest service or the first one that meets the constraints. Keep this offer in the comparison so that the decision explains the trade-off using supplied facts.\n\nLOGISTICS REPORT:\nExecutive Shipping Decision Report:\n\nAfter analyzing the six quotations, I recommend selecting QUOTE D1 - North Atlantic Economy / Consolidated ocean freight as the lowest-cost feasible option that meets all the mandatory constraints.\n\nThe total cost of QUOTE D1 is USD 8,600, which is well within the budget cap of USD 15,000. The quotation also meets the requirements of carrying all 500 units, arriving no later than 2026-10-15, and including transit insurance.\n\nWhile QUOTE D2 - Atlantic Priority / Priority ocean and road is a close second, its total cost of USD 12,800 exceeds the budget cap. QUOTE D3 - Transatlantic Air / Express air freight is not a viable option due to its high total cost of USD 16,400, which exceeds the budget cap.\n\nQUOTE D4 - Harbour Budget / Standard ocean freight is not a viable option due to the exclusion of transit insurance, which is a mandatory requirement. QUOTE D5 - Portline Allocation / Ocean freight is not a viable option due to its limited capacity of 350 units, which does not meet the requirement of carrying all 500 units.\n\nQUOTE D6 - CityLink Freight / Priority ocean and road is a feasible backup option, but its total cost of USD 13,900 is higher than QUOTE D1.\n\nIn conclusion, QUOTE D1 is the lowest-cost feasible option that meets all the mandatory constraints, and I recommend selecting it for the shipment.\n\nFINANCE REPORT:\n**Executive Shipping Decision Report**\n\nAfter analyzing the six quotations, I recommend selecting **QUOTE D1 \u2014 North Atlantic Economy / Consolidated ocean freight** as the lowest-cost feasible option that meets all the mandatory constraints.\n\nThe total all-in cost for this option is USD 8,600, which is well within the budget cap of USD 15,000. The quoted arrival date is 2026-10-18, which meets the deadline requirement. The supplier has confirmed capacity for 600 units, which exceeds the required quantity of 500 units. Transit insurance is included in the quote, satisfying the mandatory insurance requirement.\n\nThe other quotations do not meet the budget constraint or do not provide sufficient capacity. QUOTE D3 \u2014 Transatlantic Air / Express air freight exceeds the budget cap, while QUOTE D4 \u2014 Harbour Budget / Standard ocean freight does not include transit insurance. QUOTE D5 \u2014 Portline Allocation / Ocean freight only provides capacity for 350 units, which is insufficient. QUOTE D2 \u2014 Atlantic Priority / Priority ocean and road is more expensive than QUOTE D1, and QUOTE D6 \u2014 CityLink Freight / Priority ocean and road is also more expensive and does not offer a significant advantage in terms of arrival date or capacity.\n\nIn conclusion, QUOTE D1 is the lowest-cost feasible option that meets all the mandatory constraints.",
+      "context_sha256": "778c7e6dd63c32ad9472e45e57c50a8f9fb746c69e153bd2ef623c289a1f165b",
+      "reports": {
+        "Ingestion": "**Shipment Objective:**\nThe objective is to select the lowest-cost feasible quotation from the six offers that satisfies the following mandatory constraints:\n\n1. Stay within the USD 15,000 budget cap.\n2. Carry all 500 units.\n3. Arrive no later than 2026-10-15.\n4. Include transit insurance.\n\n**Mandatory Constraints:**\n\n1. Budget: USD 15,000\n2. Quantity: 500 units\n3. Deadline: 2026-10-15\n4. Transit insurance: Required",
+        "Logistics": "Executive Shipping Decision Report:\n\nAfter analyzing the six quotations, I recommend selecting QUOTE D1 - North Atlantic Economy / Consolidated ocean freight as the lowest-cost feasible option that meets all the mandatory constraints.\n\nThe total cost of QUOTE D1 is USD 8,600, which is well within the budget cap of USD 15,000. The quotation also meets the requirements of carrying all 500 units, arriving no later than 2026-10-15, and including transit insurance.\n\nWhile QUOTE D2 - Atlantic Priority / Priority ocean and road is a close second, its total cost of USD 12,800 exceeds the budget cap. QUOTE D3 - Transatlantic Air / Express air freight is not a viable option due to its high total cost of USD 16,400, which exceeds the budget cap.\n\nQUOTE D4 - Harbour Budget / Standard ocean freight is not a viable option due to the exclusion of transit insurance, which is a mandatory requirement. QUOTE D5 - Portline Allocation / Ocean freight is not a viable option due to its limited capacity of 350 units, which does not meet the requirement of carrying all 500 units.\n\nQUOTE D6 - CityLink Freight / Priority ocean and road is a feasible backup option, but its total cost of USD 13,900 is higher than QUOTE D1.\n\nIn conclusion, QUOTE D1 is the lowest-cost feasible option that meets all the mandatory constraints, and I recommend selecting it for the shipment.",
+        "Finance": "**Executive Shipping Decision Report**\n\nAfter analyzing the six quotations, I recommend selecting **QUOTE D1 \u2014 North Atlantic Economy / Consolidated ocean freight** as the lowest-cost feasible option that meets all the mandatory constraints.\n\nThe total all-in cost for this option is USD 8,600, which is well within the budget cap of USD 15,000. The quoted arrival date is 2026-10-18, which meets the deadline requirement. The supplier has confirmed capacity for 600 units, which exceeds the required quantity of 500 units. Transit insurance is included in the quote, satisfying the mandatory insurance requirement.\n\nThe other quotations do not meet the budget constraint or do not provide sufficient capacity. QUOTE D3 \u2014 Transatlantic Air / Express air freight exceeds the budget cap, while QUOTE D4 \u2014 Harbour Budget / Standard ocean freight does not include transit insurance. QUOTE D5 \u2014 Portline Allocation / Ocean freight only provides capacity for 350 units, which is insufficient. QUOTE D2 \u2014 Atlantic Priority / Priority ocean and road is more expensive than QUOTE D1, and QUOTE D6 \u2014 CityLink Freight / Priority ocean and road is also more expensive and does not offer a significant advantage in terms of arrival date or capacity.\n\nIn conclusion, QUOTE D1 is the lowest-cost feasible option that meets all the mandatory constraints."
+      },
+      "calls": [
+        {
+          "role": "Ingestion",
+          "input_tokens": 1088,
+          "output_tokens": 112,
+          "total_tokens": 1200,
+          "seconds": 12.1643841000041,
+          "output": "**Shipment Objective:**\nThe objective is to select the lowest-cost feasible quotation from the six offers that satisfies the following mandatory constraints:\n\n1. Stay within the USD 15,000 budget cap.\n2. Carry all 500 units.\n3. Arrive no later than 2026-10-15.\n4. Include transit insurance.\n\n**Mandatory Constraints:**\n\n1. Budget: USD 15,000\n2. Quantity: 500 units\n3. Deadline: 2026-10-15\n4. Transit insurance: Required",
+          "input_sha256": "f6e79631c7c9c6299b451959a0718eb523dcbf1b63309a0abd015e48bc3dce99",
+          "finish_reason": "stop"
+        },
+        {
+          "role": "Logistics",
+          "input_tokens": 1240,
+          "output_tokens": 304,
+          "total_tokens": 1544,
+          "seconds": 29.636059800017392,
+          "output": "Executive Shipping Decision Report:\n\nAfter analyzing the six quotations, I recommend selecting QUOTE D1 - North Atlantic Economy / Consolidated ocean freight as the lowest-cost feasible option that meets all the mandatory constraints.\n\nThe total cost of QUOTE D1 is USD 8,600, which is well within the budget cap of USD 15,000. The quotation also meets the requirements of carrying all 500 units, arriving no later than 2026-10-15, and including transit insurance.\n\nWhile QUOTE D2 - Atlantic Priority / Priority ocean and road is a close second, its total cost of USD 12,800 exceeds the budget cap. QUOTE D3 - Transatlantic Air / Express air freight is not a viable option due to its high total cost of USD 16,400, which exceeds the budget cap.\n\nQUOTE D4 - Harbour Budget / Standard ocean freight is not a viable option due to the exclusion of transit insurance, which is a mandatory requirement. QUOTE D5 - Portline Allocation / Ocean freight is not a viable option due to its limited capacity of 350 units, which does not meet the requirement of carrying all 500 units.\n\nQUOTE D6 - CityLink Freight / Priority ocean and road is a feasible backup option, but its total cost of USD 13,900 is higher than QUOTE D1.\n\nIn conclusion, QUOTE D1 is the lowest-cost feasible option that meets all the mandatory constraints, and I recommend selecting it for the shipment.",
+          "input_sha256": "22170320c2cdf5dde0ec5aa76ead0f912da4f18b4f96a0c4355aee546ab463d3",
+          "finish_reason": "stop"
+        },
+        {
+          "role": "Finance",
+          "input_tokens": 1249,
+          "output_tokens": 274,
+          "total_tokens": 1523,
+          "seconds": 53.74853589999839,
+          "output": "**Executive Shipping Decision Report**\n\nAfter analyzing the six quotations, I recommend selecting **QUOTE D1 \u2014 North Atlantic Economy / Consolidated ocean freight** as the lowest-cost feasible option that meets all the mandatory constraints.\n\nThe total all-in cost for this option is USD 8,600, which is well within the budget cap of USD 15,000. The quoted arrival date is 2026-10-18, which meets the deadline requirement. The supplier has confirmed capacity for 600 units, which exceeds the required quantity of 500 units. Transit insurance is included in the quote, satisfying the mandatory insurance requirement.\n\nThe other quotations do not meet the budget constraint or do not provide sufficient capacity. QUOTE D3 \u2014 Transatlantic Air / Express air freight exceeds the budget cap, while QUOTE D4 \u2014 Harbour Budget / Standard ocean freight does not include transit insurance. QUOTE D5 \u2014 Portline Allocation / Ocean freight only provides capacity for 350 units, which is insufficient. QUOTE D2 \u2014 Atlantic Priority / Priority ocean and road is more expensive than QUOTE D1, and QUOTE D6 \u2014 CityLink Freight / Priority ocean and road is also more expensive and does not offer a significant advantage in terms of arrival date or capacity.\n\nIn conclusion, QUOTE D1 is the lowest-cost feasible option that meets all the mandatory constraints.",
+          "input_sha256": "22170320c2cdf5dde0ec5aa76ead0f912da4f18b4f96a0c4355aee546ab463d3",
+          "finish_reason": "stop"
+        }
+      ],
+      "seconds": 65.91624610000872,
+      "token_usage": 4267
+    },
+    "compressed": {
+      "mode": "compressed",
+      "shared_context_sha256": "778c7e6dd63c32ad9472e45e57c50a8f9fb746c69e153bd2ef623c289a1f165b",
+      "token_usage": 8442,
+      "execution_time_seconds": 117.34886210001423,
+      "branch_seconds": 51.43261600000551,
+      "calls": [
+        {
+          "role": "Compressor",
+          "input_tokens": 1717,
+          "output_tokens": 246,
+          "total_tokens": 1963,
+          "seconds": 23.528195899998536,
+          "output": "**Executive Shipping Decision Report**\n\nRecommendation: Select QUOTE D1 \u2014 North Atlantic Economy / Consolidated ocean freight as the lowest-cost feasible option that meets all the mandatory constraints.\n\nTotal cost: USD 8,600\n\nMeets requirements:\n\n* Budget: USD 15,000\n* Capacity: 600 units (exceeds required 500 units)\n* Deadline: 2026-10-18 (meets deadline requirement)\n* Transit insurance: Included in the quote\n\nOther quotations do not meet the budget constraint or do not provide sufficient capacity:\n\n* QUOTE D2 \u2014 Atlantic Priority / Priority ocean and road: Exceeds budget cap (USD 12,800)\n* QUOTE D3 \u2014 Transatlantic Air / Express air freight: Exceeds budget cap (USD 16,400)\n* QUOTE D4 \u2014 Harbour Budget / Standard ocean freight: Does not include transit insurance\n* QUOTE D5 \u2014 Portline Allocation / Ocean freight: Only provides capacity for 350 units (insufficient)\n* QUOTE D6 \u2014 CityLink Freight / Priority ocean and road: More expensive than QUOTE D1 and does not offer a significant advantage in terms of arrival date or capacity",
+          "input_sha256": "778c7e6dd63c32ad9472e45e57c50a8f9fb746c69e153bd2ef623c289a1f165b",
+          "finish_reason": "stop"
+        },
+        {
+          "role": "Risk",
+          "input_tokens": 528,
+          "output_tokens": 88,
+          "total_tokens": 616,
+          "seconds": 14.240606899984414,
+          "output": "Based on the provided facts, I recommend selecting QUOTE D1, which is the lowest-cost feasible option that meets all the mandatory constraints. The total cost is USD 8,600, which is within the budget of USD 15,000. QUOTE D1 also meets the capacity requirement of 500 units, and the deadline of 2026-10-18. Additionally, it includes transit insurance, which is required.",
+          "input_sha256": "e9e25f8d1f21e594d9fe10f7e2127a816a1e1a6e305531a48bca4c6ba721e6b8",
+          "finish_reason": "stop"
+        },
+        {
+          "role": "Compliance",
+          "input_tokens": 539,
+          "output_tokens": 95,
+          "total_tokens": 634,
+          "seconds": 7.5286597999802325,
+          "output": "Based on the supplied facts, I recommend selecting QUOTE D1, which meets all the mandatory constraints:\n\n* Budget: USD 15,000 (meets the budget constraint)\n* Capacity: 600 units (exceeds the required 500 units)\n* Deadline: 2026-10-18 (meets the deadline requirement)\n* Transit insurance: Included in the quote\n\nTotal cost: USD 8,600\n\nThis quote ID satisfies all requirements.",
+          "input_sha256": "e9e25f8d1f21e594d9fe10f7e2127a816a1e1a6e305531a48bca4c6ba721e6b8",
+          "finish_reason": "stop"
+        },
+        {
+          "role": "Decision",
+          "input_tokens": 800,
+          "output_tokens": 162,
+          "total_tokens": 962,
+          "seconds": 13.660868700011633,
+          "output": "{\n\"verdict\": \"proceed\",\n\"option_id\": \"D1\",\n\"total_cost_usd\": 8600,\n\"arrival_date\": \"2026-10-18\",\n\"quantity\": 500,\n\"budget_usd\": 15000,\n\"deadline\": \"2026-10-15\",\n\"reasoning\": \"Select QUOTE D1 \u2014 North Atlantic Economy / Consolidated ocean freight as the lowest-cost feasible option that meets all the mandatory constraints.\",\n\"conditions\": [\n\"Budget: USD 15,000 (meets the budget constraint)\",\n\"Capacity: 600 units (exceeds the required 500 units)\",\n\"Deadline: 2026-10-18 (meets the deadline requirement)\",\n\"Transit insurance: Included in the quote\"\n]\n}",
+          "input_sha256": "1e7f07175c39ced93e1e3ffb56f93dc5a3b02011d78a07ebbfce0133e02db722",
+          "finish_reason": "stop"
+        }
+      ],
+      "reports": {
+        "Ingestion": "**Shipment Objective:**\nThe objective is to select the lowest-cost feasible quotation from the six offers that satisfies the following mandatory constraints:\n\n1. Stay within the USD 15,000 budget cap.\n2. Carry all 500 units.\n3. Arrive no later than 2026-10-15.\n4. Include transit insurance.\n\n**Mandatory Constraints:**\n\n1. Budget: USD 15,000\n2. Quantity: 500 units\n3. Deadline: 2026-10-15\n4. Transit insurance: Required",
+        "Logistics": "Executive Shipping Decision Report:\n\nAfter analyzing the six quotations, I recommend selecting QUOTE D1 - North Atlantic Economy / Consolidated ocean freight as the lowest-cost feasible option that meets all the mandatory constraints.\n\nThe total cost of QUOTE D1 is USD 8,600, which is well within the budget cap of USD 15,000. The quotation also meets the requirements of carrying all 500 units, arriving no later than 2026-10-15, and including transit insurance.\n\nWhile QUOTE D2 - Atlantic Priority / Priority ocean and road is a close second, its total cost of USD 12,800 exceeds the budget cap. QUOTE D3 - Transatlantic Air / Express air freight is not a viable option due to its high total cost of USD 16,400, which exceeds the budget cap.\n\nQUOTE D4 - Harbour Budget / Standard ocean freight is not a viable option due to the exclusion of transit insurance, which is a mandatory requirement. QUOTE D5 - Portline Allocation / Ocean freight is not a viable option due to its limited capacity of 350 units, which does not meet the requirement of carrying all 500 units.\n\nQUOTE D6 - CityLink Freight / Priority ocean and road is a feasible backup option, but its total cost of USD 13,900 is higher than QUOTE D1.\n\nIn conclusion, QUOTE D1 is the lowest-cost feasible option that meets all the mandatory constraints, and I recommend selecting it for the shipment.",
+        "Finance": "**Executive Shipping Decision Report**\n\nAfter analyzing the six quotations, I recommend selecting **QUOTE D1 \u2014 North Atlantic Economy / Consolidated ocean freight** as the lowest-cost feasible option that meets all the mandatory constraints.\n\nThe total all-in cost for this option is USD 8,600, which is well within the budget cap of USD 15,000. The quoted arrival date is 2026-10-18, which meets the deadline requirement. The supplier has confirmed capacity for 600 units, which exceeds the required quantity of 500 units. Transit insurance is included in the quote, satisfying the mandatory insurance requirement.\n\nThe other quotations do not meet the budget constraint or do not provide sufficient capacity. QUOTE D3 \u2014 Transatlantic Air / Express air freight exceeds the budget cap, while QUOTE D4 \u2014 Harbour Budget / Standard ocean freight does not include transit insurance. QUOTE D5 \u2014 Portline Allocation / Ocean freight only provides capacity for 350 units, which is insufficient. QUOTE D2 \u2014 Atlantic Priority / Priority ocean and road is more expensive than QUOTE D1, and QUOTE D6 \u2014 CityLink Freight / Priority ocean and road is also more expensive and does not offer a significant advantage in terms of arrival date or capacity.\n\nIn conclusion, QUOTE D1 is the lowest-cost feasible option that meets all the mandatory constraints.",
+        "Risk": "Based on the provided facts, I recommend selecting QUOTE D1, which is the lowest-cost feasible option that meets all the mandatory constraints. The total cost is USD 8,600, which is within the budget of USD 15,000. QUOTE D1 also meets the capacity requirement of 500 units, and the deadline of 2026-10-18. Additionally, it includes transit insurance, which is required.",
+        "Compliance": "Based on the supplied facts, I recommend selecting QUOTE D1, which meets all the mandatory constraints:\n\n* Budget: USD 15,000 (meets the budget constraint)\n* Capacity: 600 units (exceeds the required 500 units)\n* Deadline: 2026-10-18 (meets the deadline requirement)\n* Transit insurance: Included in the quote\n\nTotal cost: USD 8,600\n\nThis quote ID satisfies all requirements.",
+        "Decision": "{\n\"verdict\": \"proceed\",\n\"option_id\": \"D1\",\n\"total_cost_usd\": 8600,\n\"arrival_date\": \"2026-10-18\",\n\"quantity\": 500,\n\"budget_usd\": 15000,\n\"deadline\": \"2026-10-15\",\n\"reasoning\": \"Select QUOTE D1 \u2014 North Atlantic Economy / Consolidated ocean freight as the lowest-cost feasible option that meets all the mandatory constraints.\",\n\"conditions\": [\n\"Budget: USD 15,000 (meets the budget constraint)\",\n\"Capacity: 600 units (exceeds the required 500 units)\",\n\"Deadline: 2026-10-18 (meets the deadline requirement)\",\n\"Transit insurance: Included in the quote\"\n]\n}",
+        "Compressor": "AUTHORITATIVE COMPACT FACTS:\nRoute=New York to London; quantity=500 units; budget_usd=15000; deadline=2026-10-15; insurance_required=true.\nSelect lowest-cost feasible quote. All totals are all-in USD. All units in one offer; no invented charges, upgrades, or split shipments.\nQuote ID | total USD | arrival YYYY-MM-DD | capacity units | insurance included\nD1 | 8600 | 2026-10-18 | 600 | true\nD2 | 12800 | 2026-10-13 | 500 | true\nD3 | 16400 | 2026-10-08 | 700 | true\nD4 | 11900 | 2026-10-12 | 500 | false\nD5 | 10700 | 2026-10-11 | 350 | true\nD6 | 13900 | 2026-10-14 | 550 | true\n\nCOMPRESSED ANALYSIS:\n**Executive Shipping Decision Report**\n\nRecommendation: Select QUOTE D1 \u2014 North Atlantic Economy / Consolidated ocean freight as the lowest-cost feasible option that meets all the mandatory constraints.\n\nTotal cost: USD 8,600\n\nMeets requirements:\n\n* Budget: USD 15,000\n* Capacity: 600 units (exceeds required 500 units)\n* Deadline: 2026-10-18 (meets deadline requirement)\n* Transit insurance: Included in the quote\n\nOther quotations do not meet the budget constraint or do not provide sufficient capacity:\n\n* QUOTE D2 \u2014 Atlantic Priority / Priority ocean and road: Exceeds budget cap (USD 12,800)\n* QUOTE D3 \u2014 Transatlantic Air / Express air freight: Exceeds budget cap (USD 16,400)\n* QUOTE D4 \u2014 Harbour Budget / Standard ocean freight: Does not include transit insurance\n* QUOTE D5 \u2014 Portline Allocation / Ocean freight: Only provides capacity for 350 units (insufficient)\n* QUOTE D6 \u2014 CityLink Freight / Priority ocean and road: More expensive than QUOTE D1 and does not offer a significant advantage in terms of arrival date or capacity"
+      },
+      "compression": {
+        "strategy": "LLM summary plus losslessly packed source facts",
+        "target_word_ratio": 0.28,
+        "source_words": 1227,
+        "compressed_words": 267,
+        "achieved_word_ratio": 0.2176039119804401,
+        "summary_word_budget": 120,
+        "source_sha256": "778c7e6dd63c32ad9472e45e57c50a8f9fb746c69e153bd2ef623c289a1f165b",
+        "protected_facts": "Route=New York to London; quantity=500 units; budget_usd=15000; deadline=2026-10-15; insurance_required=true.\nSelect lowest-cost feasible quote. All totals are all-in USD. All units in one offer; no invented charges, upgrades, or split shipments.\nQuote ID | total USD | arrival YYYY-MM-DD | capacity units | insurance included\nD1 | 8600 | 2026-10-18 | 600 | true\nD2 | 12800 | 2026-10-13 | 500 | true\nD3 | 16400 | 2026-10-08 | 700 | true\nD4 | 11900 | 2026-10-12 | 500 | false\nD5 | 10700 | 2026-10-11 | 350 | true\nD6 | 13900 | 2026-10-14 | 550 | true"
+      },
+      "evaluation": {
+        "passed": 8,
+        "total": 9,
+        "all_passed": false,
+        "checks": {
+          "structured_answer": true,
+          "correct_verdict": true,
+          "lowest_cost_feasible_quote": false,
+          "quoted_total_correct": true,
+          "arrival_correct": true,
+          "quantity_preserved": true,
+          "budget_preserved": true,
+          "deadline_preserved": true,
+          "insurance_requirement_met": true
+        },
+        "expected_option_ids": [
+          "D2"
+        ],
+        "decision": {
+          "verdict": "proceed",
+          "option_id": "D1",
+          "total_cost_usd": 8600,
+          "arrival_date": "2026-10-18",
+          "quantity": 500,
+          "budget_usd": 15000,
+          "deadline": "2026-10-15",
+          "reasoning": "Select QUOTE D1 \u2014 North Atlantic Economy / Consolidated ocean freight as the lowest-cost feasible option that meets all the mandatory constraints.",
+          "conditions": [
+            "Budget: USD 15,000 (meets the budget constraint)",
+            "Capacity: 600 units (exceeds the required 500 units)",
+            "Deadline: 2026-10-18 (meets the deadline requirement)",
+            "Transit insurance: Included in the quote"
+          ]
+        },
+        "scope": "Checks supplied quote selection and key facts; not a complete evaluation of prose or real-world feasibility."
+      }
+    },
+    "baseline": {
+      "mode": "baseline",
+      "shared_context_sha256": "778c7e6dd63c32ad9472e45e57c50a8f9fb746c69e153bd2ef623c289a1f165b",
+      "token_usage": 10466,
+      "execution_time_seconds": 126.85114539999631,
+      "branch_seconds": 60.93489929998759,
+      "calls": [
+        {
+          "role": "Risk",
+          "input_tokens": 1708,
+          "output_tokens": 192,
+          "total_tokens": 1900,
+          "seconds": 38.20256830001017,
+          "output": "Based on the supplied facts, I assess the shipping risks and recommend the lowest-cost feasible option that meets all the mandatory constraints.\n\nThe recommended option is QUOTE D1 - North Atlantic Economy / Consolidated ocean freight, with a total all-in cost of USD 8,600. This option meets the requirements of carrying all 500 units, arriving no later than 2026-10-15, and including transit insurance.\n\nThe other quotations do not meet the budget constraint or do not provide sufficient capacity. QUOTE D3 - Transatlantic Air / Express air freight exceeds the budget cap, while QUOTE D4 - Harbour Budget / Standard ocean freight does not include transit insurance. QUOTE D5 - Portline Allocation / Ocean freight only provides capacity for 350 units, which is insufficient. QUOTE D2 - Atlantic Priority / Priority ocean and road is more expensive than QUOTE D1, and QUOTE D6 - CityLink Freight / Priority",
+          "input_sha256": "778c7e6dd63c32ad9472e45e57c50a8f9fb746c69e153bd2ef623c289a1f165b",
+          "finish_reason": "length"
+        },
+        {
+          "role": "Compliance",
+          "input_tokens": 1719,
+          "output_tokens": 192,
+          "total_tokens": 1911,
+          "seconds": 19.33452619999298,
+          "output": "Based on the supplied facts, I recommend selecting QUOTE D1 \u2014 North Atlantic Economy / Consolidated ocean freight as the lowest-cost feasible option that meets all the mandatory constraints.\n\nThe total all-in cost for this option is USD 8,600, which is well within the budget cap of USD 15,000. The quoted arrival date is 2026-10-18, which meets the deadline requirement. The supplier has confirmed capacity for 600 units, which exceeds the required quantity of 500 units. Transit insurance is included in the quote, satisfying the mandatory insurance requirement.\n\nThe other quotations do not meet the budget constraint or do not provide sufficient capacity. QUOTE D3 \u2014 Transatlantic Air / Express air freight exceeds the budget cap, while QUOTE D4 \u2014 Harbour Budget / Standard ocean freight does not include transit insurance. QUOTE D5 \u2014 Portline Allocation / Ocean freight only provides capacity for 350 units, which is insufficient.",
+          "input_sha256": "778c7e6dd63c32ad9472e45e57c50a8f9fb746c69e153bd2ef623c289a1f165b",
+          "finish_reason": "length"
+        },
+        {
+          "role": "Decision",
+          "input_tokens": 2183,
+          "output_tokens": 205,
+          "total_tokens": 2388,
+          "seconds": 22.72993120001047,
+          "output": "{\n\"verdict\": \"proceed\",\n\"option_id\": \"D1\",\n\"total_cost_usd\": 8600,\n\"arrival_date\": \"2026-10-18\",\n\"quantity\": 500,\n\"budget_usd\": 15000,\n\"deadline\": \"2026-10-15\",\n\"reasoning\": \"The recommended option is QUOTE D1 - North Atlantic Economy / Consolidated ocean freight, with a total all-in cost of USD 8,600. This option meets the requirements of carrying all 500 units, arriving no later than 2026-10-15, and including transit insurance.\",\n\"conditions\": [\n\"Total cost is within the budget cap of USD 15,000\",\n\"Capacity is confirmed for 600 units, exceeding the required quantity of 500 units\",\n\"Transit insurance is included in the quote, satisfying the mandatory insurance requirement\",\n\"Quoted arrival date is 2026-10-18, meeting the deadline requirement\"\n]\n}",
+          "input_sha256": "42c4d48b53281c2f67e7be9f1b8f46ce8374425ae995b5fb7709eb6ca8a4dfc3",
+          "finish_reason": "stop"
+        }
+      ],
+      "reports": {
+        "Ingestion": "**Shipment Objective:**\nThe objective is to select the lowest-cost feasible quotation from the six offers that satisfies the following mandatory constraints:\n\n1. Stay within the USD 15,000 budget cap.\n2. Carry all 500 units.\n3. Arrive no later than 2026-10-15.\n4. Include transit insurance.\n\n**Mandatory Constraints:**\n\n1. Budget: USD 15,000\n2. Quantity: 500 units\n3. Deadline: 2026-10-15\n4. Transit insurance: Required",
+        "Logistics": "Executive Shipping Decision Report:\n\nAfter analyzing the six quotations, I recommend selecting QUOTE D1 - North Atlantic Economy / Consolidated ocean freight as the lowest-cost feasible option that meets all the mandatory constraints.\n\nThe total cost of QUOTE D1 is USD 8,600, which is well within the budget cap of USD 15,000. The quotation also meets the requirements of carrying all 500 units, arriving no later than 2026-10-15, and including transit insurance.\n\nWhile QUOTE D2 - Atlantic Priority / Priority ocean and road is a close second, its total cost of USD 12,800 exceeds the budget cap. QUOTE D3 - Transatlantic Air / Express air freight is not a viable option due to its high total cost of USD 16,400, which exceeds the budget cap.\n\nQUOTE D4 - Harbour Budget / Standard ocean freight is not a viable option due to the exclusion of transit insurance, which is a mandatory requirement. QUOTE D5 - Portline Allocation / Ocean freight is not a viable option due to its limited capacity of 350 units, which does not meet the requirement of carrying all 500 units.\n\nQUOTE D6 - CityLink Freight / Priority ocean and road is a feasible backup option, but its total cost of USD 13,900 is higher than QUOTE D1.\n\nIn conclusion, QUOTE D1 is the lowest-cost feasible option that meets all the mandatory constraints, and I recommend selecting it for the shipment.",
+        "Finance": "**Executive Shipping Decision Report**\n\nAfter analyzing the six quotations, I recommend selecting **QUOTE D1 \u2014 North Atlantic Economy / Consolidated ocean freight** as the lowest-cost feasible option that meets all the mandatory constraints.\n\nThe total all-in cost for this option is USD 8,600, which is well within the budget cap of USD 15,000. The quoted arrival date is 2026-10-18, which meets the deadline requirement. The supplier has confirmed capacity for 600 units, which exceeds the required quantity of 500 units. Transit insurance is included in the quote, satisfying the mandatory insurance requirement.\n\nThe other quotations do not meet the budget constraint or do not provide sufficient capacity. QUOTE D3 \u2014 Transatlantic Air / Express air freight exceeds the budget cap, while QUOTE D4 \u2014 Harbour Budget / Standard ocean freight does not include transit insurance. QUOTE D5 \u2014 Portline Allocation / Ocean freight only provides capacity for 350 units, which is insufficient. QUOTE D2 \u2014 Atlantic Priority / Priority ocean and road is more expensive than QUOTE D1, and QUOTE D6 \u2014 CityLink Freight / Priority ocean and road is also more expensive and does not offer a significant advantage in terms of arrival date or capacity.\n\nIn conclusion, QUOTE D1 is the lowest-cost feasible option that meets all the mandatory constraints.",
+        "Risk": "Based on the supplied facts, I assess the shipping risks and recommend the lowest-cost feasible option that meets all the mandatory constraints.\n\nThe recommended option is QUOTE D1 - North Atlantic Economy / Consolidated ocean freight, with a total all-in cost of USD 8,600. This option meets the requirements of carrying all 500 units, arriving no later than 2026-10-15, and including transit insurance.\n\nThe other quotations do not meet the budget constraint or do not provide sufficient capacity. QUOTE D3 - Transatlantic Air / Express air freight exceeds the budget cap, while QUOTE D4 - Harbour Budget / Standard ocean freight does not include transit insurance. QUOTE D5 - Portline Allocation / Ocean freight only provides capacity for 350 units, which is insufficient. QUOTE D2 - Atlantic Priority / Priority ocean and road is more expensive than QUOTE D1, and QUOTE D6 - CityLink Freight / Priority",
+        "Compliance": "Based on the supplied facts, I recommend selecting QUOTE D1 \u2014 North Atlantic Economy / Consolidated ocean freight as the lowest-cost feasible option that meets all the mandatory constraints.\n\nThe total all-in cost for this option is USD 8,600, which is well within the budget cap of USD 15,000. The quoted arrival date is 2026-10-18, which meets the deadline requirement. The supplier has confirmed capacity for 600 units, which exceeds the required quantity of 500 units. Transit insurance is included in the quote, satisfying the mandatory insurance requirement.\n\nThe other quotations do not meet the budget constraint or do not provide sufficient capacity. QUOTE D3 \u2014 Transatlantic Air / Express air freight exceeds the budget cap, while QUOTE D4 \u2014 Harbour Budget / Standard ocean freight does not include transit insurance. QUOTE D5 \u2014 Portline Allocation / Ocean freight only provides capacity for 350 units, which is insufficient.",
+        "Decision": "{\n\"verdict\": \"proceed\",\n\"option_id\": \"D1\",\n\"total_cost_usd\": 8600,\n\"arrival_date\": \"2026-10-18\",\n\"quantity\": 500,\n\"budget_usd\": 15000,\n\"deadline\": \"2026-10-15\",\n\"reasoning\": \"The recommended option is QUOTE D1 - North Atlantic Economy / Consolidated ocean freight, with a total all-in cost of USD 8,600. This option meets the requirements of carrying all 500 units, arriving no later than 2026-10-15, and including transit insurance.\",\n\"conditions\": [\n\"Total cost is within the budget cap of USD 15,000\",\n\"Capacity is confirmed for 600 units, exceeding the required quantity of 500 units\",\n\"Transit insurance is included in the quote, satisfying the mandatory insurance requirement\",\n\"Quoted arrival date is 2026-10-18, meeting the deadline requirement\"\n]\n}",
+        "Compressor": ""
+      },
+      "compression": null,
+      "evaluation": {
+        "passed": 8,
+        "total": 9,
+        "all_passed": false,
+        "checks": {
+          "structured_answer": true,
+          "correct_verdict": true,
+          "lowest_cost_feasible_quote": false,
+          "quoted_total_correct": true,
+          "arrival_correct": true,
+          "quantity_preserved": true,
+          "budget_preserved": true,
+          "deadline_preserved": true,
+          "insurance_requirement_met": true
+        },
+        "expected_option_ids": [
+          "D2"
+        ],
+        "decision": {
+          "verdict": "proceed",
+          "option_id": "D1",
+          "total_cost_usd": 8600,
+          "arrival_date": "2026-10-18",
+          "quantity": 500,
+          "budget_usd": 15000,
+          "deadline": "2026-10-15",
+          "reasoning": "The recommended option is QUOTE D1 - North Atlantic Economy / Consolidated ocean freight, with a total all-in cost of USD 8,600. This option meets the requirements of carrying all 500 units, arriving no later than 2026-10-15, and including transit insurance.",
+          "conditions": [
+            "Total cost is within the budget cap of USD 15,000",
+            "Capacity is confirmed for 600 units, exceeding the required quantity of 500 units",
+            "Transit insurance is included in the quote, satisfying the mandatory insurance requirement",
+            "Quoted arrival date is 2026-10-18, meeting the deadline requirement"
+          ]
+        },
+        "scope": "Checks supplied quote selection and key facts; not a complete evaluation of prose or real-world feasibility."
+      }
+    },
+    "comparison": {
+      "saved_tokens": 2024,
+      "reduction_percent": 19.338811389260464,
+      "review_input_reduction_percent": 69.08665105386417,
+      "both_checklists_passed": false,
+      "total_experiment_tokens": 14641,
+      "experiment_wall_seconds": 178.28394689998822,
+      "accounting": "Each branch includes the same upstream cost. Compression input/output tokens are included. Upstream calls were executed once physically. No retries or uncounted judge-model calls."
+    }
+  }
+]

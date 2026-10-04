@@ -1,0 +1,1667 @@
+[
+  {
+    "schema_version": 1,
+    "experiment_id": "7ade868e-1086-4718-982f-4cda31e2573b",
+    "created_at": "2026-09-28T15:45:20.207182+00:00",
+    "scenario": {
+      "id": "demo_medium",
+      "title": "Medium \u00b7 Regional equipment shipment",
+      "size": "medium",
+      "route": "Casablanca to Madrid",
+      "quantity": 160,
+      "budget_usd": 6500,
+      "deadline": "2026-10-12",
+      "require_insurance": true,
+      "brief": "Compare four supplied quotations for delivering 160 boxed monitoring devices from Casablanca to Madrid. Select the lowest-cost feasible option. Every unit must arrive by the deadline, and transit insurance is mandatory. Prices are fictional all-in quotations in USD; customs and handling are included. Do not substitute market estimates or assume extra capacity.",
+      "options": [
+        {
+          "id": "M1",
+          "carrier": "Atlas Direct",
+          "method": "Air cargo",
+          "quoted_total_usd": 5900,
+          "arrival_date": "2026-10-10",
+          "capacity_units": 180,
+          "insurance_included": true,
+          "terms": "The quotation includes airport handling at both ends, customs processing, transit insurance, and the final delivery to the Madrid distribution centre. The stated capacity is the confirmed allocation for this booking, rather than a general aircraft capacity."
+        },
+        {
+          "id": "M2",
+          "carrier": "Iberia Consolidation",
+          "method": "Sea and road",
+          "quoted_total_usd": 4300,
+          "arrival_date": "2026-10-14",
+          "capacity_units": 200,
+          "insurance_included": true,
+          "terms": "A scheduled sea crossing is followed by consolidated road delivery. Insurance and destination handling are included. The arrival is after the requested deadline; the carrier has not offered an earlier slot at this price."
+        },
+        {
+          "id": "M3",
+          "carrier": "Strait Logistics",
+          "method": "Road and ferry",
+          "quoted_total_usd": 5100,
+          "arrival_date": "2026-10-11",
+          "capacity_units": 160,
+          "insurance_included": true,
+          "terms": "A dedicated vehicle crosses by ferry and continues to the Madrid receiving facility. The quoted amount includes the ferry reservation, customs handling, cargo insurance, and delivery. The allocation covers exactly the required consignment."
+        },
+        {
+          "id": "M4",
+          "carrier": "Budget Forwarding",
+          "method": "Road and ferry",
+          "quoted_total_usd": 4600,
+          "arrival_date": "2026-10-09",
+          "capacity_units": 160,
+          "insurance_included": false,
+          "terms": "This quotation meets the date and capacity requirements but explicitly excludes transit insurance. No insurance add-on has been quoted. Evaluate the supplied offer as it stands; do not invent a premium to make it compliant."
+        }
+      ]
+    },
+    "configuration": {
+      "pipeline_version": "validated-v5-graph",
+      "model": "llama3",
+      "seed": 42,
+      "temperature": 0,
+      "num_ctx": 8192,
+      "limits": {
+        "Ingestion": 256,
+        "Logistics": 384,
+        "Finance": 384,
+        "Risk": 384,
+        "Compliance": 384,
+        "Compressor": 192,
+        "Decision": 384
+      },
+      "compression_mode": "auto",
+      "compressor_strategy": "llm",
+      "branch_order": [
+        "baseline",
+        "compressed"
+      ],
+      "validation_scope": "Exact Python-supported claims and canonical decision reasoning. Original narrative quality is not certified."
+    },
+    "shared": {
+      "calls": [
+        {
+          "role": "Ingestion",
+          "system_prompt": "You are the Ingestion quotation reviewer. Return at most TWO relevant claims. For example, quote_id=\"M1\", constraint=\"within_budget\" requires explanation=\"M1: within_budget=PASS.\" Substitute the actual quote ID, constraint and uppercase result from each claim. Never output placeholder names. Use only Python comparisons. Do not add numeric prose. Prefer uncertainties=[]; otherwise copy a protected source caveat exactly. Return only JSON matching the provided schema, with claims and uncertainties arrays. Every factual comparison must be a claim with the exact supplied quote_id, a constraint from within_budget, on_time, enough_capacity, insured_as_required, eligible, lowest_cost_eligible, result pass/fail/unknown, and a short explanation. Use Python calculations as authoritative. Each explanation or uncertainty must be at most 30 words. State missing evidence explicitly; never interpret unknown as pass. Use at most 12 relevant claims and 6 uncertainties. Do not duplicate a quote/constraint pair. An uncertainty has quote_id (null only for a general issue) and detail. Use empty arrays when no relevant claims or uncertainties exist. No Markdown or extra fields.",
+          "input": "Route=Casablanca to Madrid; quantity=160 units; budget_usd=6500; deadline=2026-10-12; insurance_required=true.\nSelect lowest-cost feasible quote. All totals are all-in USD. All units in one offer; no invented charges, upgrades, or split shipments.\nQuote ID | total USD | arrival YYYY-MM-DD | capacity units | insurance included\nM1 | 5900 | 2026-10-10 | 180 | true\nM2 | 4300 | 2026-10-14 | 200 | true\nM3 | 5100 | 2026-10-11 | 160 | true\nM4 | 4600 | 2026-10-09 | 160 | false\nPYTHON CONSTRAINT CHECKS (authoritative calculations from protected source fields):\nM1: within_budget=PASS; on_time=PASS; enough_capacity=PASS; insured_as_required=PASS; budget_remaining_usd=600; days_before_deadline=2; capacity_surplus_units=20\nM2: within_budget=PASS; on_time=FAIL; enough_capacity=PASS; insured_as_required=PASS; budget_remaining_usd=2200; days_before_deadline=-2; capacity_surplus_units=40\nM3: within_budget=PASS; on_time=PASS; enough_capacity=PASS; insured_as_required=PASS; budget_remaining_usd=1400; days_before_deadline=1; capacity_surplus_units=0\nM4: within_budget=PASS; on_time=PASS; enough_capacity=PASS; insured_as_required=FAIL; budget_remaining_usd=1900; days_before_deadline=3; capacity_surplus_units=0\nELIGIBLE QUOTE IDS: M1, M3\nINELIGIBLE QUOTE IDS: M2, M4\nLOWEST-COST ELIGIBLE QUOTE IDS: M3\nPYTHON RECOMMENDATION: proceed with M3, USD 5100, arrival 2026-10-11\nAny FAIL makes a quote infeasible. Negative remaining budget, days or capacity indicate a shortfall. Explain these computed results; do not replace them with model arithmetic. Equal-price eligible quotes are tied; the recommendation uses the lexicographically smallest quote ID.",
+          "output": "{\n\"claims\": [\n{\n\"quote_id\": \"M1\",\n\"constraint\": \"within_budget\",\n\"result\": \"pass\",\n\"explanation\": \"M1: within_budget=PASS\"\n},\n{\n\"quote_id\": \"M3\",\n\"constraint\": \"within_budget\",\n\"result\": \"pass\",\n\"explanation\": \"M3: within_budget=PASS\"\n}\n],\n\"uncertainties\": []\n}",
+          "input_sha256": "d774b0f1056ebbb27c17d7d4a60fbbb0205df7aa462e70a7794051cb63efd11a",
+          "settings": {
+            "model": "llama3",
+            "seed": 42,
+            "temperature": 0,
+            "num_ctx": 8192,
+            "max_output_tokens": 256
+          },
+          "input_tokens": 718,
+          "output_tokens": 86,
+          "total_tokens": 804,
+          "raw_output": "{\n\"claims\": [\n{\n\"quote_id\": \"M1\",\n\"constraint\": \"within_budget\",\n\"result\": \"pass\",\n\"explanation\": \"M1: within_budget=PASS\"\n},\n{\n\"quote_id\": \"M3\",\n\"constraint\": \"within_budget\",\n\"result\": \"pass\",\n\"explanation\": \"M3: within_budget=PASS\"\n}\n],\n\"uncertainties\": []\n}",
+          "finish_reason": "stop",
+          "seconds": 13.345794400011073,
+          "claim_validation": {
+            "valid": false,
+            "schema_valid": true,
+            "accepted": [],
+            "rejected": [
+              {
+                "kind": "claim",
+                "value": {
+                  "quote_id": "M1",
+                  "constraint": "within_budget",
+                  "result": "pass",
+                  "explanation": "M1: within_budget=PASS"
+                },
+                "reason": "Explanation is not verified canonical wording"
+              },
+              {
+                "kind": "claim",
+                "value": {
+                  "quote_id": "M3",
+                  "constraint": "within_budget",
+                  "result": "pass",
+                  "explanation": "M3: within_budget=PASS"
+                },
+                "reason": "Explanation is not verified canonical wording"
+              }
+            ],
+            "claims_total": 2,
+            "claims_correct": 2,
+            "safe_text": "No verified claims available."
+          },
+          "forwarded_output": "No verified claims available."
+        }
+      ],
+      "reports": {
+        "Ingestion": "No verified claims available."
+      },
+      "context": "REQUEST: Compare four supplied quotations for delivering 160 boxed monitoring devices from Casablanca to Madrid. Select the lowest-cost feasible option. Every unit must arrive by the deadline, and transit insurance is mandatory. Prices are fictional all-in quotations in USD; customs and handling are included. Do not substitute market estimates or assume extra capacity.\nRoute: Casablanca to Madrid\nQuantity: 160 units\nBudget: USD 6500\nDeadline: 2026-10-12\nTransit insurance required: True\nObjective: lowest quoted total among offers satisfying every requirement.\nNo split shipments or unquoted changes. All quoted totals are all-in.\n\nQUOTE M1 \u2014 Atlas Direct / Air cargo\nAll-in total: USD 5900\nWarehouse arrival: 2026-10-10\nConfirmed capacity: 180 units\nTransit insurance included: True\nSupplier terms: The quotation includes airport handling at both ends, customs processing, transit insurance, and the final delivery to the Madrid distribution centre. The stated capacity is the confirmed allocation for this booking, rather than a general aircraft capacity.\n\nQUOTE M2 \u2014 Iberia Consolidation / Sea and road\nAll-in total: USD 4300\nWarehouse arrival: 2026-10-14\nConfirmed capacity: 200 units\nTransit insurance included: True\nSupplier terms: A scheduled sea crossing is followed by consolidated road delivery. Insurance and destination handling are included. The arrival is after the requested deadline; the carrier has not offered an earlier slot at this price.\n\nQUOTE M3 \u2014 Strait Logistics / Road and ferry\nAll-in total: USD 5100\nWarehouse arrival: 2026-10-11\nConfirmed capacity: 160 units\nTransit insurance included: True\nSupplier terms: A dedicated vehicle crosses by ferry and continues to the Madrid receiving facility. The quoted amount includes the ferry reservation, customs handling, cargo insurance, and delivery. The allocation covers exactly the required consignment.\n\nQUOTE M4 \u2014 Budget Forwarding / Road and ferry\nAll-in total: USD 4600\nWarehouse arrival: 2026-10-09\nConfirmed capacity: 160 units\nTransit insurance included: False\nSupplier terms: This quotation meets the date and capacity requirements but explicitly excludes transit insurance. No insurance add-on has been quoted. Evaluate the supplied offer as it stands; do not invent a premium to make it compliant.\nPYTHON CONSTRAINT CHECKS (authoritative calculations from protected source fields):\nM1: within_budget=PASS; on_time=PASS; enough_capacity=PASS; insured_as_required=PASS; budget_remaining_usd=600; days_before_deadline=2; capacity_surplus_units=20\nM2: within_budget=PASS; on_time=FAIL; enough_capacity=PASS; insured_as_required=PASS; budget_remaining_usd=2200; days_before_deadline=-2; capacity_surplus_units=40\nM3: within_budget=PASS; on_time=PASS; enough_capacity=PASS; insured_as_required=PASS; budget_remaining_usd=1400; days_before_deadline=1; capacity_surplus_units=0\nM4: within_budget=PASS; on_time=PASS; enough_capacity=PASS; insured_as_required=FAIL; budget_remaining_usd=1900; days_before_deadline=3; capacity_surplus_units=0\nELIGIBLE QUOTE IDS: M1, M3\nINELIGIBLE QUOTE IDS: M2, M4\nLOWEST-COST ELIGIBLE QUOTE IDS: M3\nPYTHON RECOMMENDATION: proceed with M3, USD 5100, arrival 2026-10-11\nAny FAIL makes a quote infeasible. Negative remaining budget, days or capacity indicate a shortfall. Explain these computed results; do not replace them with model arithmetic. Equal-price eligible quotes are tied; the recommendation uses the lexicographically smallest quote ID.",
+      "context_sha256": "6cc9b2a255279f84619b8b015461b48cbe6087547ca6d1389e88e77606a37162",
+      "protected_facts": {
+        "schema_version": 1,
+        "scenario_id": "demo_medium",
+        "source_sha256": "13b5e5f3c6f7298459a443a421a2bcc1c1c5dfd2f9f6601047e199c7af352c3d",
+        "brief": "Compare four supplied quotations for delivering 160 boxed monitoring devices from Casablanca to Madrid. Select the lowest-cost feasible option. Every unit must arrive by the deadline, and transit insurance is mandatory. Prices are fictional all-in quotations in USD; customs and handling are included. Do not substitute market estimates or assume extra capacity.",
+        "route": "Casablanca to Madrid",
+        "quantity": 160,
+        "budget_usd": 6500,
+        "deadline": "2026-10-12",
+        "require_insurance": true,
+        "quotes": [
+          {
+            "id": "M1",
+            "carrier": "Atlas Direct",
+            "method": "Air cargo",
+            "quoted_total_usd": 5900,
+            "arrival_date": "2026-10-10",
+            "capacity_units": 180,
+            "insurance_included": true,
+            "terms": "The quotation includes airport handling at both ends, customs processing, transit insurance, and the final delivery to the Madrid distribution centre. The stated capacity is the confirmed allocation for this booking, rather than a general aircraft capacity."
+          },
+          {
+            "id": "M2",
+            "carrier": "Iberia Consolidation",
+            "method": "Sea and road",
+            "quoted_total_usd": 4300,
+            "arrival_date": "2026-10-14",
+            "capacity_units": 200,
+            "insurance_included": true,
+            "terms": "A scheduled sea crossing is followed by consolidated road delivery. Insurance and destination handling are included. The arrival is after the requested deadline; the carrier has not offered an earlier slot at this price."
+          },
+          {
+            "id": "M3",
+            "carrier": "Strait Logistics",
+            "method": "Road and ferry",
+            "quoted_total_usd": 5100,
+            "arrival_date": "2026-10-11",
+            "capacity_units": 160,
+            "insurance_included": true,
+            "terms": "A dedicated vehicle crosses by ferry and continues to the Madrid receiving facility. The quoted amount includes the ferry reservation, customs handling, cargo insurance, and delivery. The allocation covers exactly the required consignment."
+          },
+          {
+            "id": "M4",
+            "carrier": "Budget Forwarding",
+            "method": "Road and ferry",
+            "quoted_total_usd": 4600,
+            "arrival_date": "2026-10-09",
+            "capacity_units": 160,
+            "insurance_included": false,
+            "terms": "This quotation meets the date and capacity requirements but explicitly excludes transit insurance. No insurance add-on has been quoted. Evaluate the supplied offer as it stands; do not invent a premium to make it compliant."
+          }
+        ],
+        "record_sha256": "459948018798fe9441b3db846b43ed4259b09b6a238cfc1f7c42a272837a09b4"
+      },
+      "constraint_audit": {
+        "calculation_version": "quote-calculations-v1",
+        "rows": [
+          {
+            "quote_id": "M1",
+            "within_budget": true,
+            "on_time": true,
+            "enough_capacity": true,
+            "insured_as_required": true
+          },
+          {
+            "quote_id": "M2",
+            "within_budget": true,
+            "on_time": false,
+            "enough_capacity": true,
+            "insured_as_required": true
+          },
+          {
+            "quote_id": "M3",
+            "within_budget": true,
+            "on_time": true,
+            "enough_capacity": true,
+            "insured_as_required": true
+          },
+          {
+            "quote_id": "M4",
+            "within_budget": true,
+            "on_time": true,
+            "enough_capacity": true,
+            "insured_as_required": false
+          }
+        ],
+        "comparisons": [
+          {
+            "quote_id": "M1",
+            "quoted_total_usd": 5900,
+            "budget_usd": 6500,
+            "budget_remaining_usd": "600",
+            "arrival_date": "2026-10-10",
+            "deadline": "2026-10-12",
+            "days_before_deadline": 2,
+            "capacity_units": 180,
+            "quantity": 160,
+            "capacity_surplus_units": 20,
+            "insurance_included": true,
+            "insurance_required": true,
+            "eligible": true,
+            "failed_constraints": []
+          },
+          {
+            "quote_id": "M2",
+            "quoted_total_usd": 4300,
+            "budget_usd": 6500,
+            "budget_remaining_usd": "2200",
+            "arrival_date": "2026-10-14",
+            "deadline": "2026-10-12",
+            "days_before_deadline": -2,
+            "capacity_units": 200,
+            "quantity": 160,
+            "capacity_surplus_units": 40,
+            "insurance_included": true,
+            "insurance_required": true,
+            "eligible": false,
+            "failed_constraints": [
+              "on_time"
+            ]
+          },
+          {
+            "quote_id": "M3",
+            "quoted_total_usd": 5100,
+            "budget_usd": 6500,
+            "budget_remaining_usd": "1400",
+            "arrival_date": "2026-10-11",
+            "deadline": "2026-10-12",
+            "days_before_deadline": 1,
+            "capacity_units": 160,
+            "quantity": 160,
+            "capacity_surplus_units": 0,
+            "insurance_included": true,
+            "insurance_required": true,
+            "eligible": true,
+            "failed_constraints": []
+          },
+          {
+            "quote_id": "M4",
+            "quoted_total_usd": 4600,
+            "budget_usd": 6500,
+            "budget_remaining_usd": "1900",
+            "arrival_date": "2026-10-09",
+            "deadline": "2026-10-12",
+            "days_before_deadline": 3,
+            "capacity_units": 160,
+            "quantity": 160,
+            "capacity_surplus_units": 0,
+            "insurance_included": false,
+            "insurance_required": true,
+            "eligible": false,
+            "failed_constraints": [
+              "insured_as_required"
+            ]
+          }
+        ],
+        "eligible_ids": [
+          "M1",
+          "M3"
+        ],
+        "ineligible_ids": [
+          "M2",
+          "M4"
+        ],
+        "lowest_cost_eligible_ids": [
+          "M3"
+        ],
+        "lowest_eligible_total_usd": 5100,
+        "recommendation": {
+          "verdict": "proceed",
+          "option_id": "M3",
+          "total_cost_usd": 5100,
+          "arrival_date": "2026-10-11",
+          "quantity": 160,
+          "budget_usd": 6500,
+          "deadline": "2026-10-12"
+        },
+        "tie_break": "lexicographically smallest quote ID; all minimum-price eligible quotes accepted by evaluation",
+        "protected_facts_sha256": "459948018798fe9441b3db846b43ed4259b09b6a238cfc1f7c42a272837a09b4",
+        "text": "PYTHON CONSTRAINT CHECKS (authoritative calculations from protected source fields):\nM1: within_budget=PASS; on_time=PASS; enough_capacity=PASS; insured_as_required=PASS; budget_remaining_usd=600; days_before_deadline=2; capacity_surplus_units=20\nM2: within_budget=PASS; on_time=FAIL; enough_capacity=PASS; insured_as_required=PASS; budget_remaining_usd=2200; days_before_deadline=-2; capacity_surplus_units=40\nM3: within_budget=PASS; on_time=PASS; enough_capacity=PASS; insured_as_required=PASS; budget_remaining_usd=1400; days_before_deadline=1; capacity_surplus_units=0\nM4: within_budget=PASS; on_time=PASS; enough_capacity=PASS; insured_as_required=FAIL; budget_remaining_usd=1900; days_before_deadline=3; capacity_surplus_units=0\nELIGIBLE QUOTE IDS: M1, M3\nINELIGIBLE QUOTE IDS: M2, M4\nLOWEST-COST ELIGIBLE QUOTE IDS: M3\nPYTHON RECOMMENDATION: proceed with M3, USD 5100, arrival 2026-10-11\nAny FAIL makes a quote infeasible. Negative remaining budget, days or capacity indicate a shortfall. Explain these computed results; do not replace them with model arithmetic. Equal-price eligible quotes are tied; the recommendation uses the lexicographically smallest quote ID."
+      },
+      "protected_caveats": [
+        {
+          "id": "U0",
+          "quote_id": "M2",
+          "detail": "The arrival is after the requested deadline; the carrier has not offered an earlier slot at this price."
+        },
+        {
+          "id": "U1",
+          "quote_id": "M3",
+          "detail": "The allocation covers exactly the required consignment."
+        },
+        {
+          "id": "U2",
+          "quote_id": "M4",
+          "detail": "This quotation meets the date and capacity requirements but explicitly excludes transit insurance."
+        },
+        {
+          "id": "U3",
+          "quote_id": "M4",
+          "detail": "No insurance add-on has been quoted."
+        },
+        {
+          "id": "U4",
+          "quote_id": "M4",
+          "detail": "Evaluate the supplied offer as it stands; do not invent a premium to make it compliant."
+        }
+      ],
+      "token_usage": 804,
+      "seconds": 13.346300000004703
+    },
+    "baseline": {
+      "mode": "baseline",
+      "status": "validated",
+      "reports": {
+        "Ingestion": "No verified claims available.",
+        "Logistics": "M3: within_budget=PASS.\nM3: on_time=PASS.",
+        "Finance": "M3: within_budget=PASS.\nM3: on_time=PASS.",
+        "Risk": "M1: within_budget=PASS.\nM1: on_time=PASS.",
+        "Compliance": "M3: within_budget=PASS.\nM3: on_time=PASS.",
+        "Decision": "{\n\"verdict\": \"proceed\",\n\"option_id\": \"M3\",\n\"total_cost_usd\": 5100,\n\"arrival_date\": \"2026-10-11\",\n\"quantity\": 160,\n\"budget_usd\": 6500,\n\"deadline\": \"2026-10-12\",\n\"reasoning\": \"M3 is a lowest-cost eligible quote at USD 5100; arrival 2026-10-11 meets deadline 2026-10-12, with sufficient capacity and required insurance.\",\n\"conditions\": []\n}",
+        "Compressor": ""
+      },
+      "calls": [
+        {
+          "role": "Logistics",
+          "system_prompt": "You are the Logistics quotation reviewer. Return at most TWO relevant claims. For example, quote_id=\"M1\", constraint=\"within_budget\" requires explanation=\"M1: within_budget=PASS.\" Substitute the actual quote ID, constraint and uppercase result from each claim. Never output placeholder names. Use only Python comparisons. Do not add numeric prose. Prefer uncertainties=[]; otherwise copy a protected source caveat exactly. Return only JSON matching the provided schema, with claims and uncertainties arrays. Every factual comparison must be a claim with the exact supplied quote_id, a constraint from within_budget, on_time, enough_capacity, insured_as_required, eligible, lowest_cost_eligible, result pass/fail/unknown, and a short explanation. Use Python calculations as authoritative. Each explanation or uncertainty must be at most 30 words. State missing evidence explicitly; never interpret unknown as pass. Use at most 12 relevant claims and 6 uncertainties. Do not duplicate a quote/constraint pair. An uncertainty has quote_id (null only for a general issue) and detail. Use empty arrays when no relevant claims or uncertainties exist. No Markdown or extra fields.",
+          "input": "REQUEST: Compare four supplied quotations for delivering 160 boxed monitoring devices from Casablanca to Madrid. Select the lowest-cost feasible option. Every unit must arrive by the deadline, and transit insurance is mandatory. Prices are fictional all-in quotations in USD; customs and handling are included. Do not substitute market estimates or assume extra capacity.\nRoute: Casablanca to Madrid\nQuantity: 160 units\nBudget: USD 6500\nDeadline: 2026-10-12\nTransit insurance required: True\nObjective: lowest quoted total among offers satisfying every requirement.\nNo split shipments or unquoted changes. All quoted totals are all-in.\n\nQUOTE M1 \u2014 Atlas Direct / Air cargo\nAll-in total: USD 5900\nWarehouse arrival: 2026-10-10\nConfirmed capacity: 180 units\nTransit insurance included: True\nSupplier terms: The quotation includes airport handling at both ends, customs processing, transit insurance, and the final delivery to the Madrid distribution centre. The stated capacity is the confirmed allocation for this booking, rather than a general aircraft capacity.\n\nQUOTE M2 \u2014 Iberia Consolidation / Sea and road\nAll-in total: USD 4300\nWarehouse arrival: 2026-10-14\nConfirmed capacity: 200 units\nTransit insurance included: True\nSupplier terms: A scheduled sea crossing is followed by consolidated road delivery. Insurance and destination handling are included. The arrival is after the requested deadline; the carrier has not offered an earlier slot at this price.\n\nQUOTE M3 \u2014 Strait Logistics / Road and ferry\nAll-in total: USD 5100\nWarehouse arrival: 2026-10-11\nConfirmed capacity: 160 units\nTransit insurance included: True\nSupplier terms: A dedicated vehicle crosses by ferry and continues to the Madrid receiving facility. The quoted amount includes the ferry reservation, customs handling, cargo insurance, and delivery. The allocation covers exactly the required consignment.\n\nQUOTE M4 \u2014 Budget Forwarding / Road and ferry\nAll-in total: USD 4600\nWarehouse arrival: 2026-10-09\nConfirmed capacity: 160 units\nTransit insurance included: False\nSupplier terms: This quotation meets the date and capacity requirements but explicitly excludes transit insurance. No insurance add-on has been quoted. Evaluate the supplied offer as it stands; do not invent a premium to make it compliant.\nPYTHON CONSTRAINT CHECKS (authoritative calculations from protected source fields):\nM1: within_budget=PASS; on_time=PASS; enough_capacity=PASS; insured_as_required=PASS; budget_remaining_usd=600; days_before_deadline=2; capacity_surplus_units=20\nM2: within_budget=PASS; on_time=FAIL; enough_capacity=PASS; insured_as_required=PASS; budget_remaining_usd=2200; days_before_deadline=-2; capacity_surplus_units=40\nM3: within_budget=PASS; on_time=PASS; enough_capacity=PASS; insured_as_required=PASS; budget_remaining_usd=1400; days_before_deadline=1; capacity_surplus_units=0\nM4: within_budget=PASS; on_time=PASS; enough_capacity=PASS; insured_as_required=FAIL; budget_remaining_usd=1900; days_before_deadline=3; capacity_surplus_units=0\nELIGIBLE QUOTE IDS: M1, M3\nINELIGIBLE QUOTE IDS: M2, M4\nLOWEST-COST ELIGIBLE QUOTE IDS: M3\nPYTHON RECOMMENDATION: proceed with M3, USD 5100, arrival 2026-10-11\nAny FAIL makes a quote infeasible. Negative remaining budget, days or capacity indicate a shortfall. Explain these computed results; do not replace them with model arithmetic. Equal-price eligible quotes are tied; the recommendation uses the lexicographically smallest quote ID.",
+          "output": "{\n\"claims\": [\n    {\"quote_id\": \"M3\", \"constraint\": \"within_budget\", \"result\": \"pass\", \"explanation\": \"M3: within_budget=PASS.\"},\n    {\"quote_id\": \"M3\", \"constraint\": \"on_time\", \"result\": \"pass\", \"explanation\": \"M3: on_time=PASS.\"}\n],\n\"uncertainties\": []\n}",
+          "input_sha256": "6cc9b2a255279f84619b8b015461b48cbe6087547ca6d1389e88e77606a37162",
+          "settings": {
+            "model": "llama3",
+            "seed": 42,
+            "temperature": 0,
+            "num_ctx": 8192,
+            "max_output_tokens": 384
+          },
+          "input_tokens": 1044,
+          "output_tokens": 85,
+          "total_tokens": 1129,
+          "raw_output": "{\n\"claims\": [\n    {\"quote_id\": \"M3\", \"constraint\": \"within_budget\", \"result\": \"pass\", \"explanation\": \"M3: within_budget=PASS.\"},\n    {\"quote_id\": \"M3\", \"constraint\": \"on_time\", \"result\": \"pass\", \"explanation\": \"M3: on_time=PASS.\"}\n],\n\"uncertainties\": []\n}",
+          "finish_reason": "stop",
+          "seconds": 15.974250900006155,
+          "claim_validation": {
+            "valid": true,
+            "schema_valid": true,
+            "accepted": [
+              {
+                "kind": "claim",
+                "quote_id": "M3",
+                "constraint": "within_budget",
+                "result": "pass",
+                "explanation": "M3: within_budget=PASS."
+              },
+              {
+                "kind": "claim",
+                "quote_id": "M3",
+                "constraint": "on_time",
+                "result": "pass",
+                "explanation": "M3: on_time=PASS."
+              }
+            ],
+            "rejected": [],
+            "claims_total": 2,
+            "claims_correct": 2,
+            "safe_text": "M3: within_budget=PASS.\nM3: on_time=PASS."
+          },
+          "forwarded_output": "M3: within_budget=PASS.\nM3: on_time=PASS."
+        },
+        {
+          "role": "Finance",
+          "system_prompt": "You are the Finance quotation reviewer. Return at most TWO relevant claims. For example, quote_id=\"M1\", constraint=\"within_budget\" requires explanation=\"M1: within_budget=PASS.\" Substitute the actual quote ID, constraint and uppercase result from each claim. Never output placeholder names. Use only Python comparisons. Do not add numeric prose. Prefer uncertainties=[]; otherwise copy a protected source caveat exactly. Return only JSON matching the provided schema, with claims and uncertainties arrays. Every factual comparison must be a claim with the exact supplied quote_id, a constraint from within_budget, on_time, enough_capacity, insured_as_required, eligible, lowest_cost_eligible, result pass/fail/unknown, and a short explanation. Use Python calculations as authoritative. Each explanation or uncertainty must be at most 30 words. State missing evidence explicitly; never interpret unknown as pass. Use at most 12 relevant claims and 6 uncertainties. Do not duplicate a quote/constraint pair. An uncertainty has quote_id (null only for a general issue) and detail. Use empty arrays when no relevant claims or uncertainties exist. No Markdown or extra fields.",
+          "input": "REQUEST: Compare four supplied quotations for delivering 160 boxed monitoring devices from Casablanca to Madrid. Select the lowest-cost feasible option. Every unit must arrive by the deadline, and transit insurance is mandatory. Prices are fictional all-in quotations in USD; customs and handling are included. Do not substitute market estimates or assume extra capacity.\nRoute: Casablanca to Madrid\nQuantity: 160 units\nBudget: USD 6500\nDeadline: 2026-10-12\nTransit insurance required: True\nObjective: lowest quoted total among offers satisfying every requirement.\nNo split shipments or unquoted changes. All quoted totals are all-in.\n\nQUOTE M1 \u2014 Atlas Direct / Air cargo\nAll-in total: USD 5900\nWarehouse arrival: 2026-10-10\nConfirmed capacity: 180 units\nTransit insurance included: True\nSupplier terms: The quotation includes airport handling at both ends, customs processing, transit insurance, and the final delivery to the Madrid distribution centre. The stated capacity is the confirmed allocation for this booking, rather than a general aircraft capacity.\n\nQUOTE M2 \u2014 Iberia Consolidation / Sea and road\nAll-in total: USD 4300\nWarehouse arrival: 2026-10-14\nConfirmed capacity: 200 units\nTransit insurance included: True\nSupplier terms: A scheduled sea crossing is followed by consolidated road delivery. Insurance and destination handling are included. The arrival is after the requested deadline; the carrier has not offered an earlier slot at this price.\n\nQUOTE M3 \u2014 Strait Logistics / Road and ferry\nAll-in total: USD 5100\nWarehouse arrival: 2026-10-11\nConfirmed capacity: 160 units\nTransit insurance included: True\nSupplier terms: A dedicated vehicle crosses by ferry and continues to the Madrid receiving facility. The quoted amount includes the ferry reservation, customs handling, cargo insurance, and delivery. The allocation covers exactly the required consignment.\n\nQUOTE M4 \u2014 Budget Forwarding / Road and ferry\nAll-in total: USD 4600\nWarehouse arrival: 2026-10-09\nConfirmed capacity: 160 units\nTransit insurance included: False\nSupplier terms: This quotation meets the date and capacity requirements but explicitly excludes transit insurance. No insurance add-on has been quoted. Evaluate the supplied offer as it stands; do not invent a premium to make it compliant.\nPYTHON CONSTRAINT CHECKS (authoritative calculations from protected source fields):\nM1: within_budget=PASS; on_time=PASS; enough_capacity=PASS; insured_as_required=PASS; budget_remaining_usd=600; days_before_deadline=2; capacity_surplus_units=20\nM2: within_budget=PASS; on_time=FAIL; enough_capacity=PASS; insured_as_required=PASS; budget_remaining_usd=2200; days_before_deadline=-2; capacity_surplus_units=40\nM3: within_budget=PASS; on_time=PASS; enough_capacity=PASS; insured_as_required=PASS; budget_remaining_usd=1400; days_before_deadline=1; capacity_surplus_units=0\nM4: within_budget=PASS; on_time=PASS; enough_capacity=PASS; insured_as_required=FAIL; budget_remaining_usd=1900; days_before_deadline=3; capacity_surplus_units=0\nELIGIBLE QUOTE IDS: M1, M3\nINELIGIBLE QUOTE IDS: M2, M4\nLOWEST-COST ELIGIBLE QUOTE IDS: M3\nPYTHON RECOMMENDATION: proceed with M3, USD 5100, arrival 2026-10-11\nAny FAIL makes a quote infeasible. Negative remaining budget, days or capacity indicate a shortfall. Explain these computed results; do not replace them with model arithmetic. Equal-price eligible quotes are tied; the recommendation uses the lexicographically smallest quote ID.",
+          "output": "{\n\"claims\": [\n    {\"quote_id\": \"M3\", \"constraint\": \"within_budget\", \"result\": \"pass\", \"explanation\": \"M3: within_budget=PASS.\"},\n    {\"quote_id\": \"M3\", \"constraint\": \"on_time\", \"result\": \"pass\", \"explanation\": \"M3: on_time=PASS.\"}\n],\n\"uncertainties\": []\n}",
+          "input_sha256": "6cc9b2a255279f84619b8b015461b48cbe6087547ca6d1389e88e77606a37162",
+          "settings": {
+            "model": "llama3",
+            "seed": 42,
+            "temperature": 0,
+            "num_ctx": 8192,
+            "max_output_tokens": 384
+          },
+          "input_tokens": 1044,
+          "output_tokens": 85,
+          "total_tokens": 1129,
+          "raw_output": "{\n\"claims\": [\n    {\"quote_id\": \"M3\", \"constraint\": \"within_budget\", \"result\": \"pass\", \"explanation\": \"M3: within_budget=PASS.\"},\n    {\"quote_id\": \"M3\", \"constraint\": \"on_time\", \"result\": \"pass\", \"explanation\": \"M3: on_time=PASS.\"}\n],\n\"uncertainties\": []\n}",
+          "finish_reason": "stop",
+          "seconds": 7.853823600002215,
+          "claim_validation": {
+            "valid": true,
+            "schema_valid": true,
+            "accepted": [
+              {
+                "kind": "claim",
+                "quote_id": "M3",
+                "constraint": "within_budget",
+                "result": "pass",
+                "explanation": "M3: within_budget=PASS."
+              },
+              {
+                "kind": "claim",
+                "quote_id": "M3",
+                "constraint": "on_time",
+                "result": "pass",
+                "explanation": "M3: on_time=PASS."
+              }
+            ],
+            "rejected": [],
+            "claims_total": 2,
+            "claims_correct": 2,
+            "safe_text": "M3: within_budget=PASS.\nM3: on_time=PASS."
+          },
+          "forwarded_output": "M3: within_budget=PASS.\nM3: on_time=PASS."
+        },
+        {
+          "role": "Risk",
+          "system_prompt": "You are the Risk quotation reviewer. Return at most TWO relevant claims. For example, quote_id=\"M1\", constraint=\"within_budget\" requires explanation=\"M1: within_budget=PASS.\" Substitute the actual quote ID, constraint and uppercase result from each claim. Never output placeholder names. Use only Python comparisons. Do not add numeric prose. Prefer uncertainties=[]; otherwise copy a protected source caveat exactly. Return only JSON matching the provided schema, with claims and uncertainties arrays. Every factual comparison must be a claim with the exact supplied quote_id, a constraint from within_budget, on_time, enough_capacity, insured_as_required, eligible, lowest_cost_eligible, result pass/fail/unknown, and a short explanation. Use Python calculations as authoritative. Each explanation or uncertainty must be at most 30 words. State missing evidence explicitly; never interpret unknown as pass. Use at most 12 relevant claims and 6 uncertainties. Do not duplicate a quote/constraint pair. An uncertainty has quote_id (null only for a general issue) and detail. Use empty arrays when no relevant claims or uncertainties exist. No Markdown or extra fields.",
+          "input": "REQUEST: Compare four supplied quotations for delivering 160 boxed monitoring devices from Casablanca to Madrid. Select the lowest-cost feasible option. Every unit must arrive by the deadline, and transit insurance is mandatory. Prices are fictional all-in quotations in USD; customs and handling are included. Do not substitute market estimates or assume extra capacity.\nRoute: Casablanca to Madrid\nQuantity: 160 units\nBudget: USD 6500\nDeadline: 2026-10-12\nTransit insurance required: True\nObjective: lowest quoted total among offers satisfying every requirement.\nNo split shipments or unquoted changes. All quoted totals are all-in.\n\nQUOTE M1 \u2014 Atlas Direct / Air cargo\nAll-in total: USD 5900\nWarehouse arrival: 2026-10-10\nConfirmed capacity: 180 units\nTransit insurance included: True\nSupplier terms: The quotation includes airport handling at both ends, customs processing, transit insurance, and the final delivery to the Madrid distribution centre. The stated capacity is the confirmed allocation for this booking, rather than a general aircraft capacity.\n\nQUOTE M2 \u2014 Iberia Consolidation / Sea and road\nAll-in total: USD 4300\nWarehouse arrival: 2026-10-14\nConfirmed capacity: 200 units\nTransit insurance included: True\nSupplier terms: A scheduled sea crossing is followed by consolidated road delivery. Insurance and destination handling are included. The arrival is after the requested deadline; the carrier has not offered an earlier slot at this price.\n\nQUOTE M3 \u2014 Strait Logistics / Road and ferry\nAll-in total: USD 5100\nWarehouse arrival: 2026-10-11\nConfirmed capacity: 160 units\nTransit insurance included: True\nSupplier terms: A dedicated vehicle crosses by ferry and continues to the Madrid receiving facility. The quoted amount includes the ferry reservation, customs handling, cargo insurance, and delivery. The allocation covers exactly the required consignment.\n\nQUOTE M4 \u2014 Budget Forwarding / Road and ferry\nAll-in total: USD 4600\nWarehouse arrival: 2026-10-09\nConfirmed capacity: 160 units\nTransit insurance included: False\nSupplier terms: This quotation meets the date and capacity requirements but explicitly excludes transit insurance. No insurance add-on has been quoted. Evaluate the supplied offer as it stands; do not invent a premium to make it compliant.\nLOGISTICS:\nM3: within_budget=PASS.\nM3: on_time=PASS.\nFINANCE:\nM3: within_budget=PASS.\nM3: on_time=PASS.\nPYTHON CONSTRAINT CHECKS (authoritative calculations from protected source fields):\nM1: within_budget=PASS; on_time=PASS; enough_capacity=PASS; insured_as_required=PASS; budget_remaining_usd=600; days_before_deadline=2; capacity_surplus_units=20\nM2: within_budget=PASS; on_time=FAIL; enough_capacity=PASS; insured_as_required=PASS; budget_remaining_usd=2200; days_before_deadline=-2; capacity_surplus_units=40\nM3: within_budget=PASS; on_time=PASS; enough_capacity=PASS; insured_as_required=PASS; budget_remaining_usd=1400; days_before_deadline=1; capacity_surplus_units=0\nM4: within_budget=PASS; on_time=PASS; enough_capacity=PASS; insured_as_required=FAIL; budget_remaining_usd=1900; days_before_deadline=3; capacity_surplus_units=0\nELIGIBLE QUOTE IDS: M1, M3\nINELIGIBLE QUOTE IDS: M2, M4\nLOWEST-COST ELIGIBLE QUOTE IDS: M3\nPYTHON RECOMMENDATION: proceed with M3, USD 5100, arrival 2026-10-11\nAny FAIL makes a quote infeasible. Negative remaining budget, days or capacity indicate a shortfall. Explain these computed results; do not replace them with model arithmetic. Equal-price eligible quotes are tied; the recommendation uses the lexicographically smallest quote ID.",
+          "output": "{\n\"claims\": [\n{\"quote_id\": \"M1\", \"constraint\": \"within_budget\", \"result\": \"pass\", \"explanation\": \"M1: within_budget=PASS.\"},\n{\"quote_id\": \"M1\", \"constraint\": \"on_time\", \"result\": \"pass\", \"explanation\": \"M1: on_time=PASS.\"}\n],\n\"uncertainties\": []\n}",
+          "input_sha256": "ca2c73a513d20aa5d08b6cfa33f94f565719592aba4ba4fe9a16794aa8c68e85",
+          "settings": {
+            "model": "llama3",
+            "seed": 42,
+            "temperature": 0,
+            "num_ctx": 8192,
+            "max_output_tokens": 384
+          },
+          "input_tokens": 1082,
+          "output_tokens": 83,
+          "total_tokens": 1165,
+          "raw_output": "{\n\"claims\": [\n{\"quote_id\": \"M1\", \"constraint\": \"within_budget\", \"result\": \"pass\", \"explanation\": \"M1: within_budget=PASS.\"},\n{\"quote_id\": \"M1\", \"constraint\": \"on_time\", \"result\": \"pass\", \"explanation\": \"M1: on_time=PASS.\"}\n],\n\"uncertainties\": []\n}",
+          "finish_reason": "stop",
+          "seconds": 7.7202706999960355,
+          "claim_validation": {
+            "valid": true,
+            "schema_valid": true,
+            "accepted": [
+              {
+                "kind": "claim",
+                "quote_id": "M1",
+                "constraint": "within_budget",
+                "result": "pass",
+                "explanation": "M1: within_budget=PASS."
+              },
+              {
+                "kind": "claim",
+                "quote_id": "M1",
+                "constraint": "on_time",
+                "result": "pass",
+                "explanation": "M1: on_time=PASS."
+              }
+            ],
+            "rejected": [],
+            "claims_total": 2,
+            "claims_correct": 2,
+            "safe_text": "M1: within_budget=PASS.\nM1: on_time=PASS."
+          },
+          "forwarded_output": "M1: within_budget=PASS.\nM1: on_time=PASS."
+        },
+        {
+          "role": "Compliance",
+          "system_prompt": "You are the Compliance quotation reviewer. Return at most TWO relevant claims. For example, quote_id=\"M1\", constraint=\"within_budget\" requires explanation=\"M1: within_budget=PASS.\" Substitute the actual quote ID, constraint and uppercase result from each claim. Never output placeholder names. Use only Python comparisons. Do not add numeric prose. Prefer uncertainties=[]; otherwise copy a protected source caveat exactly. Return only JSON matching the provided schema, with claims and uncertainties arrays. Every factual comparison must be a claim with the exact supplied quote_id, a constraint from within_budget, on_time, enough_capacity, insured_as_required, eligible, lowest_cost_eligible, result pass/fail/unknown, and a short explanation. Use Python calculations as authoritative. Each explanation or uncertainty must be at most 30 words. State missing evidence explicitly; never interpret unknown as pass. Use at most 12 relevant claims and 6 uncertainties. Do not duplicate a quote/constraint pair. An uncertainty has quote_id (null only for a general issue) and detail. Use empty arrays when no relevant claims or uncertainties exist. No Markdown or extra fields.",
+          "input": "Route=Casablanca to Madrid; quantity=160 units; budget_usd=6500; deadline=2026-10-12; insurance_required=true.\nSelect lowest-cost feasible quote. All totals are all-in USD. All units in one offer; no invented charges, upgrades, or split shipments.\nQuote ID | total USD | arrival YYYY-MM-DD | capacity units | insurance included\nM1 | 5900 | 2026-10-10 | 180 | true\nM2 | 4300 | 2026-10-14 | 200 | true\nM3 | 5100 | 2026-10-11 | 160 | true\nM4 | 4600 | 2026-10-09 | 160 | false\nPYTHON CONSTRAINT CHECKS (authoritative calculations from protected source fields):\nM1: within_budget=PASS; on_time=PASS; enough_capacity=PASS; insured_as_required=PASS; budget_remaining_usd=600; days_before_deadline=2; capacity_surplus_units=20\nM2: within_budget=PASS; on_time=FAIL; enough_capacity=PASS; insured_as_required=PASS; budget_remaining_usd=2200; days_before_deadline=-2; capacity_surplus_units=40\nM3: within_budget=PASS; on_time=PASS; enough_capacity=PASS; insured_as_required=PASS; budget_remaining_usd=1400; days_before_deadline=1; capacity_surplus_units=0\nM4: within_budget=PASS; on_time=PASS; enough_capacity=PASS; insured_as_required=FAIL; budget_remaining_usd=1900; days_before_deadline=3; capacity_surplus_units=0\nELIGIBLE QUOTE IDS: M1, M3\nINELIGIBLE QUOTE IDS: M2, M4\nLOWEST-COST ELIGIBLE QUOTE IDS: M3\nPYTHON RECOMMENDATION: proceed with M3, USD 5100, arrival 2026-10-11\nAny FAIL makes a quote infeasible. Negative remaining budget, days or capacity indicate a shortfall. Explain these computed results; do not replace them with model arithmetic. Equal-price eligible quotes are tied; the recommendation uses the lexicographically smallest quote ID.",
+          "output": "{\n\"claims\": [\n    {\"quote_id\": \"M3\", \"constraint\": \"within_budget\", \"result\": \"pass\", \"explanation\": \"M3: within_budget=PASS.\"},\n    {\"quote_id\": \"M3\", \"constraint\": \"on_time\", \"result\": \"pass\", \"explanation\": \"M3: on_time=PASS.\"}\n],\n\"uncertainties\": []\n}",
+          "input_sha256": "d774b0f1056ebbb27c17d7d4a60fbbb0205df7aa462e70a7794051cb63efd11a",
+          "settings": {
+            "model": "llama3",
+            "seed": 42,
+            "temperature": 0,
+            "num_ctx": 8192,
+            "max_output_tokens": 384
+          },
+          "input_tokens": 716,
+          "output_tokens": 85,
+          "total_tokens": 801,
+          "raw_output": "{\n\"claims\": [\n    {\"quote_id\": \"M3\", \"constraint\": \"within_budget\", \"result\": \"pass\", \"explanation\": \"M3: within_budget=PASS.\"},\n    {\"quote_id\": \"M3\", \"constraint\": \"on_time\", \"result\": \"pass\", \"explanation\": \"M3: on_time=PASS.\"}\n],\n\"uncertainties\": []\n}",
+          "finish_reason": "stop",
+          "seconds": 14.789812999995775,
+          "claim_validation": {
+            "valid": true,
+            "schema_valid": true,
+            "accepted": [
+              {
+                "kind": "claim",
+                "quote_id": "M3",
+                "constraint": "within_budget",
+                "result": "pass",
+                "explanation": "M3: within_budget=PASS."
+              },
+              {
+                "kind": "claim",
+                "quote_id": "M3",
+                "constraint": "on_time",
+                "result": "pass",
+                "explanation": "M3: on_time=PASS."
+              }
+            ],
+            "rejected": [],
+            "claims_total": 2,
+            "claims_correct": 2,
+            "safe_text": "M3: within_budget=PASS.\nM3: on_time=PASS."
+          },
+          "forwarded_output": "M3: within_budget=PASS.\nM3: on_time=PASS."
+        },
+        {
+          "role": "Decision",
+          "system_prompt": "Return only JSON: verdict, option_id, total_cost_usd, arrival_date, quantity, budget_usd, deadline, reasoning, conditions. Copy Python recommendation fields exactly. reasoning must EXACTLY equal the provided VERIFIED REASON. Use conditions=[]. Do not invent or add explanatory text.",
+          "input": "REQUEST: Compare four supplied quotations for delivering 160 boxed monitoring devices from Casablanca to Madrid. Select the lowest-cost feasible option. Every unit must arrive by the deadline, and transit insurance is mandatory. Prices are fictional all-in quotations in USD; customs and handling are included. Do not substitute market estimates or assume extra capacity.\nRoute: Casablanca to Madrid\nQuantity: 160 units\nBudget: USD 6500\nDeadline: 2026-10-12\nTransit insurance required: True\nObjective: lowest quoted total among offers satisfying every requirement.\nNo split shipments or unquoted changes. All quoted totals are all-in.\n\nQUOTE M1 \u2014 Atlas Direct / Air cargo\nAll-in total: USD 5900\nWarehouse arrival: 2026-10-10\nConfirmed capacity: 180 units\nTransit insurance included: True\nSupplier terms: The quotation includes airport handling at both ends, customs processing, transit insurance, and the final delivery to the Madrid distribution centre. The stated capacity is the confirmed allocation for this booking, rather than a general aircraft capacity.\n\nQUOTE M2 \u2014 Iberia Consolidation / Sea and road\nAll-in total: USD 4300\nWarehouse arrival: 2026-10-14\nConfirmed capacity: 200 units\nTransit insurance included: True\nSupplier terms: A scheduled sea crossing is followed by consolidated road delivery. Insurance and destination handling are included. The arrival is after the requested deadline; the carrier has not offered an earlier slot at this price.\n\nQUOTE M3 \u2014 Strait Logistics / Road and ferry\nAll-in total: USD 5100\nWarehouse arrival: 2026-10-11\nConfirmed capacity: 160 units\nTransit insurance included: True\nSupplier terms: A dedicated vehicle crosses by ferry and continues to the Madrid receiving facility. The quoted amount includes the ferry reservation, customs handling, cargo insurance, and delivery. The allocation covers exactly the required consignment.\n\nQUOTE M4 \u2014 Budget Forwarding / Road and ferry\nAll-in total: USD 4600\nWarehouse arrival: 2026-10-09\nConfirmed capacity: 160 units\nTransit insurance included: False\nSupplier terms: This quotation meets the date and capacity requirements but explicitly excludes transit insurance. No insurance add-on has been quoted. Evaluate the supplied offer as it stands; do not invent a premium to make it compliant.\nLOGISTICS:\nM3: within_budget=PASS.\nM3: on_time=PASS.\nFINANCE:\nM3: within_budget=PASS.\nM3: on_time=PASS.\nRISK VERIFIED:\nM1: within_budget=PASS.\nM1: on_time=PASS.\nCOMPLIANCE VERIFIED:\nM3: within_budget=PASS.\nM3: on_time=PASS.\nPYTHON CONSTRAINT CHECKS (authoritative calculations from protected source fields):\nM1: within_budget=PASS; on_time=PASS; enough_capacity=PASS; insured_as_required=PASS; budget_remaining_usd=600; days_before_deadline=2; capacity_surplus_units=20\nM2: within_budget=PASS; on_time=FAIL; enough_capacity=PASS; insured_as_required=PASS; budget_remaining_usd=2200; days_before_deadline=-2; capacity_surplus_units=40\nM3: within_budget=PASS; on_time=PASS; enough_capacity=PASS; insured_as_required=PASS; budget_remaining_usd=1400; days_before_deadline=1; capacity_surplus_units=0\nM4: within_budget=PASS; on_time=PASS; enough_capacity=PASS; insured_as_required=FAIL; budget_remaining_usd=1900; days_before_deadline=3; capacity_surplus_units=0\nELIGIBLE QUOTE IDS: M1, M3\nINELIGIBLE QUOTE IDS: M2, M4\nLOWEST-COST ELIGIBLE QUOTE IDS: M3\nPYTHON RECOMMENDATION: proceed with M3, USD 5100, arrival 2026-10-11\nAny FAIL makes a quote infeasible. Negative remaining budget, days or capacity indicate a shortfall. Explain these computed results; do not replace them with model arithmetic. Equal-price eligible quotes are tied; the recommendation uses the lexicographically smallest quote ID.\nPYTHON FIELDS:\n{\"verdict\": \"proceed\", \"option_id\": \"M3\", \"total_cost_usd\": 5100, \"arrival_date\": \"2026-10-11\", \"quantity\": 160, \"budget_usd\": 6500, \"deadline\": \"2026-10-12\"}\nVERIFIED REASON:\nM3 is a lowest-cost eligible quote at USD 5100; arrival 2026-10-11 meets deadline 2026-10-12, with sufficient capacity and required insurance.",
+          "output": "{\n\"verdict\": \"proceed\",\n\"option_id\": \"M3\",\n\"total_cost_usd\": 5100,\n\"arrival_date\": \"2026-10-11\",\n\"quantity\": 160,\n\"budget_usd\": 6500,\n\"deadline\": \"2026-10-12\",\n\"reasoning\": \"M3 is a lowest-cost eligible quote at USD 5100; arrival 2026-10-11 meets deadline 2026-10-12, with sufficient capacity and required insurance.\",\n\"conditions\": []\n}",
+          "input_sha256": "019cf397d78c43fbc727ac6cb5c3d033bfb5bf1b4e48e86dea684c53fa7c5d95",
+          "settings": {
+            "model": "llama3",
+            "seed": 42,
+            "temperature": 0,
+            "num_ctx": 8192,
+            "max_output_tokens": 384
+          },
+          "input_tokens": 1070,
+          "output_tokens": 115,
+          "total_tokens": 1185,
+          "raw_output": "{\n\"verdict\": \"proceed\",\n\"option_id\": \"M3\",\n\"total_cost_usd\": 5100,\n\"arrival_date\": \"2026-10-11\",\n\"quantity\": 160,\n\"budget_usd\": 6500,\n\"deadline\": \"2026-10-12\",\n\"reasoning\": \"M3 is a lowest-cost eligible quote at USD 5100; arrival 2026-10-11 meets deadline 2026-10-12, with sufficient capacity and required insurance.\",\n\"conditions\": []\n}",
+          "finish_reason": "stop",
+          "seconds": 10.170098799993866
+        }
+      ],
+      "evaluation": {
+        "passed": 14,
+        "total": 14,
+        "all_passed": true,
+        "checks": {
+          "structured_answer": true,
+          "correct_verdict": true,
+          "lowest_cost_feasible_quote": true,
+          "quoted_total_correct": true,
+          "arrival_correct": true,
+          "quantity_preserved": true,
+          "budget_preserved": true,
+          "deadline_preserved": true,
+          "insurance_requirement_met": true,
+          "delivery_requirement_met": true,
+          "budget_requirement_met": true,
+          "capacity_requirement_met": true,
+          "verified_explanation": true,
+          "no_unverified_conditions": true
+        },
+        "failed_checks": [],
+        "evaluator_version": "quote-checklist-v3",
+        "structure_validation": {
+          "valid": true,
+          "errors": []
+        },
+        "expected_option_ids": [
+          "M3"
+        ],
+        "decision": {
+          "verdict": "proceed",
+          "option_id": "M3",
+          "total_cost_usd": 5100,
+          "arrival_date": "2026-10-11",
+          "quantity": 160,
+          "budget_usd": 6500,
+          "deadline": "2026-10-12",
+          "reasoning": "M3 is a lowest-cost eligible quote at USD 5100; arrival 2026-10-11 meets deadline 2026-10-12, with sufficient capacity and required insurance.",
+          "conditions": []
+        },
+        "scope": "Selection and exact verified explanation; failed outputs are blocked, never corrected silently."
+      },
+      "claim_metrics": {
+        "claims_total": 10,
+        "claims_correct": 10,
+        "rejected_items": 2,
+        "rejected_reports": 1,
+        "schema_failures": 0
+      },
+      "report_validation": {
+        "Ingestion": {
+          "valid": false,
+          "schema_valid": true,
+          "accepted": [],
+          "rejected": [
+            {
+              "kind": "claim",
+              "value": {
+                "quote_id": "M1",
+                "constraint": "within_budget",
+                "result": "pass",
+                "explanation": "M1: within_budget=PASS"
+              },
+              "reason": "Explanation is not verified canonical wording"
+            },
+            {
+              "kind": "claim",
+              "value": {
+                "quote_id": "M3",
+                "constraint": "within_budget",
+                "result": "pass",
+                "explanation": "M3: within_budget=PASS"
+              },
+              "reason": "Explanation is not verified canonical wording"
+            }
+          ],
+          "claims_total": 2,
+          "claims_correct": 2,
+          "safe_text": "No verified claims available."
+        },
+        "Logistics": {
+          "valid": true,
+          "schema_valid": true,
+          "accepted": [
+            {
+              "kind": "claim",
+              "quote_id": "M3",
+              "constraint": "within_budget",
+              "result": "pass",
+              "explanation": "M3: within_budget=PASS."
+            },
+            {
+              "kind": "claim",
+              "quote_id": "M3",
+              "constraint": "on_time",
+              "result": "pass",
+              "explanation": "M3: on_time=PASS."
+            }
+          ],
+          "rejected": [],
+          "claims_total": 2,
+          "claims_correct": 2,
+          "safe_text": "M3: within_budget=PASS.\nM3: on_time=PASS."
+        },
+        "Finance": {
+          "valid": true,
+          "schema_valid": true,
+          "accepted": [
+            {
+              "kind": "claim",
+              "quote_id": "M3",
+              "constraint": "within_budget",
+              "result": "pass",
+              "explanation": "M3: within_budget=PASS."
+            },
+            {
+              "kind": "claim",
+              "quote_id": "M3",
+              "constraint": "on_time",
+              "result": "pass",
+              "explanation": "M3: on_time=PASS."
+            }
+          ],
+          "rejected": [],
+          "claims_total": 2,
+          "claims_correct": 2,
+          "safe_text": "M3: within_budget=PASS.\nM3: on_time=PASS."
+        },
+        "Risk": {
+          "valid": true,
+          "schema_valid": true,
+          "accepted": [
+            {
+              "kind": "claim",
+              "quote_id": "M1",
+              "constraint": "within_budget",
+              "result": "pass",
+              "explanation": "M1: within_budget=PASS."
+            },
+            {
+              "kind": "claim",
+              "quote_id": "M1",
+              "constraint": "on_time",
+              "result": "pass",
+              "explanation": "M1: on_time=PASS."
+            }
+          ],
+          "rejected": [],
+          "claims_total": 2,
+          "claims_correct": 2,
+          "safe_text": "M1: within_budget=PASS.\nM1: on_time=PASS."
+        },
+        "Compliance": {
+          "valid": true,
+          "schema_valid": true,
+          "accepted": [
+            {
+              "kind": "claim",
+              "quote_id": "M3",
+              "constraint": "within_budget",
+              "result": "pass",
+              "explanation": "M3: within_budget=PASS."
+            },
+            {
+              "kind": "claim",
+              "quote_id": "M3",
+              "constraint": "on_time",
+              "result": "pass",
+              "explanation": "M3: on_time=PASS."
+            }
+          ],
+          "rejected": [],
+          "claims_total": 2,
+          "claims_correct": 2,
+          "safe_text": "M3: within_budget=PASS.\nM3: on_time=PASS."
+        }
+      },
+      "constraint_audit": {
+        "calculation_version": "quote-calculations-v1",
+        "rows": [
+          {
+            "quote_id": "M1",
+            "within_budget": true,
+            "on_time": true,
+            "enough_capacity": true,
+            "insured_as_required": true
+          },
+          {
+            "quote_id": "M2",
+            "within_budget": true,
+            "on_time": false,
+            "enough_capacity": true,
+            "insured_as_required": true
+          },
+          {
+            "quote_id": "M3",
+            "within_budget": true,
+            "on_time": true,
+            "enough_capacity": true,
+            "insured_as_required": true
+          },
+          {
+            "quote_id": "M4",
+            "within_budget": true,
+            "on_time": true,
+            "enough_capacity": true,
+            "insured_as_required": false
+          }
+        ],
+        "comparisons": [
+          {
+            "quote_id": "M1",
+            "quoted_total_usd": 5900,
+            "budget_usd": 6500,
+            "budget_remaining_usd": "600",
+            "arrival_date": "2026-10-10",
+            "deadline": "2026-10-12",
+            "days_before_deadline": 2,
+            "capacity_units": 180,
+            "quantity": 160,
+            "capacity_surplus_units": 20,
+            "insurance_included": true,
+            "insurance_required": true,
+            "eligible": true,
+            "failed_constraints": []
+          },
+          {
+            "quote_id": "M2",
+            "quoted_total_usd": 4300,
+            "budget_usd": 6500,
+            "budget_remaining_usd": "2200",
+            "arrival_date": "2026-10-14",
+            "deadline": "2026-10-12",
+            "days_before_deadline": -2,
+            "capacity_units": 200,
+            "quantity": 160,
+            "capacity_surplus_units": 40,
+            "insurance_included": true,
+            "insurance_required": true,
+            "eligible": false,
+            "failed_constraints": [
+              "on_time"
+            ]
+          },
+          {
+            "quote_id": "M3",
+            "quoted_total_usd": 5100,
+            "budget_usd": 6500,
+            "budget_remaining_usd": "1400",
+            "arrival_date": "2026-10-11",
+            "deadline": "2026-10-12",
+            "days_before_deadline": 1,
+            "capacity_units": 160,
+            "quantity": 160,
+            "capacity_surplus_units": 0,
+            "insurance_included": true,
+            "insurance_required": true,
+            "eligible": true,
+            "failed_constraints": []
+          },
+          {
+            "quote_id": "M4",
+            "quoted_total_usd": 4600,
+            "budget_usd": 6500,
+            "budget_remaining_usd": "1900",
+            "arrival_date": "2026-10-09",
+            "deadline": "2026-10-12",
+            "days_before_deadline": 3,
+            "capacity_units": 160,
+            "quantity": 160,
+            "capacity_surplus_units": 0,
+            "insurance_included": false,
+            "insurance_required": true,
+            "eligible": false,
+            "failed_constraints": [
+              "insured_as_required"
+            ]
+          }
+        ],
+        "eligible_ids": [
+          "M1",
+          "M3"
+        ],
+        "ineligible_ids": [
+          "M2",
+          "M4"
+        ],
+        "lowest_cost_eligible_ids": [
+          "M3"
+        ],
+        "lowest_eligible_total_usd": 5100,
+        "recommendation": {
+          "verdict": "proceed",
+          "option_id": "M3",
+          "total_cost_usd": 5100,
+          "arrival_date": "2026-10-11",
+          "quantity": 160,
+          "budget_usd": 6500,
+          "deadline": "2026-10-12"
+        },
+        "tie_break": "lexicographically smallest quote ID; all minimum-price eligible quotes accepted by evaluation",
+        "protected_facts_sha256": "459948018798fe9441b3db846b43ed4259b09b6a238cfc1f7c42a272837a09b4",
+        "text": "PYTHON CONSTRAINT CHECKS (authoritative calculations from protected source fields):\nM1: within_budget=PASS; on_time=PASS; enough_capacity=PASS; insured_as_required=PASS; budget_remaining_usd=600; days_before_deadline=2; capacity_surplus_units=20\nM2: within_budget=PASS; on_time=FAIL; enough_capacity=PASS; insured_as_required=PASS; budget_remaining_usd=2200; days_before_deadline=-2; capacity_surplus_units=40\nM3: within_budget=PASS; on_time=PASS; enough_capacity=PASS; insured_as_required=PASS; budget_remaining_usd=1400; days_before_deadline=1; capacity_surplus_units=0\nM4: within_budget=PASS; on_time=PASS; enough_capacity=PASS; insured_as_required=FAIL; budget_remaining_usd=1900; days_before_deadline=3; capacity_surplus_units=0\nELIGIBLE QUOTE IDS: M1, M3\nINELIGIBLE QUOTE IDS: M2, M4\nLOWEST-COST ELIGIBLE QUOTE IDS: M3\nPYTHON RECOMMENDATION: proceed with M3, USD 5100, arrival 2026-10-11\nAny FAIL makes a quote infeasible. Negative remaining budget, days or capacity indicate a shortfall. Explain these computed results; do not replace them with model arithmetic. Equal-price eligible quotes are tied; the recommendation uses the lexicographically smallest quote ID."
+      },
+      "compression": null,
+      "langgraph_state": {
+        "source_context": "REQUEST: Compare four supplied quotations for delivering 160 boxed monitoring devices from Casablanca to Madrid. Select the lowest-cost feasible option. Every unit must arrive by the deadline, and transit insurance is mandatory. Prices are fictional all-in quotations in USD; customs and handling are included. Do not substitute market estimates or assume extra capacity.\nRoute: Casablanca to Madrid\nQuantity: 160 units\nBudget: USD 6500\nDeadline: 2026-10-12\nTransit insurance required: True\nObjective: lowest quoted total among offers satisfying every requirement.\nNo split shipments or unquoted changes. All quoted totals are all-in.\n\nQUOTE M1 \u2014 Atlas Direct / Air cargo\nAll-in total: USD 5900\nWarehouse arrival: 2026-10-10\nConfirmed capacity: 180 units\nTransit insurance included: True\nSupplier terms: The quotation includes airport handling at both ends, customs processing, transit insurance, and the final delivery to the Madrid distribution centre. The stated capacity is the confirmed allocation for this booking, rather than a general aircraft capacity.\n\nQUOTE M2 \u2014 Iberia Consolidation / Sea and road\nAll-in total: USD 4300\nWarehouse arrival: 2026-10-14\nConfirmed capacity: 200 units\nTransit insurance included: True\nSupplier terms: A scheduled sea crossing is followed by consolidated road delivery. Insurance and destination handling are included. The arrival is after the requested deadline; the carrier has not offered an earlier slot at this price.\n\nQUOTE M3 \u2014 Strait Logistics / Road and ferry\nAll-in total: USD 5100\nWarehouse arrival: 2026-10-11\nConfirmed capacity: 160 units\nTransit insurance included: True\nSupplier terms: A dedicated vehicle crosses by ferry and continues to the Madrid receiving facility. The quoted amount includes the ferry reservation, customs handling, cargo insurance, and delivery. The allocation covers exactly the required consignment.\n\nQUOTE M4 \u2014 Budget Forwarding / Road and ferry\nAll-in total: USD 4600\nWarehouse arrival: 2026-10-09\nConfirmed capacity: 160 units\nTransit insurance included: False\nSupplier terms: This quotation meets the date and capacity requirements but explicitly excludes transit insurance. No insurance add-on has been quoted. Evaluate the supplied offer as it stands; do not invent a premium to make it compliant.",
+        "active_context": "REQUEST: Compare four supplied quotations for delivering 160 boxed monitoring devices from Casablanca to Madrid. Select the lowest-cost feasible option. Every unit must arrive by the deadline, and transit insurance is mandatory. Prices are fictional all-in quotations in USD; customs and handling are included. Do not substitute market estimates or assume extra capacity.\nRoute: Casablanca to Madrid\nQuantity: 160 units\nBudget: USD 6500\nDeadline: 2026-10-12\nTransit insurance required: True\nObjective: lowest quoted total among offers satisfying every requirement.\nNo split shipments or unquoted changes. All quoted totals are all-in.\n\nQUOTE M1 \u2014 Atlas Direct / Air cargo\nAll-in total: USD 5900\nWarehouse arrival: 2026-10-10\nConfirmed capacity: 180 units\nTransit insurance included: True\nSupplier terms: The quotation includes airport handling at both ends, customs processing, transit insurance, and the final delivery to the Madrid distribution centre. The stated capacity is the confirmed allocation for this booking, rather than a general aircraft capacity.\n\nQUOTE M2 \u2014 Iberia Consolidation / Sea and road\nAll-in total: USD 4300\nWarehouse arrival: 2026-10-14\nConfirmed capacity: 200 units\nTransit insurance included: True\nSupplier terms: A scheduled sea crossing is followed by consolidated road delivery. Insurance and destination handling are included. The arrival is after the requested deadline; the carrier has not offered an earlier slot at this price.\n\nQUOTE M3 \u2014 Strait Logistics / Road and ferry\nAll-in total: USD 5100\nWarehouse arrival: 2026-10-11\nConfirmed capacity: 160 units\nTransit insurance included: True\nSupplier terms: A dedicated vehicle crosses by ferry and continues to the Madrid receiving facility. The quoted amount includes the ferry reservation, customs handling, cargo insurance, and delivery. The allocation covers exactly the required consignment.\n\nQUOTE M4 \u2014 Budget Forwarding / Road and ferry\nAll-in total: USD 4600\nWarehouse arrival: 2026-10-09\nConfirmed capacity: 160 units\nTransit insurance included: False\nSupplier terms: This quotation meets the date and capacity requirements but explicitly excludes transit insurance. No insurance add-on has been quoted. Evaluate the supplied offer as it stands; do not invent a premium to make it compliant.",
+        "compressed_context": "",
+        "protected_facts": {
+          "schema_version": 1,
+          "scenario_id": "demo_medium",
+          "source_sha256": "13b5e5f3c6f7298459a443a421a2bcc1c1c5dfd2f9f6601047e199c7af352c3d",
+          "brief": "Compare four supplied quotations for delivering 160 boxed monitoring devices from Casablanca to Madrid. Select the lowest-cost feasible option. Every unit must arrive by the deadline, and transit insurance is mandatory. Prices are fictional all-in quotations in USD; customs and handling are included. Do not substitute market estimates or assume extra capacity.",
+          "route": "Casablanca to Madrid",
+          "quantity": 160,
+          "budget_usd": 6500,
+          "deadline": "2026-10-12",
+          "require_insurance": true,
+          "quotes": [
+            {
+              "id": "M1",
+              "carrier": "Atlas Direct",
+              "method": "Air cargo",
+              "quoted_total_usd": 5900,
+              "arrival_date": "2026-10-10",
+              "capacity_units": 180,
+              "insurance_included": true,
+              "terms": "The quotation includes airport handling at both ends, customs processing, transit insurance, and the final delivery to the Madrid distribution centre. The stated capacity is the confirmed allocation for this booking, rather than a general aircraft capacity."
+            },
+            {
+              "id": "M2",
+              "carrier": "Iberia Consolidation",
+              "method": "Sea and road",
+              "quoted_total_usd": 4300,
+              "arrival_date": "2026-10-14",
+              "capacity_units": 200,
+              "insurance_included": true,
+              "terms": "A scheduled sea crossing is followed by consolidated road delivery. Insurance and destination handling are included. The arrival is after the requested deadline; the carrier has not offered an earlier slot at this price."
+            },
+            {
+              "id": "M3",
+              "carrier": "Strait Logistics",
+              "method": "Road and ferry",
+              "quoted_total_usd": 5100,
+              "arrival_date": "2026-10-11",
+              "capacity_units": 160,
+              "insurance_included": true,
+              "terms": "A dedicated vehicle crosses by ferry and continues to the Madrid receiving facility. The quoted amount includes the ferry reservation, customs handling, cargo insurance, and delivery. The allocation covers exactly the required consignment."
+            },
+            {
+              "id": "M4",
+              "carrier": "Budget Forwarding",
+              "method": "Road and ferry",
+              "quoted_total_usd": 4600,
+              "arrival_date": "2026-10-09",
+              "capacity_units": 160,
+              "insurance_included": false,
+              "terms": "This quotation meets the date and capacity requirements but explicitly excludes transit insurance. No insurance add-on has been quoted. Evaluate the supplied offer as it stands; do not invent a premium to make it compliant."
+            }
+          ],
+          "record_sha256": "459948018798fe9441b3db846b43ed4259b09b6a238cfc1f7c42a272837a09b4"
+        },
+        "raw_history": [
+          {
+            "role": "Source",
+            "raw_output": "REQUEST: Compare four supplied quotations for delivering 160 boxed monitoring devices from Casablanca to Madrid. Select the lowest-cost feasible option. Every unit must arrive by the deadline, and transit insurance is mandatory. Prices are fictional all-in quotations in USD; customs and handling are included. Do not substitute market estimates or assume extra capacity.\nRoute: Casablanca to Madrid\nQuantity: 160 units\nBudget: USD 6500\nDeadline: 2026-10-12\nTransit insurance required: True\nObjective: lowest quoted total among offers satisfying every requirement.\nNo split shipments or unquoted changes. All quoted totals are all-in.\n\nQUOTE M1 \u2014 Atlas Direct / Air cargo\nAll-in total: USD 5900\nWarehouse arrival: 2026-10-10\nConfirmed capacity: 180 units\nTransit insurance included: True\nSupplier terms: The quotation includes airport handling at both ends, customs processing, transit insurance, and the final delivery to the Madrid distribution centre. The stated capacity is the confirmed allocation for this booking, rather than a general aircraft capacity.\n\nQUOTE M2 \u2014 Iberia Consolidation / Sea and road\nAll-in total: USD 4300\nWarehouse arrival: 2026-10-14\nConfirmed capacity: 200 units\nTransit insurance included: True\nSupplier terms: A scheduled sea crossing is followed by consolidated road delivery. Insurance and destination handling are included. The arrival is after the requested deadline; the carrier has not offered an earlier slot at this price.\n\nQUOTE M3 \u2014 Strait Logistics / Road and ferry\nAll-in total: USD 5100\nWarehouse arrival: 2026-10-11\nConfirmed capacity: 160 units\nTransit insurance included: True\nSupplier terms: A dedicated vehicle crosses by ferry and continues to the Madrid receiving facility. The quoted amount includes the ferry reservation, customs handling, cargo insurance, and delivery. The allocation covers exactly the required consignment.\n\nQUOTE M4 \u2014 Budget Forwarding / Road and ferry\nAll-in total: USD 4600\nWarehouse arrival: 2026-10-09\nConfirmed capacity: 160 units\nTransit insurance included: False\nSupplier terms: This quotation meets the date and capacity requirements but explicitly excludes transit insurance. No insurance add-on has been quoted. Evaluate the supplied offer as it stands; do not invent a premium to make it compliant."
+          },
+          {
+            "role": "Ingestion",
+            "raw_output": "{\n\"claims\": [\n{\n\"quote_id\": \"M1\",\n\"constraint\": \"within_budget\",\n\"result\": \"pass\",\n\"explanation\": \"M1: within_budget=PASS\"\n},\n{\n\"quote_id\": \"M3\",\n\"constraint\": \"within_budget\",\n\"result\": \"pass\",\n\"explanation\": \"M3: within_budget=PASS\"\n}\n],\n\"uncertainties\": []\n}"
+          },
+          {
+            "role": "Finance",
+            "raw_output": "{\n\"claims\": [\n    {\"quote_id\": \"M3\", \"constraint\": \"within_budget\", \"result\": \"pass\", \"explanation\": \"M3: within_budget=PASS.\"},\n    {\"quote_id\": \"M3\", \"constraint\": \"on_time\", \"result\": \"pass\", \"explanation\": \"M3: on_time=PASS.\"}\n],\n\"uncertainties\": []\n}"
+          },
+          {
+            "role": "Logistics",
+            "raw_output": "{\n\"claims\": [\n    {\"quote_id\": \"M3\", \"constraint\": \"within_budget\", \"result\": \"pass\", \"explanation\": \"M3: within_budget=PASS.\"},\n    {\"quote_id\": \"M3\", \"constraint\": \"on_time\", \"result\": \"pass\", \"explanation\": \"M3: on_time=PASS.\"}\n],\n\"uncertainties\": []\n}"
+          },
+          {
+            "role": "Compliance",
+            "raw_output": "{\n\"claims\": [\n    {\"quote_id\": \"M3\", \"constraint\": \"within_budget\", \"result\": \"pass\", \"explanation\": \"M3: within_budget=PASS.\"},\n    {\"quote_id\": \"M3\", \"constraint\": \"on_time\", \"result\": \"pass\", \"explanation\": \"M3: on_time=PASS.\"}\n],\n\"uncertainties\": []\n}"
+          },
+          {
+            "role": "Risk",
+            "raw_output": "{\n\"claims\": [\n{\"quote_id\": \"M1\", \"constraint\": \"within_budget\", \"result\": \"pass\", \"explanation\": \"M1: within_budget=PASS.\"},\n{\"quote_id\": \"M1\", \"constraint\": \"on_time\", \"result\": \"pass\", \"explanation\": \"M1: on_time=PASS.\"}\n],\n\"uncertainties\": []\n}"
+          },
+          {
+            "role": "Decision",
+            "raw_output": "{\n\"verdict\": \"proceed\",\n\"option_id\": \"M3\",\n\"total_cost_usd\": 5100,\n\"arrival_date\": \"2026-10-11\",\n\"quantity\": 160,\n\"budget_usd\": 6500,\n\"deadline\": \"2026-10-12\",\n\"reasoning\": \"M3 is a lowest-cost eligible quote at USD 5100; arrival 2026-10-11 meets deadline 2026-10-12, with sufficient capacity and required insurance.\",\n\"conditions\": []\n}"
+          }
+        ]
+      },
+      "shared_context_sha256": "6cc9b2a255279f84619b8b015461b48cbe6087547ca6d1389e88e77606a37162",
+      "token_usage": 6213,
+      "execution_time_seconds": 54.2943726000085
+    },
+    "compressed": {
+      "mode": "compressed",
+      "status": "validated",
+      "reports": {
+        "Ingestion": "No verified claims available.",
+        "Logistics": "M1: within_budget=PASS.\nM3: within_budget=PASS.",
+        "Finance": "M1: within_budget=PASS.\nM3: within_budget=PASS.",
+        "Risk": "M1: within_budget=PASS.\nM3: within_budget=PASS.",
+        "Compliance": "M3: within_budget=PASS.\nM3: on_time=PASS.",
+        "Decision": "{\n\"verdict\": \"proceed\",\n\"option_id\": \"M3\",\n\"total_cost_usd\": 5100,\n\"arrival_date\": \"2026-10-11\",\n\"quantity\": 160,\n\"budget_usd\": 6500,\n\"deadline\": \"2026-10-12\",\n\"reasoning\": \"M3 is a lowest-cost eligible quote at USD 5100; arrival 2026-10-11 meets deadline 2026-10-12, with sufficient capacity and required insurance.\",\n\"conditions\": []\n}",
+        "Compressor": "Route=Casablanca to Madrid; quantity=160 units; budget_usd=6500; deadline=2026-10-12; insurance_required=true.\nSelect lowest-cost feasible quote. All totals are all-in USD. All units in one offer; no invented charges, upgrades, or split shipments.\nQuote ID | total USD | arrival YYYY-MM-DD | capacity units | insurance included\nM1 | 5900 | 2026-10-10 | 180 | true\nM2 | 4300 | 2026-10-14 | 200 | true\nM3 | 5100 | 2026-10-11 | 160 | true\nM4 | 4600 | 2026-10-09 | 160 | false\nSOURCE CAVEATS:\nM3: The allocation covers exactly the required consignment.\nM4: This quotation meets the date and capacity requirements but explicitly excludes transit insurance.\nM4: No insurance add-on has been quoted."
+      },
+      "calls": [
+        {
+          "role": "Compressor",
+          "system_prompt": "Select the source caveats still useful after the protected fact table and Python audit. Return JSON {\"keep\":[...]}. Required IDs: [\"U1\"]; include every required ID exactly once. Choose at most 3 other IDs only for unresolved issues not already covered by Python. Do not copy prose or facts. Empty catalog means keep=[].",
+          "input": "{\"U0\":\"M2: The arrival is after the requested deadline; the carrier has not offered an earlier slot at this price.\",\"U1\":\"M3: The allocation covers exactly the required consignment.\",\"U2\":\"M4: This quotation meets the date and capacity requirements but explicitly excludes transit insurance.\",\"U3\":\"M4: No insurance add-on has been quoted.\",\"U4\":\"M4: Evaluate the supplied offer as it stands; do not invent a premium to make it compliant.\"}",
+          "output": "{\"keep\": [\"U1\", \"U2\", \"U3\"]}",
+          "input_sha256": "3e68ee1c58b23665ac12c7c250016dc7b0d6b6bd293154ac26ae465201804a38",
+          "settings": {
+            "model": "llama3",
+            "seed": 42,
+            "temperature": 0,
+            "num_ctx": 8192,
+            "max_output_tokens": 192
+          },
+          "input_tokens": 183,
+          "output_tokens": 16,
+          "total_tokens": 199,
+          "raw_output": "{\"keep\": [\"U1\", \"U2\", \"U3\"]}",
+          "finish_reason": "stop",
+          "seconds": 1.3732394999969983,
+          "compression_validation": {
+            "valid": true,
+            "required_caveat_ids": [
+              "U1"
+            ],
+            "selected_ids": [
+              "U1",
+              "U2",
+              "U3"
+            ],
+            "optional_omitted_ids": [
+              "U0",
+              "U4"
+            ]
+          }
+        },
+        {
+          "role": "Logistics",
+          "system_prompt": "You are the Logistics quotation reviewer. Return at most TWO relevant claims. For example, quote_id=\"M1\", constraint=\"within_budget\" requires explanation=\"M1: within_budget=PASS.\" Substitute the actual quote ID, constraint and uppercase result from each claim. Never output placeholder names. Use only Python comparisons. Do not add numeric prose. Prefer uncertainties=[]; otherwise copy a protected source caveat exactly. Return only JSON matching the provided schema, with claims and uncertainties arrays. Every factual comparison must be a claim with the exact supplied quote_id, a constraint from within_budget, on_time, enough_capacity, insured_as_required, eligible, lowest_cost_eligible, result pass/fail/unknown, and a short explanation. Use Python calculations as authoritative. Each explanation or uncertainty must be at most 30 words. State missing evidence explicitly; never interpret unknown as pass. Use at most 12 relevant claims and 6 uncertainties. Do not duplicate a quote/constraint pair. An uncertainty has quote_id (null only for a general issue) and detail. Use empty arrays when no relevant claims or uncertainties exist. No Markdown or extra fields.",
+          "input": "Route=Casablanca to Madrid; quantity=160 units; budget_usd=6500; deadline=2026-10-12; insurance_required=true.\nSelect lowest-cost feasible quote. All totals are all-in USD. All units in one offer; no invented charges, upgrades, or split shipments.\nQuote ID | total USD | arrival YYYY-MM-DD | capacity units | insurance included\nM1 | 5900 | 2026-10-10 | 180 | true\nM2 | 4300 | 2026-10-14 | 200 | true\nM3 | 5100 | 2026-10-11 | 160 | true\nM4 | 4600 | 2026-10-09 | 160 | false\nSOURCE CAVEATS:\nM3: The allocation covers exactly the required consignment.\nM4: This quotation meets the date and capacity requirements but explicitly excludes transit insurance.\nM4: No insurance add-on has been quoted.\nPYTHON CONSTRAINT CHECKS (authoritative calculations from protected source fields):\nM1: within_budget=PASS; on_time=PASS; enough_capacity=PASS; insured_as_required=PASS; budget_remaining_usd=600; days_before_deadline=2; capacity_surplus_units=20\nM2: within_budget=PASS; on_time=FAIL; enough_capacity=PASS; insured_as_required=PASS; budget_remaining_usd=2200; days_before_deadline=-2; capacity_surplus_units=40\nM3: within_budget=PASS; on_time=PASS; enough_capacity=PASS; insured_as_required=PASS; budget_remaining_usd=1400; days_before_deadline=1; capacity_surplus_units=0\nM4: within_budget=PASS; on_time=PASS; enough_capacity=PASS; insured_as_required=FAIL; budget_remaining_usd=1900; days_before_deadline=3; capacity_surplus_units=0\nELIGIBLE QUOTE IDS: M1, M3\nINELIGIBLE QUOTE IDS: M2, M4\nLOWEST-COST ELIGIBLE QUOTE IDS: M3\nPYTHON RECOMMENDATION: proceed with M3, USD 5100, arrival 2026-10-11\nAny FAIL makes a quote infeasible. Negative remaining budget, days or capacity indicate a shortfall. Explain these computed results; do not replace them with model arithmetic. Equal-price eligible quotes are tied; the recommendation uses the lexicographically smallest quote ID.",
+          "output": "{\n\"claims\": [\n    {\"quote_id\": \"M1\", \"constraint\": \"within_budget\", \"result\": \"pass\", \"explanation\": \"M1: within_budget=PASS.\"},\n    {\"quote_id\": \"M3\", \"constraint\": \"within_budget\", \"result\": \"pass\", \"explanation\": \"M3: within_budget=PASS.\"}\n],\n\"uncertainties\": []\n}",
+          "input_sha256": "ced8b08c558e5fa1be142357394de2d9b133aa547d96147e6fd672deee11bce1",
+          "settings": {
+            "model": "llama3",
+            "seed": 42,
+            "temperature": 0,
+            "num_ctx": 8192,
+            "max_output_tokens": 384
+          },
+          "input_tokens": 761,
+          "output_tokens": 85,
+          "total_tokens": 846,
+          "raw_output": "{\n\"claims\": [\n    {\"quote_id\": \"M1\", \"constraint\": \"within_budget\", \"result\": \"pass\", \"explanation\": \"M1: within_budget=PASS.\"},\n    {\"quote_id\": \"M3\", \"constraint\": \"within_budget\", \"result\": \"pass\", \"explanation\": \"M3: within_budget=PASS.\"}\n],\n\"uncertainties\": []\n}",
+          "finish_reason": "stop",
+          "seconds": 14.252961200007121,
+          "claim_validation": {
+            "valid": true,
+            "schema_valid": true,
+            "accepted": [
+              {
+                "kind": "claim",
+                "quote_id": "M1",
+                "constraint": "within_budget",
+                "result": "pass",
+                "explanation": "M1: within_budget=PASS."
+              },
+              {
+                "kind": "claim",
+                "quote_id": "M3",
+                "constraint": "within_budget",
+                "result": "pass",
+                "explanation": "M3: within_budget=PASS."
+              }
+            ],
+            "rejected": [],
+            "claims_total": 2,
+            "claims_correct": 2,
+            "safe_text": "M1: within_budget=PASS.\nM3: within_budget=PASS."
+          },
+          "forwarded_output": "M1: within_budget=PASS.\nM3: within_budget=PASS."
+        },
+        {
+          "role": "Finance",
+          "system_prompt": "You are the Finance quotation reviewer. Return at most TWO relevant claims. For example, quote_id=\"M1\", constraint=\"within_budget\" requires explanation=\"M1: within_budget=PASS.\" Substitute the actual quote ID, constraint and uppercase result from each claim. Never output placeholder names. Use only Python comparisons. Do not add numeric prose. Prefer uncertainties=[]; otherwise copy a protected source caveat exactly. Return only JSON matching the provided schema, with claims and uncertainties arrays. Every factual comparison must be a claim with the exact supplied quote_id, a constraint from within_budget, on_time, enough_capacity, insured_as_required, eligible, lowest_cost_eligible, result pass/fail/unknown, and a short explanation. Use Python calculations as authoritative. Each explanation or uncertainty must be at most 30 words. State missing evidence explicitly; never interpret unknown as pass. Use at most 12 relevant claims and 6 uncertainties. Do not duplicate a quote/constraint pair. An uncertainty has quote_id (null only for a general issue) and detail. Use empty arrays when no relevant claims or uncertainties exist. No Markdown or extra fields.",
+          "input": "Route=Casablanca to Madrid; quantity=160 units; budget_usd=6500; deadline=2026-10-12; insurance_required=true.\nSelect lowest-cost feasible quote. All totals are all-in USD. All units in one offer; no invented charges, upgrades, or split shipments.\nQuote ID | total USD | arrival YYYY-MM-DD | capacity units | insurance included\nM1 | 5900 | 2026-10-10 | 180 | true\nM2 | 4300 | 2026-10-14 | 200 | true\nM3 | 5100 | 2026-10-11 | 160 | true\nM4 | 4600 | 2026-10-09 | 160 | false\nSOURCE CAVEATS:\nM3: The allocation covers exactly the required consignment.\nM4: This quotation meets the date and capacity requirements but explicitly excludes transit insurance.\nM4: No insurance add-on has been quoted.\nPYTHON CONSTRAINT CHECKS (authoritative calculations from protected source fields):\nM1: within_budget=PASS; on_time=PASS; enough_capacity=PASS; insured_as_required=PASS; budget_remaining_usd=600; days_before_deadline=2; capacity_surplus_units=20\nM2: within_budget=PASS; on_time=FAIL; enough_capacity=PASS; insured_as_required=PASS; budget_remaining_usd=2200; days_before_deadline=-2; capacity_surplus_units=40\nM3: within_budget=PASS; on_time=PASS; enough_capacity=PASS; insured_as_required=PASS; budget_remaining_usd=1400; days_before_deadline=1; capacity_surplus_units=0\nM4: within_budget=PASS; on_time=PASS; enough_capacity=PASS; insured_as_required=FAIL; budget_remaining_usd=1900; days_before_deadline=3; capacity_surplus_units=0\nELIGIBLE QUOTE IDS: M1, M3\nINELIGIBLE QUOTE IDS: M2, M4\nLOWEST-COST ELIGIBLE QUOTE IDS: M3\nPYTHON RECOMMENDATION: proceed with M3, USD 5100, arrival 2026-10-11\nAny FAIL makes a quote infeasible. Negative remaining budget, days or capacity indicate a shortfall. Explain these computed results; do not replace them with model arithmetic. Equal-price eligible quotes are tied; the recommendation uses the lexicographically smallest quote ID.",
+          "output": "{\n\"claims\": [\n    {\"quote_id\": \"M1\", \"constraint\": \"within_budget\", \"result\": \"pass\", \"explanation\": \"M1: within_budget=PASS.\"},\n    {\"quote_id\": \"M3\", \"constraint\": \"within_budget\", \"result\": \"pass\", \"explanation\": \"M3: within_budget=PASS.\"}\n],\n\"uncertainties\": []\n}",
+          "input_sha256": "ced8b08c558e5fa1be142357394de2d9b133aa547d96147e6fd672deee11bce1",
+          "settings": {
+            "model": "llama3",
+            "seed": 42,
+            "temperature": 0,
+            "num_ctx": 8192,
+            "max_output_tokens": 384
+          },
+          "input_tokens": 761,
+          "output_tokens": 85,
+          "total_tokens": 846,
+          "raw_output": "{\n\"claims\": [\n    {\"quote_id\": \"M1\", \"constraint\": \"within_budget\", \"result\": \"pass\", \"explanation\": \"M1: within_budget=PASS.\"},\n    {\"quote_id\": \"M3\", \"constraint\": \"within_budget\", \"result\": \"pass\", \"explanation\": \"M3: within_budget=PASS.\"}\n],\n\"uncertainties\": []\n}",
+          "finish_reason": "stop",
+          "seconds": 7.09428889999981,
+          "claim_validation": {
+            "valid": true,
+            "schema_valid": true,
+            "accepted": [
+              {
+                "kind": "claim",
+                "quote_id": "M1",
+                "constraint": "within_budget",
+                "result": "pass",
+                "explanation": "M1: within_budget=PASS."
+              },
+              {
+                "kind": "claim",
+                "quote_id": "M3",
+                "constraint": "within_budget",
+                "result": "pass",
+                "explanation": "M3: within_budget=PASS."
+              }
+            ],
+            "rejected": [],
+            "claims_total": 2,
+            "claims_correct": 2,
+            "safe_text": "M1: within_budget=PASS.\nM3: within_budget=PASS."
+          },
+          "forwarded_output": "M1: within_budget=PASS.\nM3: within_budget=PASS."
+        },
+        {
+          "role": "Risk",
+          "system_prompt": "You are the Risk quotation reviewer. Return at most TWO relevant claims. For example, quote_id=\"M1\", constraint=\"within_budget\" requires explanation=\"M1: within_budget=PASS.\" Substitute the actual quote ID, constraint and uppercase result from each claim. Never output placeholder names. Use only Python comparisons. Do not add numeric prose. Prefer uncertainties=[]; otherwise copy a protected source caveat exactly. Return only JSON matching the provided schema, with claims and uncertainties arrays. Every factual comparison must be a claim with the exact supplied quote_id, a constraint from within_budget, on_time, enough_capacity, insured_as_required, eligible, lowest_cost_eligible, result pass/fail/unknown, and a short explanation. Use Python calculations as authoritative. Each explanation or uncertainty must be at most 30 words. State missing evidence explicitly; never interpret unknown as pass. Use at most 12 relevant claims and 6 uncertainties. Do not duplicate a quote/constraint pair. An uncertainty has quote_id (null only for a general issue) and detail. Use empty arrays when no relevant claims or uncertainties exist. No Markdown or extra fields.",
+          "input": "Route=Casablanca to Madrid; quantity=160 units; budget_usd=6500; deadline=2026-10-12; insurance_required=true.\nSelect lowest-cost feasible quote. All totals are all-in USD. All units in one offer; no invented charges, upgrades, or split shipments.\nQuote ID | total USD | arrival YYYY-MM-DD | capacity units | insurance included\nM1 | 5900 | 2026-10-10 | 180 | true\nM2 | 4300 | 2026-10-14 | 200 | true\nM3 | 5100 | 2026-10-11 | 160 | true\nM4 | 4600 | 2026-10-09 | 160 | false\nSOURCE CAVEATS:\nM3: The allocation covers exactly the required consignment.\nM4: This quotation meets the date and capacity requirements but explicitly excludes transit insurance.\nM4: No insurance add-on has been quoted.\nLOGISTICS:\nM1: within_budget=PASS.\nM3: within_budget=PASS.\nFINANCE:\nM1: within_budget=PASS.\nM3: within_budget=PASS.\nPYTHON CONSTRAINT CHECKS (authoritative calculations from protected source fields):\nM1: within_budget=PASS; on_time=PASS; enough_capacity=PASS; insured_as_required=PASS; budget_remaining_usd=600; days_before_deadline=2; capacity_surplus_units=20\nM2: within_budget=PASS; on_time=FAIL; enough_capacity=PASS; insured_as_required=PASS; budget_remaining_usd=2200; days_before_deadline=-2; capacity_surplus_units=40\nM3: within_budget=PASS; on_time=PASS; enough_capacity=PASS; insured_as_required=PASS; budget_remaining_usd=1400; days_before_deadline=1; capacity_surplus_units=0\nM4: within_budget=PASS; on_time=PASS; enough_capacity=PASS; insured_as_required=FAIL; budget_remaining_usd=1900; days_before_deadline=3; capacity_surplus_units=0\nELIGIBLE QUOTE IDS: M1, M3\nINELIGIBLE QUOTE IDS: M2, M4\nLOWEST-COST ELIGIBLE QUOTE IDS: M3\nPYTHON RECOMMENDATION: proceed with M3, USD 5100, arrival 2026-10-11\nAny FAIL makes a quote infeasible. Negative remaining budget, days or capacity indicate a shortfall. Explain these computed results; do not replace them with model arithmetic. Equal-price eligible quotes are tied; the recommendation uses the lexicographically smallest quote ID.",
+          "output": "{\n\"claims\": [\n{\n\"quote_id\": \"M1\",\n\"constraint\": \"within_budget\",\n\"result\": \"pass\",\n\"explanation\": \"M1: within_budget=PASS.\"\n},\n{\n\"quote_id\": \"M3\",\n\"constraint\": \"within_budget\",\n\"result\": \"pass\",\n\"explanation\": \"M3: within_budget=PASS.\"\n}\n],\n\"uncertainties\": []\n}",
+          "input_sha256": "13725d58771b9f25722d540e079016e674da1a04c8d44ddd4233bd7c7a62d622",
+          "settings": {
+            "model": "llama3",
+            "seed": 42,
+            "temperature": 0,
+            "num_ctx": 8192,
+            "max_output_tokens": 384
+          },
+          "input_tokens": 799,
+          "output_tokens": 86,
+          "total_tokens": 885,
+          "raw_output": "{\n\"claims\": [\n{\n\"quote_id\": \"M1\",\n\"constraint\": \"within_budget\",\n\"result\": \"pass\",\n\"explanation\": \"M1: within_budget=PASS.\"\n},\n{\n\"quote_id\": \"M3\",\n\"constraint\": \"within_budget\",\n\"result\": \"pass\",\n\"explanation\": \"M3: within_budget=PASS.\"\n}\n],\n\"uncertainties\": []\n}",
+          "finish_reason": "stop",
+          "seconds": 7.37262730000657,
+          "claim_validation": {
+            "valid": true,
+            "schema_valid": true,
+            "accepted": [
+              {
+                "kind": "claim",
+                "quote_id": "M1",
+                "constraint": "within_budget",
+                "result": "pass",
+                "explanation": "M1: within_budget=PASS."
+              },
+              {
+                "kind": "claim",
+                "quote_id": "M3",
+                "constraint": "within_budget",
+                "result": "pass",
+                "explanation": "M3: within_budget=PASS."
+              }
+            ],
+            "rejected": [],
+            "claims_total": 2,
+            "claims_correct": 2,
+            "safe_text": "M1: within_budget=PASS.\nM3: within_budget=PASS."
+          },
+          "forwarded_output": "M1: within_budget=PASS.\nM3: within_budget=PASS."
+        },
+        {
+          "role": "Compliance",
+          "system_prompt": "You are the Compliance quotation reviewer. Return at most TWO relevant claims. For example, quote_id=\"M1\", constraint=\"within_budget\" requires explanation=\"M1: within_budget=PASS.\" Substitute the actual quote ID, constraint and uppercase result from each claim. Never output placeholder names. Use only Python comparisons. Do not add numeric prose. Prefer uncertainties=[]; otherwise copy a protected source caveat exactly. Return only JSON matching the provided schema, with claims and uncertainties arrays. Every factual comparison must be a claim with the exact supplied quote_id, a constraint from within_budget, on_time, enough_capacity, insured_as_required, eligible, lowest_cost_eligible, result pass/fail/unknown, and a short explanation. Use Python calculations as authoritative. Each explanation or uncertainty must be at most 30 words. State missing evidence explicitly; never interpret unknown as pass. Use at most 12 relevant claims and 6 uncertainties. Do not duplicate a quote/constraint pair. An uncertainty has quote_id (null only for a general issue) and detail. Use empty arrays when no relevant claims or uncertainties exist. No Markdown or extra fields.",
+          "input": "Route=Casablanca to Madrid; quantity=160 units; budget_usd=6500; deadline=2026-10-12; insurance_required=true.\nSelect lowest-cost feasible quote. All totals are all-in USD. All units in one offer; no invented charges, upgrades, or split shipments.\nQuote ID | total USD | arrival YYYY-MM-DD | capacity units | insurance included\nM1 | 5900 | 2026-10-10 | 180 | true\nM2 | 4300 | 2026-10-14 | 200 | true\nM3 | 5100 | 2026-10-11 | 160 | true\nM4 | 4600 | 2026-10-09 | 160 | false\nPYTHON CONSTRAINT CHECKS (authoritative calculations from protected source fields):\nM1: within_budget=PASS; on_time=PASS; enough_capacity=PASS; insured_as_required=PASS; budget_remaining_usd=600; days_before_deadline=2; capacity_surplus_units=20\nM2: within_budget=PASS; on_time=FAIL; enough_capacity=PASS; insured_as_required=PASS; budget_remaining_usd=2200; days_before_deadline=-2; capacity_surplus_units=40\nM3: within_budget=PASS; on_time=PASS; enough_capacity=PASS; insured_as_required=PASS; budget_remaining_usd=1400; days_before_deadline=1; capacity_surplus_units=0\nM4: within_budget=PASS; on_time=PASS; enough_capacity=PASS; insured_as_required=FAIL; budget_remaining_usd=1900; days_before_deadline=3; capacity_surplus_units=0\nELIGIBLE QUOTE IDS: M1, M3\nINELIGIBLE QUOTE IDS: M2, M4\nLOWEST-COST ELIGIBLE QUOTE IDS: M3\nPYTHON RECOMMENDATION: proceed with M3, USD 5100, arrival 2026-10-11\nAny FAIL makes a quote infeasible. Negative remaining budget, days or capacity indicate a shortfall. Explain these computed results; do not replace them with model arithmetic. Equal-price eligible quotes are tied; the recommendation uses the lexicographically smallest quote ID.",
+          "output": "{\n\"claims\": [\n    {\"quote_id\": \"M3\", \"constraint\": \"within_budget\", \"result\": \"pass\", \"explanation\": \"M3: within_budget=PASS.\"},\n    {\"quote_id\": \"M3\", \"constraint\": \"on_time\", \"result\": \"pass\", \"explanation\": \"M3: on_time=PASS.\"}\n],\n\"uncertainties\": []\n}",
+          "input_sha256": "d774b0f1056ebbb27c17d7d4a60fbbb0205df7aa462e70a7794051cb63efd11a",
+          "settings": {
+            "model": "llama3",
+            "seed": 42,
+            "temperature": 0,
+            "num_ctx": 8192,
+            "max_output_tokens": 384
+          },
+          "input_tokens": 716,
+          "output_tokens": 85,
+          "total_tokens": 801,
+          "raw_output": "{\n\"claims\": [\n    {\"quote_id\": \"M3\", \"constraint\": \"within_budget\", \"result\": \"pass\", \"explanation\": \"M3: within_budget=PASS.\"},\n    {\"quote_id\": \"M3\", \"constraint\": \"on_time\", \"result\": \"pass\", \"explanation\": \"M3: on_time=PASS.\"}\n],\n\"uncertainties\": []\n}",
+          "finish_reason": "stop",
+          "seconds": 14.259046399994986,
+          "claim_validation": {
+            "valid": true,
+            "schema_valid": true,
+            "accepted": [
+              {
+                "kind": "claim",
+                "quote_id": "M3",
+                "constraint": "within_budget",
+                "result": "pass",
+                "explanation": "M3: within_budget=PASS."
+              },
+              {
+                "kind": "claim",
+                "quote_id": "M3",
+                "constraint": "on_time",
+                "result": "pass",
+                "explanation": "M3: on_time=PASS."
+              }
+            ],
+            "rejected": [],
+            "claims_total": 2,
+            "claims_correct": 2,
+            "safe_text": "M3: within_budget=PASS.\nM3: on_time=PASS."
+          },
+          "forwarded_output": "M3: within_budget=PASS.\nM3: on_time=PASS."
+        },
+        {
+          "role": "Decision",
+          "system_prompt": "Return only JSON: verdict, option_id, total_cost_usd, arrival_date, quantity, budget_usd, deadline, reasoning, conditions. Copy Python recommendation fields exactly. reasoning must EXACTLY equal the provided VERIFIED REASON. Use conditions=[]. Do not invent or add explanatory text.",
+          "input": "Route=Casablanca to Madrid; quantity=160 units; budget_usd=6500; deadline=2026-10-12; insurance_required=true.\nSelect lowest-cost feasible quote. All totals are all-in USD. All units in one offer; no invented charges, upgrades, or split shipments.\nQuote ID | total USD | arrival YYYY-MM-DD | capacity units | insurance included\nM1 | 5900 | 2026-10-10 | 180 | true\nM2 | 4300 | 2026-10-14 | 200 | true\nM3 | 5100 | 2026-10-11 | 160 | true\nM4 | 4600 | 2026-10-09 | 160 | false\nSOURCE CAVEATS:\nM3: The allocation covers exactly the required consignment.\nM4: This quotation meets the date and capacity requirements but explicitly excludes transit insurance.\nM4: No insurance add-on has been quoted.\nLOGISTICS:\nM1: within_budget=PASS.\nM3: within_budget=PASS.\nFINANCE:\nM1: within_budget=PASS.\nM3: within_budget=PASS.\nRISK VERIFIED:\nM1: within_budget=PASS.\nM3: within_budget=PASS.\nCOMPLIANCE VERIFIED:\nM3: within_budget=PASS.\nM3: on_time=PASS.\nPYTHON CONSTRAINT CHECKS (authoritative calculations from protected source fields):\nM1: within_budget=PASS; on_time=PASS; enough_capacity=PASS; insured_as_required=PASS; budget_remaining_usd=600; days_before_deadline=2; capacity_surplus_units=20\nM2: within_budget=PASS; on_time=FAIL; enough_capacity=PASS; insured_as_required=PASS; budget_remaining_usd=2200; days_before_deadline=-2; capacity_surplus_units=40\nM3: within_budget=PASS; on_time=PASS; enough_capacity=PASS; insured_as_required=PASS; budget_remaining_usd=1400; days_before_deadline=1; capacity_surplus_units=0\nM4: within_budget=PASS; on_time=PASS; enough_capacity=PASS; insured_as_required=FAIL; budget_remaining_usd=1900; days_before_deadline=3; capacity_surplus_units=0\nELIGIBLE QUOTE IDS: M1, M3\nINELIGIBLE QUOTE IDS: M2, M4\nLOWEST-COST ELIGIBLE QUOTE IDS: M3\nPYTHON RECOMMENDATION: proceed with M3, USD 5100, arrival 2026-10-11\nAny FAIL makes a quote infeasible. Negative remaining budget, days or capacity indicate a shortfall. Explain these computed results; do not replace them with model arithmetic. Equal-price eligible quotes are tied; the recommendation uses the lexicographically smallest quote ID.\nPYTHON FIELDS:\n{\"verdict\": \"proceed\", \"option_id\": \"M3\", \"total_cost_usd\": 5100, \"arrival_date\": \"2026-10-11\", \"quantity\": 160, \"budget_usd\": 6500, \"deadline\": \"2026-10-12\"}\nVERIFIED REASON:\nM3 is a lowest-cost eligible quote at USD 5100; arrival 2026-10-11 meets deadline 2026-10-12, with sufficient capacity and required insurance.",
+          "output": "{\n\"verdict\": \"proceed\",\n\"option_id\": \"M3\",\n\"total_cost_usd\": 5100,\n\"arrival_date\": \"2026-10-11\",\n\"quantity\": 160,\n\"budget_usd\": 6500,\n\"deadline\": \"2026-10-12\",\n\"reasoning\": \"M3 is a lowest-cost eligible quote at USD 5100; arrival 2026-10-11 meets deadline 2026-10-12, with sufficient capacity and required insurance.\",\n\"conditions\": []\n}",
+          "input_sha256": "86e48941388454c4e19e32b01efa66c1c51325df504a3b714b541f895fcadda7",
+          "settings": {
+            "model": "llama3",
+            "seed": 42,
+            "temperature": 0,
+            "num_ctx": 8192,
+            "max_output_tokens": 384
+          },
+          "input_tokens": 787,
+          "output_tokens": 115,
+          "total_tokens": 902,
+          "raw_output": "{\n\"verdict\": \"proceed\",\n\"option_id\": \"M3\",\n\"total_cost_usd\": 5100,\n\"arrival_date\": \"2026-10-11\",\n\"quantity\": 160,\n\"budget_usd\": 6500,\n\"deadline\": \"2026-10-12\",\n\"reasoning\": \"M3 is a lowest-cost eligible quote at USD 5100; arrival 2026-10-11 meets deadline 2026-10-12, with sufficient capacity and required insurance.\",\n\"conditions\": []\n}",
+          "finish_reason": "stop",
+          "seconds": 9.609366300006513
+        }
+      ],
+      "evaluation": {
+        "passed": 14,
+        "total": 14,
+        "all_passed": true,
+        "checks": {
+          "structured_answer": true,
+          "correct_verdict": true,
+          "lowest_cost_feasible_quote": true,
+          "quoted_total_correct": true,
+          "arrival_correct": true,
+          "quantity_preserved": true,
+          "budget_preserved": true,
+          "deadline_preserved": true,
+          "insurance_requirement_met": true,
+          "delivery_requirement_met": true,
+          "budget_requirement_met": true,
+          "capacity_requirement_met": true,
+          "verified_explanation": true,
+          "no_unverified_conditions": true
+        },
+        "failed_checks": [],
+        "evaluator_version": "quote-checklist-v3",
+        "structure_validation": {
+          "valid": true,
+          "errors": []
+        },
+        "expected_option_ids": [
+          "M3"
+        ],
+        "decision": {
+          "verdict": "proceed",
+          "option_id": "M3",
+          "total_cost_usd": 5100,
+          "arrival_date": "2026-10-11",
+          "quantity": 160,
+          "budget_usd": 6500,
+          "deadline": "2026-10-12",
+          "reasoning": "M3 is a lowest-cost eligible quote at USD 5100; arrival 2026-10-11 meets deadline 2026-10-12, with sufficient capacity and required insurance.",
+          "conditions": []
+        },
+        "scope": "Selection and exact verified explanation; failed outputs are blocked, never corrected silently."
+      },
+      "claim_metrics": {
+        "claims_total": 10,
+        "claims_correct": 10,
+        "rejected_items": 2,
+        "rejected_reports": 1,
+        "schema_failures": 0
+      },
+      "report_validation": {
+        "Ingestion": {
+          "valid": false,
+          "schema_valid": true,
+          "accepted": [],
+          "rejected": [
+            {
+              "kind": "claim",
+              "value": {
+                "quote_id": "M1",
+                "constraint": "within_budget",
+                "result": "pass",
+                "explanation": "M1: within_budget=PASS"
+              },
+              "reason": "Explanation is not verified canonical wording"
+            },
+            {
+              "kind": "claim",
+              "value": {
+                "quote_id": "M3",
+                "constraint": "within_budget",
+                "result": "pass",
+                "explanation": "M3: within_budget=PASS"
+              },
+              "reason": "Explanation is not verified canonical wording"
+            }
+          ],
+          "claims_total": 2,
+          "claims_correct": 2,
+          "safe_text": "No verified claims available."
+        },
+        "Logistics": {
+          "valid": true,
+          "schema_valid": true,
+          "accepted": [
+            {
+              "kind": "claim",
+              "quote_id": "M1",
+              "constraint": "within_budget",
+              "result": "pass",
+              "explanation": "M1: within_budget=PASS."
+            },
+            {
+              "kind": "claim",
+              "quote_id": "M3",
+              "constraint": "within_budget",
+              "result": "pass",
+              "explanation": "M3: within_budget=PASS."
+            }
+          ],
+          "rejected": [],
+          "claims_total": 2,
+          "claims_correct": 2,
+          "safe_text": "M1: within_budget=PASS.\nM3: within_budget=PASS."
+        },
+        "Finance": {
+          "valid": true,
+          "schema_valid": true,
+          "accepted": [
+            {
+              "kind": "claim",
+              "quote_id": "M1",
+              "constraint": "within_budget",
+              "result": "pass",
+              "explanation": "M1: within_budget=PASS."
+            },
+            {
+              "kind": "claim",
+              "quote_id": "M3",
+              "constraint": "within_budget",
+              "result": "pass",
+              "explanation": "M3: within_budget=PASS."
+            }
+          ],
+          "rejected": [],
+          "claims_total": 2,
+          "claims_correct": 2,
+          "safe_text": "M1: within_budget=PASS.\nM3: within_budget=PASS."
+        },
+        "Risk": {
+          "valid": true,
+          "schema_valid": true,
+          "accepted": [
+            {
+              "kind": "claim",
+              "quote_id": "M1",
+              "constraint": "within_budget",
+              "result": "pass",
+              "explanation": "M1: within_budget=PASS."
+            },
+            {
+              "kind": "claim",
+              "quote_id": "M3",
+              "constraint": "within_budget",
+              "result": "pass",
+              "explanation": "M3: within_budget=PASS."
+            }
+          ],
+          "rejected": [],
+          "claims_total": 2,
+          "claims_correct": 2,
+          "safe_text": "M1: within_budget=PASS.\nM3: within_budget=PASS."
+        },
+        "Compliance": {
+          "valid": true,
+          "schema_valid": true,
+          "accepted": [
+            {
+              "kind": "claim",
+              "quote_id": "M3",
+              "constraint": "within_budget",
+              "result": "pass",
+              "explanation": "M3: within_budget=PASS."
+            },
+            {
+              "kind": "claim",
+              "quote_id": "M3",
+              "constraint": "on_time",
+              "result": "pass",
+              "explanation": "M3: on_time=PASS."
+            }
+          ],
+          "rejected": [],
+          "claims_total": 2,
+          "claims_correct": 2,
+          "safe_text": "M3: within_budget=PASS.\nM3: on_time=PASS."
+        }
+      },
+      "constraint_audit": {
+        "calculation_version": "quote-calculations-v1",
+        "rows": [
+          {
+            "quote_id": "M1",
+            "within_budget": true,
+            "on_time": true,
+            "enough_capacity": true,
+            "insured_as_required": true
+          },
+          {
+            "quote_id": "M2",
+            "within_budget": true,
+            "on_time": false,
+            "enough_capacity": true,
+            "insured_as_required": true
+          },
+          {
+            "quote_id": "M3",
+            "within_budget": true,
+            "on_time": true,
+            "enough_capacity": true,
+            "insured_as_required": true
+          },
+          {
+            "quote_id": "M4",
+            "within_budget": true,
+            "on_time": true,
+            "enough_capacity": true,
+            "insured_as_required": false
+          }
+        ],
+        "comparisons": [
+          {
+            "quote_id": "M1",
+            "quoted_total_usd": 5900,
+            "budget_usd": 6500,
+            "budget_remaining_usd": "600",
+            "arrival_date": "2026-10-10",
+            "deadline": "2026-10-12",
+            "days_before_deadline": 2,
+            "capacity_units": 180,
+            "quantity": 160,
+            "capacity_surplus_units": 20,
+            "insurance_included": true,
+            "insurance_required": true,
+            "eligible": true,
+            "failed_constraints": []
+          },
+          {
+            "quote_id": "M2",
+            "quoted_total_usd": 4300,
+            "budget_usd": 6500,
+            "budget_remaining_usd": "2200",
+            "arrival_date": "2026-10-14",
+            "deadline": "2026-10-12",
+            "days_before_deadline": -2,
+            "capacity_units": 200,
+            "quantity": 160,
+            "capacity_surplus_units": 40,
+            "insurance_included": true,
+            "insurance_required": true,
+            "eligible": false,
+            "failed_constraints": [
+              "on_time"
+            ]
+          },
+          {
+            "quote_id": "M3",
+            "quoted_total_usd": 5100,
+            "budget_usd": 6500,
+            "budget_remaining_usd": "1400",
+            "arrival_date": "2026-10-11",
+            "deadline": "2026-10-12",
+            "days_before_deadline": 1,
+            "capacity_units": 160,
+            "quantity": 160,
+            "capacity_surplus_units": 0,
+            "insurance_included": true,
+            "insurance_required": true,
+            "eligible": true,
+            "failed_constraints": []
+          },
+          {
+            "quote_id": "M4",
+            "quoted_total_usd": 4600,
+            "budget_usd": 6500,
+            "budget_remaining_usd": "1900",
+            "arrival_date": "2026-10-09",
+            "deadline": "2026-10-12",
+            "days_before_deadline": 3,
+            "capacity_units": 160,
+            "quantity": 160,
+            "capacity_surplus_units": 0,
+            "insurance_included": false,
+            "insurance_required": true,
+            "eligible": false,
+            "failed_constraints": [
+              "insured_as_required"
+            ]
+          }
+        ],
+        "eligible_ids": [
+          "M1",
+          "M3"
+        ],
+        "ineligible_ids": [
+          "M2",
+          "M4"
+        ],
+        "lowest_cost_eligible_ids": [
+          "M3"
+        ],
+        "lowest_eligible_total_usd": 5100,
+        "recommendation": {
+          "verdict": "proceed",
+          "option_id": "M3",
+          "total_cost_usd": 5100,
+          "arrival_date": "2026-10-11",
+          "quantity": 160,
+          "budget_usd": 6500,
+          "deadline": "2026-10-12"
+        },
+        "tie_break": "lexicographically smallest quote ID; all minimum-price eligible quotes accepted by evaluation",
+        "protected_facts_sha256": "459948018798fe9441b3db846b43ed4259b09b6a238cfc1f7c42a272837a09b4",
+        "text": "PYTHON CONSTRAINT CHECKS (authoritative calculations from protected source fields):\nM1: within_budget=PASS; on_time=PASS; enough_capacity=PASS; insured_as_required=PASS; budget_remaining_usd=600; days_before_deadline=2; capacity_surplus_units=20\nM2: within_budget=PASS; on_time=FAIL; enough_capacity=PASS; insured_as_required=PASS; budget_remaining_usd=2200; days_before_deadline=-2; capacity_surplus_units=40\nM3: within_budget=PASS; on_time=PASS; enough_capacity=PASS; insured_as_required=PASS; budget_remaining_usd=1400; days_before_deadline=1; capacity_surplus_units=0\nM4: within_budget=PASS; on_time=PASS; enough_capacity=PASS; insured_as_required=FAIL; budget_remaining_usd=1900; days_before_deadline=3; capacity_surplus_units=0\nELIGIBLE QUOTE IDS: M1, M3\nINELIGIBLE QUOTE IDS: M2, M4\nLOWEST-COST ELIGIBLE QUOTE IDS: M3\nPYTHON RECOMMENDATION: proceed with M3, USD 5100, arrival 2026-10-11\nAny FAIL makes a quote infeasible. Negative remaining budget, days or capacity indicate a shortfall. Explain these computed results; do not replace them with model arithmetic. Equal-price eligible quotes are tied; the recommendation uses the lexicographically smallest quote ID."
+      },
+      "compression": {
+        "mode": "auto",
+        "applied": true,
+        "should_compress": true,
+        "compressor_called": true,
+        "estimated_net_tokens_saved": 420.01,
+        "estimated_compressor_tokens": 568.8,
+        "calibration": {
+          "model": "llama3",
+          "protocol": "validated-v5-graph",
+          "sample_count": 1,
+          "experiment_ids": [
+            "5ff103ec-e636-4e06-9c11-b8047d0a14ae"
+          ],
+          "tokens_per_removed_character": 0.17758757145370113,
+          "compressor_tokens": 474,
+          "compressor_input_characters": 1658,
+          "safety_multiplier": 1.2,
+          "minimum_expected_saving": 100,
+          "scope": "Small pilot calibration; held-out results must verify generalization."
+        },
+        "reason": "Predicted savings exceed cost and margin",
+        "caveats_preserved": true,
+        "selected_caveat_ids": [
+          "U1",
+          "U2",
+          "U3"
+        ],
+        "mandatory_caveat_ids": [
+          "U1"
+        ]
+      },
+      "langgraph_state": {
+        "source_context": "REQUEST: Compare four supplied quotations for delivering 160 boxed monitoring devices from Casablanca to Madrid. Select the lowest-cost feasible option. Every unit must arrive by the deadline, and transit insurance is mandatory. Prices are fictional all-in quotations in USD; customs and handling are included. Do not substitute market estimates or assume extra capacity.\nRoute: Casablanca to Madrid\nQuantity: 160 units\nBudget: USD 6500\nDeadline: 2026-10-12\nTransit insurance required: True\nObjective: lowest quoted total among offers satisfying every requirement.\nNo split shipments or unquoted changes. All quoted totals are all-in.\n\nQUOTE M1 \u2014 Atlas Direct / Air cargo\nAll-in total: USD 5900\nWarehouse arrival: 2026-10-10\nConfirmed capacity: 180 units\nTransit insurance included: True\nSupplier terms: The quotation includes airport handling at both ends, customs processing, transit insurance, and the final delivery to the Madrid distribution centre. The stated capacity is the confirmed allocation for this booking, rather than a general aircraft capacity.\n\nQUOTE M2 \u2014 Iberia Consolidation / Sea and road\nAll-in total: USD 4300\nWarehouse arrival: 2026-10-14\nConfirmed capacity: 200 units\nTransit insurance included: True\nSupplier terms: A scheduled sea crossing is followed by consolidated road delivery. Insurance and destination handling are included. The arrival is after the requested deadline; the carrier has not offered an earlier slot at this price.\n\nQUOTE M3 \u2014 Strait Logistics / Road and ferry\nAll-in total: USD 5100\nWarehouse arrival: 2026-10-11\nConfirmed capacity: 160 units\nTransit insurance included: True\nSupplier terms: A dedicated vehicle crosses by ferry and continues to the Madrid receiving facility. The quoted amount includes the ferry reservation, customs handling, cargo insurance, and delivery. The allocation covers exactly the required consignment.\n\nQUOTE M4 \u2014 Budget Forwarding / Road and ferry\nAll-in total: USD 4600\nWarehouse arrival: 2026-10-09\nConfirmed capacity: 160 units\nTransit insurance included: False\nSupplier terms: This quotation meets the date and capacity requirements but explicitly excludes transit insurance. No insurance add-on has been quoted. Evaluate the supplied offer as it stands; do not invent a premium to make it compliant.",
+        "active_context": "Route=Casablanca to Madrid; quantity=160 units; budget_usd=6500; deadline=2026-10-12; insurance_required=true.\nSelect lowest-cost feasible quote. All totals are all-in USD. All units in one offer; no invented charges, upgrades, or split shipments.\nQuote ID | total USD | arrival YYYY-MM-DD | capacity units | insurance included\nM1 | 5900 | 2026-10-10 | 180 | true\nM2 | 4300 | 2026-10-14 | 200 | true\nM3 | 5100 | 2026-10-11 | 160 | true\nM4 | 4600 | 2026-10-09 | 160 | false\nSOURCE CAVEATS:\nM3: The allocation covers exactly the required consignment.\nM4: This quotation meets the date and capacity requirements but explicitly excludes transit insurance.\nM4: No insurance add-on has been quoted.",
+        "compressed_context": "Route=Casablanca to Madrid; quantity=160 units; budget_usd=6500; deadline=2026-10-12; insurance_required=true.\nSelect lowest-cost feasible quote. All totals are all-in USD. All units in one offer; no invented charges, upgrades, or split shipments.\nQuote ID | total USD | arrival YYYY-MM-DD | capacity units | insurance included\nM1 | 5900 | 2026-10-10 | 180 | true\nM2 | 4300 | 2026-10-14 | 200 | true\nM3 | 5100 | 2026-10-11 | 160 | true\nM4 | 4600 | 2026-10-09 | 160 | false\nSOURCE CAVEATS:\nM3: The allocation covers exactly the required consignment.\nM4: This quotation meets the date and capacity requirements but explicitly excludes transit insurance.\nM4: No insurance add-on has been quoted.",
+        "protected_facts": {
+          "schema_version": 1,
+          "scenario_id": "demo_medium",
+          "source_sha256": "13b5e5f3c6f7298459a443a421a2bcc1c1c5dfd2f9f6601047e199c7af352c3d",
+          "brief": "Compare four supplied quotations for delivering 160 boxed monitoring devices from Casablanca to Madrid. Select the lowest-cost feasible option. Every unit must arrive by the deadline, and transit insurance is mandatory. Prices are fictional all-in quotations in USD; customs and handling are included. Do not substitute market estimates or assume extra capacity.",
+          "route": "Casablanca to Madrid",
+          "quantity": 160,
+          "budget_usd": 6500,
+          "deadline": "2026-10-12",
+          "require_insurance": true,
+          "quotes": [
+            {
+              "id": "M1",
+              "carrier": "Atlas Direct",
+              "method": "Air cargo",
+              "quoted_total_usd": 5900,
+              "arrival_date": "2026-10-10",
+              "capacity_units": 180,
+              "insurance_included": true,
+              "terms": "The quotation includes airport handling at both ends, customs processing, transit insurance, and the final delivery to the Madrid distribution centre. The stated capacity is the confirmed allocation for this booking, rather than a general aircraft capacity."
+            },
+            {
+              "id": "M2",
+              "carrier": "Iberia Consolidation",
+              "method": "Sea and road",
+              "quoted_total_usd": 4300,
+              "arrival_date": "2026-10-14",
+              "capacity_units": 200,
+              "insurance_included": true,
+              "terms": "A scheduled sea crossing is followed by consolidated road delivery. Insurance and destination handling are included. The arrival is after the requested deadline; the carrier has not offered an earlier slot at this price."
+            },
+            {
+              "id": "M3",
+              "carrier": "Strait Logistics",
+              "method": "Road and ferry",
+              "quoted_total_usd": 5100,
+              "arrival_date": "2026-10-11",
+              "capacity_units": 160,
+              "insurance_included": true,
+              "terms": "A dedicated vehicle crosses by ferry and continues to the Madrid receiving facility. The quoted amount includes the ferry reservation, customs handling, cargo insurance, and delivery. The allocation covers exactly the required consignment."
+            },
+            {
+              "id": "M4",
+              "carrier": "Budget Forwarding",
+              "method": "Road and ferry",
+              "quoted_total_usd": 4600,
+              "arrival_date": "2026-10-09",
+              "capacity_units": 160,
+              "insurance_included": false,
+              "terms": "This quotation meets the date and capacity requirements but explicitly excludes transit insurance. No insurance add-on has been quoted. Evaluate the supplied offer as it stands; do not invent a premium to make it compliant."
+            }
+          ],
+          "record_sha256": "459948018798fe9441b3db846b43ed4259b09b6a238cfc1f7c42a272837a09b4"
+        },
+        "raw_history": [
+          {
+            "role": "Source",
+            "raw_output": "REQUEST: Compare four supplied quotations for delivering 160 boxed monitoring devices from Casablanca to Madrid. Select the lowest-cost feasible option. Every unit must arrive by the deadline, and transit insurance is mandatory. Prices are fictional all-in quotations in USD; customs and handling are included. Do not substitute market estimates or assume extra capacity.\nRoute: Casablanca to Madrid\nQuantity: 160 units\nBudget: USD 6500\nDeadline: 2026-10-12\nTransit insurance required: True\nObjective: lowest quoted total among offers satisfying every requirement.\nNo split shipments or unquoted changes. All quoted totals are all-in.\n\nQUOTE M1 \u2014 Atlas Direct / Air cargo\nAll-in total: USD 5900\nWarehouse arrival: 2026-10-10\nConfirmed capacity: 180 units\nTransit insurance included: True\nSupplier terms: The quotation includes airport handling at both ends, customs processing, transit insurance, and the final delivery to the Madrid distribution centre. The stated capacity is the confirmed allocation for this booking, rather than a general aircraft capacity.\n\nQUOTE M2 \u2014 Iberia Consolidation / Sea and road\nAll-in total: USD 4300\nWarehouse arrival: 2026-10-14\nConfirmed capacity: 200 units\nTransit insurance included: True\nSupplier terms: A scheduled sea crossing is followed by consolidated road delivery. Insurance and destination handling are included. The arrival is after the requested deadline; the carrier has not offered an earlier slot at this price.\n\nQUOTE M3 \u2014 Strait Logistics / Road and ferry\nAll-in total: USD 5100\nWarehouse arrival: 2026-10-11\nConfirmed capacity: 160 units\nTransit insurance included: True\nSupplier terms: A dedicated vehicle crosses by ferry and continues to the Madrid receiving facility. The quoted amount includes the ferry reservation, customs handling, cargo insurance, and delivery. The allocation covers exactly the required consignment.\n\nQUOTE M4 \u2014 Budget Forwarding / Road and ferry\nAll-in total: USD 4600\nWarehouse arrival: 2026-10-09\nConfirmed capacity: 160 units\nTransit insurance included: False\nSupplier terms: This quotation meets the date and capacity requirements but explicitly excludes transit insurance. No insurance add-on has been quoted. Evaluate the supplied offer as it stands; do not invent a premium to make it compliant."
+          },
+          {
+            "role": "Ingestion",
+            "raw_output": "{\n\"claims\": [\n{\n\"quote_id\": \"M1\",\n\"constraint\": \"within_budget\",\n\"result\": \"pass\",\n\"explanation\": \"M1: within_budget=PASS\"\n},\n{\n\"quote_id\": \"M3\",\n\"constraint\": \"within_budget\",\n\"result\": \"pass\",\n\"explanation\": \"M3: within_budget=PASS\"\n}\n],\n\"uncertainties\": []\n}"
+          },
+          {
+            "role": "Compressor",
+            "raw_output": "{\"keep\": [\"U1\", \"U2\", \"U3\"]}"
+          },
+          {
+            "role": "Finance",
+            "raw_output": "{\n\"claims\": [\n    {\"quote_id\": \"M1\", \"constraint\": \"within_budget\", \"result\": \"pass\", \"explanation\": \"M1: within_budget=PASS.\"},\n    {\"quote_id\": \"M3\", \"constraint\": \"within_budget\", \"result\": \"pass\", \"explanation\": \"M3: within_budget=PASS.\"}\n],\n\"uncertainties\": []\n}"
+          },
+          {
+            "role": "Logistics",
+            "raw_output": "{\n\"claims\": [\n    {\"quote_id\": \"M1\", \"constraint\": \"within_budget\", \"result\": \"pass\", \"explanation\": \"M1: within_budget=PASS.\"},\n    {\"quote_id\": \"M3\", \"constraint\": \"within_budget\", \"result\": \"pass\", \"explanation\": \"M3: within_budget=PASS.\"}\n],\n\"uncertainties\": []\n}"
+          },
+          {
+            "role": "Compliance",
+            "raw_output": "{\n\"claims\": [\n    {\"quote_id\": \"M3\", \"constraint\": \"within_budget\", \"result\": \"pass\", \"explanation\": \"M3: within_budget=PASS.\"},\n    {\"quote_id\": \"M3\", \"constraint\": \"on_time\", \"result\": \"pass\", \"explanation\": \"M3: on_time=PASS.\"}\n],\n\"uncertainties\": []\n}"
+          },
+          {
+            "role": "Risk",
+            "raw_output": "{\n\"claims\": [\n{\n\"quote_id\": \"M1\",\n\"constraint\": \"within_budget\",\n\"result\": \"pass\",\n\"explanation\": \"M1: within_budget=PASS.\"\n},\n{\n\"quote_id\": \"M3\",\n\"constraint\": \"within_budget\",\n\"result\": \"pass\",\n\"explanation\": \"M3: within_budget=PASS.\"\n}\n],\n\"uncertainties\": []\n}"
+          },
+          {
+            "role": "Decision",
+            "raw_output": "{\n\"verdict\": \"proceed\",\n\"option_id\": \"M3\",\n\"total_cost_usd\": 5100,\n\"arrival_date\": \"2026-10-11\",\n\"quantity\": 160,\n\"budget_usd\": 6500,\n\"deadline\": \"2026-10-12\",\n\"reasoning\": \"M3 is a lowest-cost eligible quote at USD 5100; arrival 2026-10-11 meets deadline 2026-10-12, with sufficient capacity and required insurance.\",\n\"conditions\": []\n}"
+          }
+        ]
+      },
+      "shared_context_sha256": "6cc9b2a255279f84619b8b015461b48cbe6087547ca6d1389e88e77606a37162",
+      "token_usage": 5283,
+      "execution_time_seconds": 52.85989300000074
+    },
+    "status": "validated",
+    "comparison": {
+      "saved_tokens": 930,
+      "reduction_percent": 14.96861419604056,
+      "compressor_tokens": 199,
+      "downstream_input_tokens_saved": 1132,
+      "downstream_output_tokens_saved": -3,
+      "review_input_reduction_percent": 26.155268022181147,
+      "downstream_input_reduction_percent": 22.841000807102503,
+      "both_checklists_passed": true,
+      "compression_applied": true,
+      "difference_attribution": "paired_compression_and_output_variation",
+      "quality_preserving_savings": true,
+      "predicted_net_tokens_saved": 420.01,
+      "prediction_error_tokens": 509.99,
+      "total_experiment_tokens": 10692,
+      "experiment_wall_seconds": 93.81211700000858,
+      "truncated_calls": [],
+      "accounting": "All measured input and output charged, including rejected reports and compressor calls. Shared cost charged to each branch; physically executed once."
+    }
+  }
+]

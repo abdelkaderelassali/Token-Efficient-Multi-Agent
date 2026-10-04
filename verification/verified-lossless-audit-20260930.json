@@ -1,0 +1,32 @@
+[
+  {
+    "file": "verification\\verified-lossless-detailed-20260930.json",
+    "experiment_id": "c754f397-29bb-4639-85cc-606788974f4b",
+    "scenario_id": "demo_detailed",
+    "protocol": "validated-v9-lossless-verified",
+    "compression_applied": true,
+    "saved_tokens": 1820,
+    "reduction_percent": 16.900362150617514,
+    "checks": {
+      "source_unchanged": true,
+      "protected_record_unchanged": true,
+      "python_audit_unchanged": true,
+      "context_exactly_reconstructed_from_source": true,
+      "all_required_caveats_selected": true,
+      "selected_caveats_are_source_exact": true,
+      "downstream_prompts_use_active_context": true,
+      "ingestion_prompt_uses_full_source": true,
+      "python_checks_in_compressed_context": true,
+      "agent_reports_forward_only_guarded_text": true,
+      "both_final_decisions_validated": true
+    },
+    "all_checks_passed": true,
+    "selected_caveat_ids": [],
+    "omitted_catalog_caveats": [],
+    "full_brief_in_active_context": true,
+    "carrier_and_method_names_in_active_context": true,
+    "every_eligible_full_terms_in_active_context": true,
+    "every_full_terms_in_active_context": true,
+    "scope": "Every original source field and supplier term copied exactly; prompt routing, guarded claims and final supplied-fact checks verified. Generated prose quality is not certified."
+  }
+]
