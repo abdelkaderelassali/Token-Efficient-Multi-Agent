@@ -73,11 +73,15 @@ The following are saved **v13 Llama 3 experiments**, not simulated test results 
 | Two courier quotations | 5,144 tokens | 4,306 tokens | 2,959 tokens | 42.48% | 14/14 |
 | Six quotations with required refrigeration | 12,016 tokens | 10,180 tokens | 5,232 tokens | 56.46% | 16/16 |
 
+![Comparison between complete and optimized paths](assets/03_comparison.png)
+
 All three decisions passed their checks in each completed comparison. Two additional requirement-review cases stopped before inference; they are recorded separately and are not counted as successful decisions or token-saving measurements.
 
 Sources: [short comparison](verification/paired-f8fee089-1eb7-4622-962c-2891b0a1a2b7.json), [requirement-review experiments](verification/requirements-v13-20261001.json), and [v13 evaluation summary](verification/requirements-v13-20261001.summary.json).
 
 ### Where the savings come from
+
+![Token reduction by agent](assets/05_tokens.png)
 
 ```text
 Total reduction (%) = 100 * (full-context tokens - adaptive tokens) / full-context tokens
